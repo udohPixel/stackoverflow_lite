@@ -1,0 +1,59 @@
+{
+  "bodyData": {
+    "valid": {
+      "userInfo": {
+        "firstname": "Johnny",
+        "lastname": "Doe",
+        "username": "johnnydoe",
+        "email": "john.doe123@gmail.com",
+        "facebook": "johnnydoe",
+        "twitter": "@johnnydoe"
+      }
+    },
+    "invalid": null
+  },
+  "userData": {
+    "valid": {
+      "id": "23"
+    },
+    "invalid": {
+      "id": "999999999999999999999999"
+    }
+  },
+  "foundData": {
+    "valid": {
+      "id": "23",
+      "firstname": "Jane",
+      "lastname": "Dowey",
+      "username": "janedowey",
+      "email": "john.doe123@gmail.com",
+      "password": "$2a$10$1FQle85g4y7hlCS7aYZ1c.RbuVtpgapLliMs0KGoAK9zyExzcksUm",
+      "isActive": false,
+      "createdAt": "2022-10-10T17:40:00.128Z",
+      "updatedAt": "2022-10-10T17:40:00.128Z"
+    },
+    "validNone": null,
+    "invalidEmail": {
+      "id": "11",
+      "firstname": "Johnson",
+      "lastname": "Doegh",
+      "username": "johnnydoewy",
+      "email": "john.doe123@gmail.com",
+      "password": "$2a$10$1FQle85g4y7hlCS7aYZ1c.RbuVtpgapLliMs0KGoAK9zyExzcksUm",
+      "isActive": false,
+      "createdAt": "2022-11-09T12:40:46.128Z",
+      "updatedAt": "2022-11-09T12:40:46.128Z"
+    },
+    "invalidUsername": {
+      "id": "14",
+      "firstname": "John",
+      "lastname": "Doe",
+      "username": "johnnydoe",
+      "email": "johnny.doweyn@gmail.com",
+      "password": "$2a$10$tXF1dFrqKLG2o7Wrong.passWOrD/HPaFZsoydu.ntQE8T7y1C4Wy",
+      "isActive": false,
+      "createdAt": "2022-11-09T12:40:46.128Z",
+      "updatedAt": "2022-11-09T12:40:46.128Z"
+    }
+  }
+}

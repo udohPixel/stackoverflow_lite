@@ -5,6 +5,8 @@ const chai = require('chai');
 const chaiHttp = require('chai-http');
 const sinon = require('sinon');
 
+const sandbox = sinon.createSandbox();
+
 // assertions
 const { expect } = chai;
 
@@ -33,16 +35,14 @@ describe('REGISTER USER UNIT TEST', () => {
     updatedAt: '2022-11-09T12:40:46.128Z',
   };
 
-  after(() => {
-    User.findOne.restore();
-    User.findAll.restore();
-    User.create.restore();
+  afterEach(() => {
+    sandbox.restore();
   });
 
   it('should create registration successfully', async () => {
-    const stubFindOne = sinon.stub(User, 'findOne').resolves(foundData);
-    const stubFindAll = sinon.stub(User, 'findAll').resolves(foundData);
-    const stubCreate = sinon.stub(User, 'create').resolves(stubData);
+    const stubFindOne = sandbox.stub(User, 'findOne').resolves(foundData);
+    const stubFindAll = sandbox.stub(User, 'findAll').resolves(foundData);
+    const stubCreate = sandbox.stub(User, 'create').resolves(stubData);
 
     const {
       firstname, lastname, username, email, password,

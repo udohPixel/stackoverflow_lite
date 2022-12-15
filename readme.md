@@ -16,9 +16,7 @@
 ## API Endpoints
 ### Users
 ``` js
-POST    /api/v1/users              create new user
-GET     /api/v1/users/{userId}     get a particular user
-GET     /api/v1/users              get all user
-PUT     /api/v1/users/{userId}     update a particular user
-DELETE  /api/v1/users/{userId}     update a particular user
+POST    /api/v1/auth/register     register new user
+POST    /api/v1/auth/login        register new user
+PUT     /api/v1/users             user personal profile update
 ```

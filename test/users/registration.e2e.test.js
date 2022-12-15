@@ -5,6 +5,8 @@ const chai = require('chai');
 const chaiHttp = require('chai-http');
 const sinon = require('sinon');
 
+const sandbox = sinon.createSandbox();
+
 // assertions
 const { expect } = chai;
 
@@ -45,9 +47,7 @@ describe('REGISTER USER E2E TEST', () => {
     });
 
     after(() => {
-      User.findOne.restore();
-      User.findAll.restore();
-      User.create.restore();
+      sandbox.restore();
     });
 
     it('should register user successfully', async () => {
@@ -55,9 +55,9 @@ describe('REGISTER USER E2E TEST', () => {
         body: inputData,
       };
 
-      const stubFindOne = sinon.stub(User, 'findOne').resolves(foundData);
-      const stubFindAll = sinon.stub(User, 'findAll').resolves(foundData);
-      const stubCreate = sinon.stub(User, 'create').resolves(stubData);
+      const stubFindOne = sandbox.stub(User, 'findOne').resolves(foundData);
+      const stubFindAll = sandbox.stub(User, 'findAll').resolves(foundData);
+      const stubCreate = sandbox.stub(User, 'create').resolves(stubData);
 
       await registrationCtrl(req, res);
 
@@ -89,11 +89,7 @@ describe('REGISTER USER E2E TEST', () => {
     });
 
     afterEach(() => {
-      User.findOne.restore();
-    });
-
-    after(() => {
-      User.findAll.restore();
+      sandbox.restore();
     });
 
     it('should not register user successfully when user is found with same email', async () => {
@@ -101,7 +97,7 @@ describe('REGISTER USER E2E TEST', () => {
         body: inputData,
       };
 
-      const stubFindEmail = sinon.stub(User, 'findOne').resolves(foundDataEmail);
+      const stubFindEmail = sandbox.stub(User, 'findOne').resolves(foundDataEmail);
 
       await registrationCtrl(req, res);
 
@@ -118,8 +114,8 @@ describe('REGISTER USER E2E TEST', () => {
         body: inputData,
       };
 
-      const stubFindNone = sinon.stub(User, 'findOne').resolves(foundDataNone);
-      const stubFindUsername = sinon.stub(User, 'findAll').resolves(foundDataUsername);
+      const stubFindNone = sandbox.stub(User, 'findOne').resolves(foundDataNone);
+      const stubFindUsername = sandbox.stub(User, 'findAll').resolves(foundDataUsername);
 
       await registrationCtrl(req, res);
 

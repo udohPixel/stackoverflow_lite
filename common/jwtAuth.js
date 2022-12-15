@@ -14,7 +14,7 @@ opts.secretOrKey = key.APP_PRIVATE_KEY;
 const payload = (passport) => {
   passport.use(
     new JwtStrategy(opts, (jwtPayload, done) => {
-      User.findById(jwtPayload.id)
+      User.findByPk(jwtPayload.id)
         .then((user) => {
           if (user) {
             return done(null, user);

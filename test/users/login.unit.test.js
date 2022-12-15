@@ -6,6 +6,8 @@ const chaiHttp = require('chai-http');
 const sinon = require('sinon');
 const jwt = require('jsonwebtoken');
 
+const sandbox = sinon.createSandbox();
+
 // assertions
 const { expect } = chai;
 
@@ -26,13 +28,12 @@ describe('LOGIN UNIT TEST', () => {
   const stubData = token.token;
 
   afterEach(() => {
-    User.findOne.restore();
-    jwt.sign.restore();
+    sandbox.restore();
   });
 
   it('should log in user successfully', async () => {
-    const stubFind = sinon.stub(User, 'findOne').resolves(foundData);
-    const stubSign = sinon.stub(jwt, 'sign').resolves(stubData);
+    const stubFind = sandbox.stub(User, 'findOne').resolves(foundData);
+    const stubSign = sandbox.stub(jwt, 'sign').resolves(stubData);
 
     const response = await loginService(inputData.email, inputData.password);
 

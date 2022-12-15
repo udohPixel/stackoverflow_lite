@@ -5,8 +5,8 @@
       "password": "udoh@1234"
     },
     "invalid": {
-      "email": "umohndem@gmail.com",
-      "password": "udeg1&234"
+      "email": "lagbaja.dada111@gmail.com",
+      "password": "udewrong1#234"
     }
   },
   "foundData": {
@@ -22,7 +22,7 @@
       "updatedAt": "2022-11-09T12:40:46.128Z"
     },
     "invalid": null,
-    "invalid1": {
+    "invalidEmail": {
       "id": "7",
       "firstname": "John",
       "lastname": "Doe",
@@ -33,13 +33,13 @@
       "createdAt": "2022-11-09T12:40:46.128Z",
       "updatedAt": "2022-11-09T12:40:46.128Z"
     },
-    "invalid2": {
+    "invalidPassword": {
       "id": "7",
       "firstname": "John",
       "lastname": "Doe",
       "username": "johnnydoe",
-      "email": "john.doe123@gmail.com",
-      "password": "$2a$10$tXF1dFrqKLG2o7Wrong.passWOrD/HPaFZsoydu.ntQE8T7y1C4Wy",
+      "email": "lagbaja.dada111@gmail.com",
+      "password": "$2a$10$tXF1dFrqKLG2o7Wrong.passsWOrD/HPaFZsoydu.ntQE8T7y1C4Wy",
       "isActive": true,
       "createdAt": "2022-11-09T12:40:46.128Z",
       "updatedAt": "2022-11-09T12:40:46.128Z"

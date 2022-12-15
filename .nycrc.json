@@ -2,7 +2,8 @@
   "exclude": [
       "test",
       "logger",
-      "common"
+      "common",
+      "providers"
   ],
   "check-coverage": true
 }

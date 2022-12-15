@@ -6,6 +6,8 @@ const chaiHttp = require('chai-http');
 const sinon = require('sinon');
 const jwt = require('jsonwebtoken');
 
+const sandbox = sinon.createSandbox();
+
 // assertions
 const { expect } = chai;
 
@@ -13,6 +15,7 @@ const { expect } = chai;
 chai.use(chaiHttp);
 
 // import other libraries
+const bcrypt = require('bcryptjs');
 const loginData = require('./login.data.mock.json');
 const token = require('../helpers/helper.auth.token.mock.json');
 const User = require('../../users/models/User');
@@ -36,8 +39,7 @@ describe('LOGIN E2E TEST', () => {
     });
 
     afterEach(() => {
-      User.findOne.restore();
-      jwt.sign.restore();
+      sandbox.restore();
     });
 
     it('should create a situation successfully', async () => {
@@ -45,8 +47,8 @@ describe('LOGIN E2E TEST', () => {
         body: inputData,
       };
 
-      const stubFind = sinon.stub(User, 'findOne').resolves(foundData);
-      const stubSign = sinon.stub(jwt, 'sign').resolves(stubData);
+      const stubFind = sandbox.stub(User, 'findOne').resolves(foundData);
+      const stubSign = sandbox.stub(jwt, 'sign').resolves(stubData);
 
       await loginCtrl(req, res);
 
@@ -63,11 +65,10 @@ describe('LOGIN E2E TEST', () => {
 
   describe('NEGATIVE TEST', () => {
     const inputData = { ...loginData.bodyData.invalid };
-    const foundData1 = { ...loginData.foundData.invalid1 };
-    const foundData2 = { ...loginData.foundData.invalid2 };
+    const foundDataEmail = { ...loginData.foundData.invalidEmail };
+    const foundDataPassword = { ...loginData.foundData.invalidPassword };
 
-    let status; let json; let
-      res;
+    let status; let json; let res;
 
     beforeEach(() => {
       status = sinon.stub();
@@ -77,20 +78,20 @@ describe('LOGIN E2E TEST', () => {
     });
 
     afterEach(() => {
-      User.findOne.restore();
+      sandbox.restore();
     });
 
-    it('should not login successfully when user imputted '
-    + 'email does not match any email in the database', async () => {
+    it('should not login successfully when user imputted email '
+    + 'does not match any email in the database', async () => {
       const req = {
         body: inputData,
       };
 
-      const stubFind = sinon.stub(User, 'findOne').resolves(foundData1);
+      const stubFindEmail = sandbox.stub(User, 'findOne').resolves(foundDataEmail);
 
       await loginCtrl(req, res);
 
-      expect(stubFind.calledOnce).to.be.true;
+      expect(stubFindEmail.calledOnce).to.be.true;
       expect(status.calledOnce).to.be.true;
       expect(status.args[0][0]).to.equal(400);
       expect(json.calledOnce).to.be.true;
@@ -98,17 +99,19 @@ describe('LOGIN E2E TEST', () => {
       expect(json.args[0][0].message).to.equal('Invalid email or password');
     });
 
-    it('should not login successfully when user imputted '
-    + 'password does not match password in the database', async () => {
+    it('should not login successfully when user imputted password '
+    + 'does not match password in the database', async () => {
       const req = {
         body: inputData,
       };
 
-      const stubFind = sinon.stub(User, 'findOne').resolves(foundData2);
+      const stubFindEmail = sandbox.stub(User, 'findOne').resolves(foundDataPassword);
+      const stubFindPassword = sandbox.stub(bcrypt, 'compare').resolves();
 
       await loginCtrl(req, res);
 
-      expect(stubFind.calledOnce).to.be.true;
+      expect(stubFindEmail.calledOnce).to.be.true;
+      expect(stubFindPassword.calledOnce).to.be.true;
       expect(status.calledOnce).to.be.true;
       expect(status.args[0][0]).to.equal(400);
       expect(json.calledOnce).to.be.true;
