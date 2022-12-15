@@ -3,7 +3,6 @@
 ###### . 
 
 ## Tools
-___
 >+ __Server Side Framework:__ Node/Express
 >+ __ORM:__ Sequelize
 >+ __Database:__ MySQL
@@ -15,7 +14,6 @@ ___
 >+ __Coverage:__ Istanbul NYC
 
 ## API Endpoints
-___
 ### Users
 ``` js
 POST    /api/v1/users              create new user
