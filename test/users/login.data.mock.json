@@ -1,0 +1,48 @@
+{
+  "bodyData": {
+    "valid": {
+      "email": "john.doe123@gmail.com",
+      "password": "udoh@1234"
+    },
+    "invalid": {
+      "email": "lagbaja.dada111@gmail.com",
+      "password": "udewrong1#234"
+    }
+  },
+  "foundData": {
+    "valid": {
+      "id": "7",
+      "firstname": "John",
+      "lastname": "Doe",
+      "username": "johnnydoe",
+      "email": "john.doe123@gmail.com",
+      "password": "$2a$10$1FQle85g4y7hlCS7aYZ1c.RbuVtpgapLliMs0KGoAK9zyExzcksUm",
+      "isActive": true,
+      "createdAt": "2022-11-09T12:40:46.128Z",
+      "updatedAt": "2022-11-09T12:40:46.128Z"
+    },
+    "invalid": null,
+    "invalidEmail": {
+      "id": "7",
+      "firstname": "John",
+      "lastname": "Doe",
+      "username": "johnnydoe",
+      "email": "wrong.email@gmail.com",
+      "password": "$2a$10$1FQle85g4y7hlCS7aYZ1c.RbuVtpgapLliMs0KGoAK9zyExzcksUm",
+      "isActive": true,
+      "createdAt": "2022-11-09T12:40:46.128Z",
+      "updatedAt": "2022-11-09T12:40:46.128Z"
+    },
+    "invalidPassword": {
+      "id": "7",
+      "firstname": "John",
+      "lastname": "Doe",
+      "username": "johnnydoe",
+      "email": "lagbaja.dada111@gmail.com",
+      "password": "$2a$10$tXF1dFrqKLG2o7Wrong.passsWOrD/HPaFZsoydu.ntQE8T7y1C4Wy",
+      "isActive": true,
+      "createdAt": "2022-11-09T12:40:46.128Z",
+      "updatedAt": "2022-11-09T12:40:46.128Z"
+    }
+  }
+}

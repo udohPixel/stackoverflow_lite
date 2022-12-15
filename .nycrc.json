@@ -1,0 +1,9 @@
+{
+  "exclude": [
+      "test",
+      "logger",
+      "common",
+      "providers"
+  ],
+  "check-coverage": true
+}
