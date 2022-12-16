@@ -1,0 +1,34 @@
+{
+  "queryData": {
+      "valid": {
+          "keyword": "John"
+      },
+      "invalid": {}
+  },
+  "foundData": {
+      "valid": [
+          {
+              "id": "17",
+              "firstname": "John",
+              "lastname": "Dowey",
+              "username": "johndoewey",
+              "email": "john.dowey123@gmail.com",
+              "isActive": false,
+              "createdAt": "2022-10-10T17:40:00.128Z",
+              "updatedAt": "2022-10-10T17:40:00.128Z"
+          },
+          {
+              "id": "15",
+              "firstname": "John",
+              "lastname": "Doegh",
+              "gender": "Male",
+              "username": "johnnydoe",
+              "email": "johnson.doegh@gmail.com",
+              "isActive": false,
+              "createdAt": "2022-11-09T12:40:46.128Z",
+              "updatedAt": "2022-11-09T12:40:46.128Z"
+          }
+      ],
+      "invalid": null
+  }
+}
