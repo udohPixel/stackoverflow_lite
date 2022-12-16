@@ -93,6 +93,45 @@ const userValidatorSchema = {
     twitter: Joi.string().min(3).max(50).trim(true)
       .allow(''),
   }),
+
+  // update personal password validator schema
+  updatePersonalPassword: Joi.object({
+    oldPassword: Joi.string()
+      .min(8)
+      .max(32)
+      .pattern(
+        /^(?=.*[A-Za-z])(?=.*\d)(?=.*[$@$!%*#?&])[A-Za-z\d$@$!%*#?&]{8,32}$/,
+      )
+      .required()
+      .label('Old Password')
+      .messages({
+        'string.min': 'Must have at least 8 characters',
+        'string.max': 'Must not have more than 32 characters',
+        'string.pattern.base': 'Password must be between 8 and 32 characters. '
+        + 'Must have at least 1 letter and 1 number. '
+        + 'Must have at least 1 special character.',
+      }),
+    password: Joi.string()
+      .min(8)
+      .max(32)
+      .pattern(
+        /^(?=.*[A-Za-z])(?=.*\d)(?=.*[$@$!%*#?&])[A-Za-z\d$@$!%*#?&]{8,32}$/,
+      )
+      .required()
+      .label('New password')
+      .messages({
+        'string.min': 'Must have at least 8 characters',
+        'string.max': 'Must not have more than 32 characters',
+        'string.pattern.base': 'Password must be between 8 and 32 characters. '
+        + 'Must have at least 1 letter and 1 number. '
+        + 'Must have at least 1 special character.',
+      }),
+    confirmPassword: Joi.any()
+      .equal(Joi.ref('password'))
+      .required()
+      .label('Confirm password')
+      .options({ messages: { 'any.only': '{{#label}} does not match' } }),
+  }),
 };
 
 // export user validator schema
