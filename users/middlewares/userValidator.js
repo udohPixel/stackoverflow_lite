@@ -5,6 +5,7 @@ const {
   login,
   registration,
   updatePersonalUser,
+  updatePersonalPassword,
 } = require('../validations/userValidationSchema');
 
 // is login values validated
@@ -46,9 +47,23 @@ const isUpdatePersonalUserValidated = async (req, res, next) => {
   }
 };
 
+// is update personal password values validated
+const isUpdatePersonalPasswordValidated = async (req, res, next) => {
+  // validate user-imputed values
+  const userValidator = await updatePersonalPassword.validate(req.body);
+
+  // check if user-imputed values had errors
+  if (userValidator.error) {
+    apiResponse.error(res, userValidator.error?.message);
+  } else {
+    next();
+  }
+};
+
 // export
 module.exports = {
   isLoginValidated,
   isRegistrationValidated,
   isUpdatePersonalUserValidated,
+  isUpdatePersonalPasswordValidated,
 };

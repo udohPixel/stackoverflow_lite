@@ -90,7 +90,9 @@ const updatePersonalUserService = async (userId, userInfo) => {
     where: {
       id: userId,
     },
-    attributes: { exclude: ['password', 'roleId'] },
+    attributes: {
+      exclude: ['password', 'roleId'],
+    },
   });
 
   return updatedUser;
