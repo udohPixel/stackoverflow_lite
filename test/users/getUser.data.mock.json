@@ -1,0 +1,23 @@
+{
+  "paramsData": {
+    "valid": {
+      "username": "johnnydoe"
+    },
+    "invalid": {
+      "username": "a-wrong-username"
+    }
+  },
+  "foundData": {
+    "valid": {
+      "id": "11",
+      "firstname": "Johnson",
+      "lastname": "Doegh",
+      "username": "johnnydoe",
+      "email": "johnson.doegh@gmail.com",
+      "isActive": false,
+      "createdAt": "2022-11-09T12:40:46.128Z",
+      "updatedAt": "2022-11-09T12:40:46.128Z"
+    },
+    "invalid": null
+  }
+}

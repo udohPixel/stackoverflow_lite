@@ -18,7 +18,8 @@
 ``` js
 POST    /api/v1/auth/register                   register new user
 POST    /api/v1/auth/login                      register new user
-PUT     /api/v1/users                           user personal profile update
-PUT     /api/v1/users/password/update           user personal password update
+PUT     /api/v1/users                           update personal user profile
+PUT     /api/v1/users/password/update           update personal user password
 GET     /api/v1/users                           get all users
+GET     /api/v1/users/:username                 get user
 ```

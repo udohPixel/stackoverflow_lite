@@ -12,6 +12,7 @@ const {
 const updatePersonalUser = require('../../../controllers/updatePersonalUser.controller');
 const updatePersonalPassword = require('../../../controllers/updatePersonalPassword.controller');
 const getAllUsers = require('../../../controllers/getAllUsers.controller');
+const getUser = require('../../../controllers/getUser.controller');
 
 // create router
 const router = express.Router();
@@ -45,6 +46,14 @@ router.put(
  * @type    - GET
  */
 router.get('/', getAllUsers);
+
+/**
+ * @desc    - route for fetching any user by username
+ * @api     - /api/v1/users/:username
+ * @access  - PUBLIC
+ * @type    - GET
+ */
+router.get('/:username', getUser);
 
 // export router
 module.exports = router;
