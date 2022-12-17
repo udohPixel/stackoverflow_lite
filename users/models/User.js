@@ -1,5 +1,6 @@
 const { DataTypes } = require('sequelize');
 const { sequelize } = require('../../providers/db');
+// const Role = require('../../roles/models/Role');
 
 const User = sequelize.define(
   'User',
@@ -32,10 +33,10 @@ const User = sequelize.define(
       allowNull: false,
       defaultValue: true,
     },
-    roleId: {
-      type: DataTypes.STRING,
+    RoleId: {
+      type: DataTypes.INTEGER,
       allowNull: false,
-      defaultValue: '1',
+      defaultValue: 1,
     },
     bio: {
       type: DataTypes.STRING,
@@ -56,10 +57,13 @@ const User = sequelize.define(
       type: DataTypes.STRING,
     },
   },
-  { timestamps: true },
+  {
+    timestamps: true,
+  },
 );
 
 // create table, check & perform changes in table to match model
+// Role.hasMany(User);
 // sequelize.sync({ alter: true });
 
 // export model

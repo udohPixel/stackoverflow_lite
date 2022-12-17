@@ -1,0 +1,12 @@
+{
+  "eslint.format.enable": true,
+  "eslint.run": "onSave",
+  "editor.detectIndentation": false,
+  "eslint.alwaysShowStatus": true,
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": true
+  },
+  "eslint.validate": [
+    "javascript"
+  ],
+}

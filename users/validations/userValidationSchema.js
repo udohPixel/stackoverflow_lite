@@ -132,6 +132,37 @@ const userValidatorSchema = {
       .label('Confirm password')
       .options({ messages: { 'any.only': '{{#label}} does not match' } }),
   }),
+
+  // update user validator schema
+  updateUser: Joi.object({
+    firstname: Joi.string().min(2).max(50).trim(true)
+      .required(),
+    lastname: Joi.string().min(2).max(50).trim(true)
+      .required(),
+    username: Joi.string().min(3).max(50).trim(true)
+      .required(),
+    email: Joi.string()
+      .lowercase()
+      .min(6)
+      .max(50)
+      .email({
+        minDomainSegments: 2,
+      })
+      .trim(true)
+      .required(),
+    RoleId: Joi.string(),
+    bio: Joi.string().min(10).max(5000),
+    facebook: Joi.string().min(3).max(50).trim(true)
+      .allow(''),
+    youtube: Joi.string().min(3).max(50).trim(true)
+      .allow(''),
+    instagram: Joi.string().min(3).max(50).trim(true)
+      .allow(''),
+    linkedIn: Joi.string().min(3).max(50).trim(true)
+      .allow(''),
+    twitter: Joi.string().min(3).max(50).trim(true)
+      .allow(''),
+  }),
 };
 
 // export user validator schema

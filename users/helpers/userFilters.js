@@ -27,7 +27,7 @@ const userFilters = {
         ['createdAt', 'DESC'],
       ],
       attributes: {
-        exclude: ['password', 'roleId'],
+        exclude: ['password', 'RoleId'],
       },
     });
   },

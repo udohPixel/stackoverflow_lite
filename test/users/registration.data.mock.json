@@ -3,7 +3,6 @@
     "valid": {
       "firstname": "John",
       "lastname": "Doe",
-      "gender": "Male",
       "username": "johnnydoe",
       "email": "john.doe123@gmail.com",
       "password": "udoh@1234"
