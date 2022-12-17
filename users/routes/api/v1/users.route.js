@@ -15,6 +15,7 @@ const updatePersonalPassword = require('../../../controllers/updatePersonalPassw
 const getAllUsers = require('../../../controllers/getAllUsers.controller');
 const getUser = require('../../../controllers/getUser.controller');
 const updateUser = require('../../../controllers/updateUser.controller');
+const deleteUser = require('../../../controllers/deleteUser.controller');
 
 // create router
 const router = express.Router();
@@ -70,6 +71,14 @@ router.put(
   isUpdateUserValidated,
   updateUser,
 );
+
+/**
+ * @desc    - route for deleting user
+ * @api     - /api/v1/users/:id
+ * @access  - PRIVATE
+ * @type    - DELETE
+ */
+router.delete('/:id', isLoggedIn, isTheAdmin, deleteUser);
 
 // export router
 module.exports = router;
