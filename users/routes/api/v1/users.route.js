@@ -2,10 +2,11 @@
 const express = require('express');
 
 // import required middlewares
-const { isLoggedIn } = require('../../../middlewares/auth');
+const { isLoggedIn, isTheAdmin } = require('../../../middlewares/auth');
 const {
   isUpdatePersonalUserValidated,
   isUpdatePersonalPasswordValidated,
+  isUpdateUserValidated,
 } = require('../../../middlewares/userValidator');
 
 // import required controllers
@@ -13,6 +14,7 @@ const updatePersonalUser = require('../../../controllers/updatePersonalUser.cont
 const updatePersonalPassword = require('../../../controllers/updatePersonalPassword.controller');
 const getAllUsers = require('../../../controllers/getAllUsers.controller');
 const getUser = require('../../../controllers/getUser.controller');
+const updateUser = require('../../../controllers/updateUser.controller');
 
 // create router
 const router = express.Router();
@@ -54,6 +56,20 @@ router.get('/', getAllUsers);
  * @type    - GET
  */
 router.get('/:username', getUser);
+
+/**
+ * @desc    - route for updating user
+ * @api     - /api/v1/users/:id
+ * @access  - PRIVATE
+ * @type    - PUT
+ */
+router.put(
+  '/:id',
+  isLoggedIn,
+  isTheAdmin,
+  isUpdateUserValidated,
+  updateUser,
+);
 
 // export router
 module.exports = router;

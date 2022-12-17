@@ -1,17 +1,18 @@
 // import required modules
 const { Op } = require('sequelize');
 const User = require('../models/User');
-const ApplicationException = require('../../common/ApplicationException');
 const { isEmpty } = require('../../common/helpers');
+const ApplicationException = require('../../common/ApplicationException');
 
-// update personal user service
-const updatePersonalUserService = async (userId, userInfo) => {
+// update user service
+const updateUserService = async (userId, adminRoleId, userInfo) => {
   // object destructuring assignment
   const {
     firstname,
     lastname,
     username,
     email,
+    RoleId,
     bio,
     facebook,
     youtube,
@@ -21,7 +22,14 @@ const updatePersonalUserService = async (userId, userInfo) => {
   } = userInfo;
 
   // fetch user by id from dB
-  const user = await User.findByPk(userId);
+  const user = await User.findOne(
+    {
+      where: {
+        RoleId: { [Op.ne]: adminRoleId }, // should not update admin info
+        id: userId,
+      },
+    },
+  );
 
   // pass user-imputed values into userValues object
   const userValues = {
@@ -29,6 +37,7 @@ const updatePersonalUserService = async (userId, userInfo) => {
     lastname,
     username,
     email,
+    RoleId,
     bio,
     facebook,
     youtube,
@@ -82,22 +91,24 @@ const updatePersonalUserService = async (userId, userInfo) => {
   await User.update(
     userValues,
     {
-      where: { id: userId },
+      where: {
+        id: userId,
+      },
     },
   );
 
   // get updated user
-  const updatedUser = await User.findOne({
-    where: {
-      id: userId,
+  const updatedUser = await User.findByPk(
+    userId,
+    {
+      attributes: {
+        exclude: ['password', 'RoleId'],
+      },
     },
-    attributes: {
-      exclude: ['password', 'RoleId'],
-    },
-  });
+  );
 
   return updatedUser;
 };
 
 // export service
-module.exports = updatePersonalUserService;
+module.exports = updateUserService;

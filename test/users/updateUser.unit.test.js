@@ -14,15 +14,16 @@ const { expect } = chai;
 chai.use(chaiHttp);
 
 // import other libraries
-const updateData = require('./updatePersonalUser.data.mock.json');
+const updateData = require('./updateUser.data.mock.json');
 const User = require('../../users/models/User');
-const updatePersonalUserService = require('../../users/services/updatePersonalUser.service');
+const updateUserService = require('../../users/services/updateUser.service');
 
-// update personal user test
-describe('UPDATE PERSONAL USER UNIT TEST', () => {
+// update user test
+describe('UPDATE USER UNIT TEST', () => {
   const inputData = { ...updateData.bodyData.valid.userInfo };
+  const paramsData = { ...updateData.paramsData.valid };
   const userData = { ...updateData.userData.valid };
-  const foundDataId = { ...updateData.foundData.valid };
+  const foundData = { ...updateData.foundData.valid };
   const foundDataNone = updateData.foundData.validNone;
 
   const stubData = {
@@ -42,20 +43,20 @@ describe('UPDATE PERSONAL USER UNIT TEST', () => {
     sandbox.restore();
   });
 
-  it('should update personal user information successfully', async () => {
-    const stubFindByPkUser = sandbox.stub(User, 'findByPk').resolves(foundDataId);
+  it('should update user information successfully', async () => {
+    const stubFindOne = sandbox.stub(User, 'findOne').resolves(foundData);
     const stubFindAll = sandbox.stub(User, 'findAll').resolves(foundDataNone);
     const stubUpdate = sandbox.stub(User, 'update').resolves();
-    const stubFindOneUser = sandbox.stub(User, 'findOne').resolves(stubData);
+    const stubFindId = sandbox.stub(User, 'findByPk').resolves(stubData);
 
     const userInfo = { ...inputData };
 
-    const response = await updatePersonalUserService(userData.id, userInfo);
+    const response = await updateUserService(paramsData.id, userData.RoleId, userInfo);
 
-    expect(stubFindByPkUser.calledOnce).to.be.true;
+    expect(stubFindOne.calledOnce).to.be.true;
     expect(stubFindAll.calledTwice).to.be.true;
     expect(stubUpdate.calledOnce).to.be.true;
-    expect(stubFindOneUser.calledOnce).to.be.true;
+    expect(stubFindId.calledOnce).to.be.true;
     expect(response).to.be.an('object');
     expect(response).to.have.property('id', stubData.id);
     expect(response).to.have.property('firstname', stubData.firstname);

@@ -2,6 +2,8 @@
 const passport = require('passport');
 const apiResponse = require('../../common/ApiResponse');
 const ApplicationException = require('../../common/ApplicationException');
+const Role = require('../../roles/models/Role');
+
 const {
   isAdmin,
 } = require('../../common/helpers');
@@ -10,13 +12,14 @@ const {
 const isLoggedIn = passport.authenticate('jwt', { session: false });
 
 // isTheAdmin middleware
-const isTheAdmin = (req, res, next) => {
+const isTheAdmin = async (req, res, next) => {
   try {
-    const userRole = req.user.role;
-    if (isAdmin(userRole)) {
-      next();
+    const role = await Role.findByPk(req.user.RoleId);
+    if (isAdmin(role.title)) {
+      await next();
+    } else {
+      throw new ApplicationException('Unauthorized', 401);
     }
-    throw new ApplicationException('Unauthorized', 401);
   } catch (error) {
     return apiResponse.errorObject(res, error, 403, 'auth');
   }

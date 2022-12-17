@@ -21,7 +21,6 @@
               "id": "15",
               "firstname": "John",
               "lastname": "Doegh",
-              "gender": "Male",
               "username": "johnnydoe",
               "email": "johnson.doegh@gmail.com",
               "isActive": false,
