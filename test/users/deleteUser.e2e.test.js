@@ -14,15 +14,16 @@ const { expect } = chai;
 chai.use(chaiHttp);
 
 // import other libraries
-const userData = require('./deleteUser.data.mock.json');
+const deleteData = require('./deleteUser.data.mock.json');
 const User = require('../../users/models/User');
 const deleteUserCtrl = require('../../users/controllers/deleteUser.controller');
 
 // delete user test
 describe('DELETE USER E2E TEST', () => {
   describe('POSITIVE TEST', () => {
-    const paramsData = { ...userData.paramsData.valid };
-    const foundData = { ...userData.foundData.valid };
+    const paramsData = { ...deleteData.paramsData.valid };
+    const userData = { ...deleteData.userData.valid };
+    const foundData = { ...deleteData.foundData.valid };
 
     const stubData = {
       id: foundData.id,
@@ -36,8 +37,7 @@ describe('DELETE USER E2E TEST', () => {
       updatedAt: foundData.updatedAt,
     };
 
-    let status; let json; let
-      res;
+    let status; let json; let res;
 
     beforeEach(() => {
       status = sinon.stub();
@@ -53,9 +53,10 @@ describe('DELETE USER E2E TEST', () => {
     it('should delete a user successfully', async () => {
       const req = {
         params: paramsData,
+        user: userData,
       };
 
-      const stubFind = sandbox.stub(User, 'findByPk').resolves(foundData);
+      const stubFind = sandbox.stub(User, 'findOne').resolves(foundData);
       const stubDelete = sandbox.stub(User, 'destroy').resolves(stubData);
 
       await deleteUserCtrl(req, res);
@@ -71,8 +72,9 @@ describe('DELETE USER E2E TEST', () => {
   });
 
   describe('NEGATIVE TEST', () => {
-    const paramsData = { ...userData.paramsData.invalid };
-    const foundDataNone = userData.foundData.invalid;
+    const paramsData = { ...deleteData.paramsData.invalid };
+    const userData = { ...deleteData.userData.valid };
+    const foundDataNone = deleteData.foundData.invalid;
 
     let status; let json; let res;
 
@@ -90,9 +92,10 @@ describe('DELETE USER E2E TEST', () => {
     it('should not delete a user successfully when user is not found by id', async () => {
       const req = {
         params: paramsData,
+        user: userData,
       };
 
-      const stubFind = sandbox.stub(User, 'findByPk').resolves(foundDataNone);
+      const stubFind = sandbox.stub(User, 'findOne').resolves(foundDataNone);
 
       await deleteUserCtrl(req, res);
 

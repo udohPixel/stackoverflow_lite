@@ -14,14 +14,15 @@ const { expect } = chai;
 chai.use(chaiHttp);
 
 // import other libraries
-const userData = require('./deleteUser.data.mock.json');
+const deleteData = require('./deleteUser.data.mock.json');
 const User = require('../../users/models/User');
 const deleteUserService = require('../../users/services/deleteUser.service');
 
 // delete user test
 describe('DELETE USER UNIT TEST', () => {
-  const paramsData = { ...userData.paramsData.valid };
-  const foundData = { ...userData.foundData.valid };
+  const paramsData = { ...deleteData.paramsData.valid };
+  const foundData = { ...deleteData.foundData.valid };
+  const userData = { ...deleteData.userData.valid };
 
   const stubData = {
     id: foundData.id,
@@ -40,10 +41,10 @@ describe('DELETE USER UNIT TEST', () => {
   });
 
   it('should delete a user successfully', async () => {
-    const stubFind = sandbox.stub(User, 'findByPk').resolves(foundData);
+    const stubFind = sandbox.stub(User, 'findOne').resolves(foundData);
     const stubDelete = sandbox.stub(User, 'destroy').resolves(stubData);
 
-    const response = await deleteUserService(paramsData.id);
+    const response = await deleteUserService(paramsData.id, userData.RoleId);
 
     expect(stubFind.calledOnce).to.be.true;
     expect(stubDelete.calledOnce).to.be.true;

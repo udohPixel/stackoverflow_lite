@@ -24,8 +24,7 @@ describe('GET USER E2E TEST', () => {
     const paramsData = { ...userData.paramsData.valid };
     const foundData = { ...userData.foundData.valid };
 
-    let status; let json; let
-      res;
+    let status; let json; let res;
 
     beforeEach(() => {
       status = sinon.stub();

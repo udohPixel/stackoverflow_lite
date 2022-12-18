@@ -1,6 +1,5 @@
 // import require modules
 const Joi = require('joi');
-// const validatorConfig = require('../../settings/validator.config');
 
 // user validation schema
 const userValidatorSchema = {
@@ -162,6 +161,19 @@ const userValidatorSchema = {
       .allow(''),
     twitter: Joi.string().min(3).max(50).trim(true)
       .allow(''),
+  }),
+
+  // password forgot validator schema
+  passwordForgot: Joi.object({
+    email: Joi.string()
+      .lowercase()
+      .min(6)
+      .max(50)
+      .email({
+        minDomainSegments: 2,
+      })
+      .trim(true)
+      .required(),
   }),
 };
 

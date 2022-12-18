@@ -1,11 +1,20 @@
 // import required modules
+const { Op } = require('sequelize');
 const User = require('../models/User');
 const ApplicationException = require('../../common/ApplicationException');
 
 // delete user service
-const deleteUserService = async (userId) => {
+const deleteUserService = async (userId, adminRoleId) => {
   // fetch user by id from dB
-  const user = await User.findByPk(userId);
+  // const user = await User.findByPk(userId);
+  const user = await User.findOne(
+    {
+      where: {
+        RoleId: { [Op.ne]: adminRoleId }, // should not delete admin info
+        id: userId,
+      },
+    },
+  );
 
   // check if user exists with provided id
   if (!user) {

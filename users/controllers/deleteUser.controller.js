@@ -6,9 +6,10 @@ const deleteUserService = require('../services/deleteUser.service');
 const deleteUserCtrl = async (req, res) => {
   try {
     const userId = req.params.id;
+    const adminRoleId = req.user.RoleId;
 
     // delete user service
-    const user = await deleteUserService(userId);
+    const user = await deleteUserService(userId, adminRoleId);
 
     return apiResponse.success(res, 'User deleted successfully', user);
   } catch (error) {
