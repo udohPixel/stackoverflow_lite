@@ -12,7 +12,7 @@ const deleteUserCtrl = async (req, res) => {
 
     return apiResponse.success(res, 'User deleted successfully', user);
   } catch (error) {
-    return apiResponse.errorObject(res, error, null, 'delete_user');
+    return apiResponse.errorObject(res, error, null, 'delete-user');
   }
 };
 

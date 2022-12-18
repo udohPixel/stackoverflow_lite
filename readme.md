@@ -24,4 +24,5 @@ GET     /api/v1/users                           get all users
 GET     /api/v1/users/:username                 get user
 PUT     /api/v1/users/:id                       update user
 DELETE  /api/v1/users/:id                       delete user
+PUT     /api/v1/users/:id/status                update user active status
 ```
