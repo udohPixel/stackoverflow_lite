@@ -8,6 +8,7 @@ const {
   isUpdatePersonalPasswordValidated,
   isUpdateUserValidated,
   isPasswordForgotValidated,
+  isPasswordResetValidated,
 } = require('../../../middlewares/userValidator');
 
 // import required controllers
@@ -19,6 +20,7 @@ const updateUser = require('../../../controllers/updateUser.controller');
 const deleteUser = require('../../../controllers/deleteUser.controller');
 const updateUserStatus = require('../../../controllers/updateUserStatus.controller');
 const passwordForgot = require('../../../controllers/passwordForgot.controller');
+const passwordReset = require('../../../controllers/passwordReset.controller');
 
 // create router
 const router = express.Router();
@@ -92,6 +94,14 @@ router.put('/:id/status', isLoggedIn, isTheAdmin, updateUserStatus);
  * @type    - POST
  */
 router.post('/password/forgot', isPasswordForgotValidated, passwordForgot);
+
+/**
+ * @desc    - route to reset user password (to use reset link email)
+ * @api     - /api/v1/users/password/reset"
+ * @access  - PUBLIC
+ * @type    - PUT
+ */
+router.put('/password/reset/:token', isPasswordResetValidated, passwordReset);
 
 // export router
 module.exports = router;

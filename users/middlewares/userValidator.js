@@ -8,6 +8,7 @@ const {
   updatePersonalPassword,
   updateUser,
   passwordForgot,
+  passwordReset,
 } = require('../validations/userValidationSchema');
 
 // is login values validated
@@ -88,6 +89,19 @@ const isPasswordForgotValidated = async (req, res, next) => {
   }
 };
 
+// is password reset values validated
+const isPasswordResetValidated = async (req, res, next) => {
+  // validate user-imputed values
+  const userValidator = await passwordReset.validate(req.body);
+
+  // check if user-imputed values had errors
+  if (userValidator.error) {
+    apiResponse.error(res, userValidator.error?.message);
+  } else {
+    next();
+  }
+};
+
 // export
 module.exports = {
   isLoginValidated,
@@ -96,4 +110,5 @@ module.exports = {
   isUpdatePersonalPasswordValidated,
   isUpdateUserValidated,
   isPasswordForgotValidated,
+  isPasswordResetValidated,
 };
