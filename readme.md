@@ -25,4 +25,11 @@ GET     /api/v1/users/:username                 get user
 PUT     /api/v1/users/:id                       update user
 DELETE  /api/v1/users/:id                       delete user
 PUT     /api/v1/users/:id/status                update user active status
+POST    /api/v1/users/password/forgot           generate password reset token
+PUT     /api/v1/users/password/reset/:token     reset password via reset link
+```
+
+### Categories
+``` js
+POST    /api/v1/categories                      add new category
 ```
