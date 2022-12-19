@@ -32,4 +32,5 @@ PUT     /api/v1/users/password/reset/:token     reset password via reset link
 ### Categories
 ``` js
 POST    /api/v1/categories                      add new category
+GET     /api/v1/categories                      get all categories
 ```
