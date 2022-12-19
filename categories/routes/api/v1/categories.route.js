@@ -9,6 +9,7 @@ const {
 
 // import required controllers
 const addCategory = require('../../../controllers/addCategory.controller');
+const getAllCategories = require('../../../controllers/getAllCategories.controller');
 
 // create router
 const router = express.Router();
@@ -21,6 +22,14 @@ const router = express.Router();
  * @type    - POST
  */
 router.post('/', isLoggedIn, isTheAdmin, isAddCategoryValidated, addCategory);
+
+/**
+ * @desc    - route for fetching all categories
+ * @api     - /api/v1/categories
+ * @access  - PRIVATE
+ * @type    - GET
+ */
+router.get('/', isLoggedIn, isTheAdmin, getAllCategories);
 
 // export router
 module.exports = router;
