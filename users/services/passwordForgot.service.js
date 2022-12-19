@@ -27,12 +27,11 @@ const passwordForgotService = async (email, protocol, host) => {
   // set expiration date to 3 days
   const passwordResetExpirationDate = Date.now() + 3 * 24 * 60 * 60 * 1000;
 
-  // create password reset token and email
-  await PasswordReset.create({
+  const passwordResetInfo = {
     email: user.email,
     passwordResetToken,
     passwordResetExpirationDate,
-  });
+  };
 
   // send mail to user containing password reset link
   const link = `${protocol}://${host}/password/reset/${passwordResetToken}`;
@@ -45,11 +44,40 @@ const passwordForgotService = async (email, protocol, host) => {
 
   const passwordResetMessage = passwordResetLink;
 
-  await sendMail({
+  const mailOptions = {
     email: user.email,
     subject: 'Stackoverflow Lite account password reset',
     message: passwordResetMessage,
+  };
+
+  // fetch password reset token
+  const thePasswordResetToken = await PasswordReset.findOne({
+    where: {
+      email: user.email,
+    },
   });
+
+  // check if password reset token has already been generated
+  if (thePasswordResetToken) {
+    // update password reset token
+    await PasswordReset.update(
+      passwordResetInfo,
+      {
+        where: {
+          email: user.email,
+        },
+      },
+    );
+
+    await sendMail(mailOptions);
+
+    return passwordResetToken;
+  }
+
+  // create password reset token and email
+  await PasswordReset.create(passwordResetInfo);
+
+  await sendMail(mailOptions);
 
   return passwordResetToken;
 };

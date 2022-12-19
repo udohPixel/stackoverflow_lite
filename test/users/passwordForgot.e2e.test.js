@@ -30,6 +30,7 @@ describe('PASSWORD FOTGOT E2E TEST', () => {
     const protocolData = passwordForgotData.protocolData.valid;
     const hostData = passwordForgotData.hostData.valid;
     const foundData = { ...passwordForgotData.foundData.valid };
+    const foundDataNone = passwordForgotData.foundData.invalid;
 
     const stubRandomBytes = token.randomByte;
     const stubResetTokenData = token.resetToken;
@@ -46,7 +47,7 @@ describe('PASSWORD FOTGOT E2E TEST', () => {
     const link = `${protocolData}://${hostData}/password/reset/${stubResetTokenData}`;
     const stubMailTransportData = {
       email: 'john.doe123@gmail.com',
-      subject: 'LifeVerses account password reset',
+      subject: 'Stackoverflow-Lite account password reset',
       message: `<div style='background-color: #ffffff; color: #000000'><h2>Please confirm the reset of your password by clicking the button below:</h2></div> <div><a target='_blank'  href='${
         link
       }' data-saferedirecturl='https://www.google.com/url?q=${
@@ -65,11 +66,37 @@ describe('PASSWORD FOTGOT E2E TEST', () => {
 
     afterEach(() => {
       sandbox.restore();
-    });
-
-    after(() => {
       crypto.createHash.restore();
       nodeMailer.createTransport.restore();
+    });
+
+    it('should update password reset token successfully', async () => {
+      const req = {
+        body: inputData,
+        protocol: protocolData,
+        hostname: hostData,
+      };
+
+      const stubFind = sandbox.stub(User, 'findOne').resolves(foundData);
+      const stubToken = sandbox.stub(crypto, 'randomBytes').resolves(stubRandomBytes);
+      const stubResetToken = stubCreateHash(stubResetTokenData);
+      const stubFindResetToken = sandbox.stub(PasswordReset, 'findOne').resolves(stubCreateData);
+      const stubUpdate = sandbox.stub(PasswordReset, 'update').resolves(stubCreateData);
+      const stubMailer = stubCreateTransport(stubMailTransportData);
+
+      await passwordForgotCtrl(req, res);
+
+      expect(stubFind.calledOnce).to.be.true;
+      expect(stubToken.calledOnce).to.be.true;
+      expect(stubResetToken.calledOnce).to.be.true;
+      expect(stubFindResetToken.calledOnce).to.be.true;
+      expect(stubUpdate.calledOnce).to.be.true;
+      expect(stubMailer.calledOnce).to.be.true;
+      expect(status.calledOnce).to.be.true;
+      expect(status.args[0][0]).to.equal(200);
+      expect(json.calledOnce).to.be.true;
+      expect(json.args[0][0].success).to.equal(true);
+      expect(json.args[0][0].message).to.equal(`Email sent to ${foundData.email} successfully`);
     });
 
     it('should create password reset token successfully', async () => {
@@ -82,6 +109,7 @@ describe('PASSWORD FOTGOT E2E TEST', () => {
       const stubFind = sandbox.stub(User, 'findOne').resolves(foundData);
       const stubToken = sandbox.stub(crypto, 'randomBytes').resolves(stubRandomBytes);
       const stubResetToken = stubCreateHash(stubResetTokenData);
+      const stubFindResetToken = sandbox.stub(PasswordReset, 'findOne').resolves(foundDataNone);
       const stubCreate = sandbox.stub(PasswordReset, 'create').resolves(stubCreateData);
       const stubMailer = stubCreateTransport(stubMailTransportData);
 
@@ -90,6 +118,7 @@ describe('PASSWORD FOTGOT E2E TEST', () => {
       expect(stubFind.calledOnce).to.be.true;
       expect(stubToken.calledOnce).to.be.true;
       expect(stubResetToken.calledOnce).to.be.true;
+      expect(stubFindResetToken.calledOnce).to.be.true;
       expect(stubCreate.calledOnce).to.be.true;
       expect(stubMailer.calledOnce).to.be.true;
       expect(status.calledOnce).to.be.true;

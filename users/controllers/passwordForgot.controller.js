@@ -7,7 +7,8 @@ const passwordForgotCtrl = async (req, res) => {
   try {
     // get all required params
     const { email } = req.body;
-    const { protocol, host } = req;
+    const { protocol } = req;
+    const host = req.hostname;
 
     // forgot password service
     await passwordForgotService(email, protocol, host);
