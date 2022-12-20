@@ -135,25 +135,5 @@ describe('UPDATE PERSONAL USER E2E TEST', () => {
       expect(json.args[0][0].success).to.equal(false);
       expect(json.args[0][0].message).to.equal('Email has already been taken. Try another');
     });
-
-    it('should not update a user successfully when user is found with same email', async () => {
-      const req = {
-        body: inputData,
-        user: userData,
-      };
-
-      const stubFindByPkUser = sandbox.stub(User, 'findByPk').resolves(foundDataId);
-      const stubFindEmail = sandbox.stub(User, 'findAll').resolves(foundDataEmail);
-
-      await updatePersonalUserCtrl(req, res);
-
-      expect(stubFindByPkUser.calledOnce).to.be.true;
-      expect(stubFindEmail.calledOnce).to.be.true;
-      expect(status.calledOnce).to.be.true;
-      expect(status.args[0][0]).to.equal(409);
-      expect(json.calledOnce).to.be.true;
-      expect(json.args[0][0].success).to.equal(false);
-      expect(json.args[0][0].message).to.equal('Email has already been taken. Try another');
-    });
   });
 });

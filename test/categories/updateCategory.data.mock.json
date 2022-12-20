@@ -1,0 +1,25 @@
+{
+  "bodyData": {
+    "valid": {
+      "title": "Java"
+    },
+    "invalid": null
+  },
+  "paramsData": {
+    "valid": {
+      "id": "12"
+    },
+    "invalid": {
+      "id": "888888888888888888888888"
+    }
+  },
+  "foundData": {
+    "valid": {
+      "id": "12",
+      "title": "Phython",
+      "createdAt": "2022-12-10T17:40:00.128Z",
+      "updatedAt": "2022-12-10T17:40:00.128Z"
+    },
+    "invalid": null
+  }
+}

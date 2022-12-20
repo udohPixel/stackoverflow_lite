@@ -5,11 +5,13 @@ const express = require('express');
 const { isLoggedIn, isTheAdmin } = require('../../../../users/middlewares/auth');
 const {
   isAddCategoryValidated,
+  isUpdateCategoryValidated,
 } = require('../../../middlewares/categoryValidator');
 
 // import required controllers
 const addCategory = require('../../../controllers/addCategory.controller');
 const getAllCategories = require('../../../controllers/getAllCategories.controller');
+const updateCategory = require('../../../controllers/updateCategory.controller');
 
 // create router
 const router = express.Router();
@@ -30,6 +32,14 @@ router.post('/', isLoggedIn, isTheAdmin, isAddCategoryValidated, addCategory);
  * @type    - GET
  */
 router.get('/', isLoggedIn, isTheAdmin, getAllCategories);
+
+/**
+ * @desc    - route for updating category
+ * @api     - /api/v1/categories/:id
+ * @access  - PRIVATE
+ * @type    - PUT
+ */
+router.put('/:id', isLoggedIn, isTheAdmin, isUpdateCategoryValidated, updateCategory);
 
 // export router
 module.exports = router;
