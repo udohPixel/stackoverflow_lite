@@ -19,7 +19,7 @@ const Category = require('../../categories/models/Category');
 const updateCategoryCtrl = require('../../categories/controllers/updateCategory.controller');
 
 // update category test
-describe('UPDATE USER E2E TEST', () => {
+describe('UPDATE CATEGORY E2E TEST', () => {
   describe('POSITIVE TEST', () => {
     const inputData = { ...updateData.bodyData.valid.categoryInfo };
     const paramsData = { ...updateData.paramsData.valid };

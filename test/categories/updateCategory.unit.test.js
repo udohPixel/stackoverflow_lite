@@ -19,7 +19,7 @@ const Category = require('../../categories/models/Category');
 const updateCategoryService = require('../../categories/services/updateCategory.service');
 
 // update category test
-describe('UPDATE USER UNIT TEST', () => {
+describe('UPDATE CATEGORY UNIT TEST', () => {
   const inputData = { ...updateData.bodyData.valid };
   const paramsData = { ...updateData.paramsData.valid };
   const foundData = { ...updateData.foundData.valid };
