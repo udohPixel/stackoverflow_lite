@@ -12,6 +12,7 @@ const {
 const addCategory = require('../../../controllers/addCategory.controller');
 const getAllCategories = require('../../../controllers/getAllCategories.controller');
 const updateCategory = require('../../../controllers/updateCategory.controller');
+const deleteCategory = require('../../../controllers/deleteCategory.controller');
 
 // create router
 const router = express.Router();
@@ -40,6 +41,14 @@ router.get('/', isLoggedIn, isTheAdmin, getAllCategories);
  * @type    - PUT
  */
 router.put('/:id', isLoggedIn, isTheAdmin, isUpdateCategoryValidated, updateCategory);
+
+/**
+ * @desc    - route for delete category
+ * @api     - /api/v1/categories/:id
+ * @access  - PRIVATE
+ * @type    - PUT
+ */
+router.delete('/:id', isLoggedIn, isTheAdmin, deleteCategory);
 
 // export router
 module.exports = router;

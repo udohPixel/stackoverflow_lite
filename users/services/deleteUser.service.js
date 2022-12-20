@@ -6,7 +6,6 @@ const ApplicationException = require('../../common/ApplicationException');
 // delete user service
 const deleteUserService = async (userId, adminRoleId) => {
   // fetch user by id from dB
-  // const user = await User.findByPk(userId);
   const user = await User.findOne(
     {
       where: {
