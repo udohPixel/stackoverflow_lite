@@ -5,8 +5,12 @@ const Joi = require('joi');
 const categoryValidatorSchema = {
   // add category validator schema
   addCategory: Joi.object({
-    title: Joi.string().trim(true)
-      .required(),
+    title: Joi.string().required(),
+  }),
+
+  // update category validator schema
+  updateCategory: Joi.object({
+    title: Joi.string().required(),
   }),
 
 };
