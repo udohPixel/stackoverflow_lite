@@ -1,0 +1,30 @@
+{
+  "bodyData": {
+    "valid": {
+      "title": "My very first question title",
+      "body": "This is a sample question content for my first question",
+      "CategoryId": "2"
+    },
+    "invalid": null
+  },
+  "userData": {
+    "valid": {
+      "id": 1
+    },
+    "invalid": {
+      "id": 999999999999999999999999
+    }
+  },
+  "foundData": {
+    "valid": null,
+    "invalid": {
+      "id": "4",
+      "title": "My very first question title",
+      "body": "This is a sample question content for my first question",
+      "CategoryId": "2",
+      "UserId": "1",
+      "createdAt": "2022-10-10T17:40:00.128Z",
+      "updatedAt": "2022-10-10T17:40:00.128Z"
+    }
+  }
+}
