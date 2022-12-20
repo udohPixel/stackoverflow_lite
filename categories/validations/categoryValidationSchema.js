@@ -5,12 +5,12 @@ const Joi = require('joi');
 const categoryValidatorSchema = {
   // add category validator schema
   addCategory: Joi.object({
-    title: Joi.string().required(),
+    title: Joi.string().min(2).max(255).required(),
   }),
 
   // update category validator schema
   updateCategory: Joi.object({
-    title: Joi.string().required(),
+    title: Joi.string().min(2).max(255).required(),
   }),
 
 };

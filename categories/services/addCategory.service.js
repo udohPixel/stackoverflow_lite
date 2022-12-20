@@ -4,8 +4,8 @@ const ApplicationException = require('../../common/ApplicationException');
 // import Category model
 const Category = require('../models/Category');
 
-// register service
-const registrationService = async (title) => {
+// add category service
+const addCategoryService = async (title) => {
   // fetch category by email from dB
   const category = await Category.findOne({
     where: { title },
@@ -25,4 +25,4 @@ const registrationService = async (title) => {
 };
 
 // export service
-module.exports = registrationService;
+module.exports = addCategoryService;

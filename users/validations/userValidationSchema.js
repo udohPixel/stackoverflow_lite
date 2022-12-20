@@ -149,7 +149,7 @@ const userValidatorSchema = {
       })
       .trim(true)
       .required(),
-    RoleId: Joi.string(),
+    RoleId: Joi.number().integer(),
     bio: Joi.string().min(10).max(5000),
     facebook: Joi.string().min(3).max(50).trim(true)
       .allow(''),

@@ -36,3 +36,8 @@ GET     /api/v1/categories                      get all categories
 PUT     /api/v1/categories/:id                  update category
 DELETE  /api/v1/categories/:id                  delete category
 ```
+
+### Questions
+``` js
+POST    /api/v1/questions                      add new question
+```

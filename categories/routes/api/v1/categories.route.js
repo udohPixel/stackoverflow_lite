@@ -19,7 +19,7 @@ const router = express.Router();
 
 // use router
 /**
- * @desc    - route for updating personal category
+ * @desc    - route for adding category
  * @api     - /api/v1/categories
  * @access  - PRIVATE
  * @type    - POST
