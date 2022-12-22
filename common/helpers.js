@@ -1,4 +1,7 @@
 const helperService = {
+  // check if user is User
+  isUser: (role) => role === 'User',
+
   // check if user is Admin
   isAdmin: (role) => role === 'Admin',
 

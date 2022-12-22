@@ -13,6 +13,7 @@ const addQuestion = require('../../../controllers/addQuestion.controller');
 const getAllUserQuestions = require('../../../controllers/getAllUserQuestions.controller');
 const updatePersonalQuestion = require('../../../controllers/updatePersonalQuestion.controller');
 const getAllQuestions = require('../../../controllers/getAllQuestions.controller');
+const deleteQuestion = require('../../../controllers/deleteQuestion.controller');
 
 // create router
 const router = express.Router();
@@ -49,6 +50,14 @@ router.put('/:id', isLoggedIn, isUpdatePersonalQuestionValidated, updatePersonal
  * @type    - GET
  */
 router.get('/', getAllQuestions);
+
+/**
+ * @desc    - route for delete category
+ * @api     - /api/v1/questions/:id
+ * @access  - PRIVATE
+ * @type    - DELETE
+ */
+router.delete('/:id', isLoggedIn, deleteQuestion);
 
 // export router
 module.exports = router;
