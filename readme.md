@@ -40,4 +40,6 @@ DELETE  /api/v1/categories/:id                  delete category
 ### Questions
 ``` js
 POST    /api/v1/questions                      add new question
+GET     /api/v1/questions/:username            get all user questions
+GET     /api/v1/questions                      get all questions
 ```

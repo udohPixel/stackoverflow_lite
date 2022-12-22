@@ -24,6 +24,14 @@ const Question = sequelize.define(
       type: DataTypes.INTEGER,
       allowNull: false,
     },
+    totalAnswers: {
+      type: DataTypes.INTEGER,
+      allowNull: true,
+    },
+    totalVotes: {
+      type: DataTypes.INTEGER,
+      allowNull: true,
+    },
   },
   { timestamps: true },
 );

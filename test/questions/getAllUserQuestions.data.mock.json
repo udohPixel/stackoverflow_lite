@@ -1,0 +1,39 @@
+{
+  "paramsData": {
+      "valid": {
+          "username": "ipixel"
+      },
+      "invalid": {
+          "username": "wrong-username"
+      }
+  },
+  "queryData": {
+      "valid": {
+          "keyword": "question",
+          "category": "Python"
+      },
+      "invalid": {
+        "keyword": "grass",
+        "category": "Cartoon"
+      }
+  },
+  "foundData": {
+    "validUser": {
+      "id": "1",
+      "firstname": "Udoh",
+      "lastname": "Ndem",
+      "username": "ipixel",
+      "email": "udohndem@gmail.com",
+      "isActive": false,
+      "createdAt": "2022-11-09T12:17:02.106Z",
+      "updatedAt": "2022-11-09T12:17:02.106Z"
+    },
+    "validCategory": {
+      "id": 1,
+      "title": "Python",
+      "createdAt": "2022-12-19T16:55:11.000Z",
+      "updatedAt": "2022-12-20T04:12:30.000Z"
+    },
+    "invalid": null
+  }
+}

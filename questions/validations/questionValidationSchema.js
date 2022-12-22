@@ -8,6 +8,8 @@ const questionValidatorSchema = {
     title: Joi.string().min(2).max(255).required(),
     body: Joi.string().min(6).max(5000).required(),
     CategoryId: Joi.number().integer().required(),
+    totalAnswers: Joi.number().integer().allow(null),
+    totalVotes: Joi.number().integer().allow(null),
   }),
 };
 
