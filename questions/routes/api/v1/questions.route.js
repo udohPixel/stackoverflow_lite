@@ -12,6 +12,7 @@ const {
 const addQuestion = require('../../../controllers/addQuestion.controller');
 const getAllUserQuestions = require('../../../controllers/getAllUserQuestions.controller');
 const updatePersonalQuestion = require('../../../controllers/updatePersonalQuestion.controller');
+const getAllQuestions = require('../../../controllers/getAllQuestions.controller');
 
 // create router
 const router = express.Router();
@@ -40,6 +41,14 @@ router.get('/:username', getAllUserQuestions);
  * @type    - PUT
  */
 router.put('/:id', isLoggedIn, isUpdatePersonalQuestionValidated, updatePersonalQuestion);
+
+/**
+ * @desc    - route for fetching all user questions
+ * @api     - /api/v1/questions/
+ * @access  - PUBLIC
+ * @type    - GET
+ */
+router.get('/', getAllQuestions);
 
 // export router
 module.exports = router;

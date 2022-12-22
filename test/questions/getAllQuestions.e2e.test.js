@@ -12,18 +12,15 @@ const { expect } = chai;
 chai.use(chaiHttp);
 
 // import other libraries
-const questionData = require('./getAllUserQuestions.data.mock.json');
+const questionData = require('./getAllQuestions.data.mock.json');
 const Question = require('../../questions/models/Question');
 const Category = require('../../categories/models/Category');
-const User = require('../../users/models/User');
-const getAllUserQuestionsCtrl = require('../../questions/controllers/getAllUserQuestions.controller');
+const getAllQuestionsCtrl = require('../../questions/controllers/getAllQuestions.controller');
 
-// get all user questions test
+// get all questions test
 describe('GET ALL USER QUESTIONS E2E TEST', () => {
   describe('POSITIVE TEST', () => {
-    const paramsData = { ...questionData.paramsData.valid };
     const queryData = { ...questionData.queryData.valid };
-    const foundDataUser = { ...questionData.foundData.validUser };
     const foundDataCategory = { ...questionData.foundData.validCategory };
 
     const stubData = [
@@ -64,19 +61,16 @@ describe('GET ALL USER QUESTIONS E2E TEST', () => {
       sandbox.restore();
     });
 
-    it('should get all user questions successfully', async () => {
-      const stubFindUser = sandbox.stub(User, 'findOne').resolves(foundDataUser);
+    it('should get all questions successfully', async () => {
       const stubFindCategory = sandbox.stub(Category, 'findOne').resolves(foundDataCategory);
       const stubFindQuestions = sandbox.stub(Question, 'findAll').resolves(stubData);
 
       const req = {
-        params: paramsData,
         query: queryData,
       };
 
-      await getAllUserQuestionsCtrl(req, res);
+      await getAllQuestionsCtrl(req, res);
 
-      expect(stubFindUser.calledOnce).to.be.true;
       expect(stubFindCategory.calledOnce).to.be.true;
       expect(stubFindQuestions.calledOnce).to.be.true;
       const stubFindQuestionsCallArg = stubFindQuestions.getCalls()[0].args[0];
@@ -91,8 +85,8 @@ describe('GET ALL USER QUESTIONS E2E TEST', () => {
   });
 
   describe('NEGATIVE TEST', () => {
-    const paramsData = { ...questionData.paramsData.invalid };
-    const foundDataUser = questionData.foundData.invalid;
+    const queryData = { ...questionData.queryData.valid };
+    const foundDataCategoryNone = questionData.foundData.invalid;
 
     let status; let json; let res;
 
@@ -107,23 +101,22 @@ describe('GET ALL USER QUESTIONS E2E TEST', () => {
       sandbox.restore();
     });
 
-    it('should get all user questions successfully when user is not found', async () => {
-      const stubFindUser = sandbox.stub(User, 'findOne').resolves(foundDataUser);
-
+    it('should get all questions successfully when user is not found', async () => {
+      const stubFindCategory = sandbox.stub(Category, 'findOne').resolves(foundDataCategoryNone);
       const req = {
-        params: paramsData,
+        query: queryData,
       };
 
-      await getAllUserQuestionsCtrl(req, res);
+      await getAllQuestionsCtrl(req, res);
 
-      expect(stubFindUser.calledOnce).to.be.true;
-      const stubFindUserCallArg = stubFindUser.getCalls()[0].args[0];
-      expect(stubFindUserCallArg).to.be.an('object');
+      expect(stubFindCategory.calledOnce).to.be.true;
+      const stubFindCategoryCallArg = stubFindCategory.getCalls()[0].args[0];
+      expect(stubFindCategoryCallArg).to.be.an('object');
       expect(status.calledOnce).to.be.true;
       expect(status.args[0][0]).to.equal(404);
       expect(json.calledOnce).to.be.true;
       expect(json.args[0][0].success).to.equal(false);
-      expect(json.args[0][0].message).to.equal('User does not exist');
+      expect(json.args[0][0].message).to.equal('Category does not exist');
     });
   });
 });
