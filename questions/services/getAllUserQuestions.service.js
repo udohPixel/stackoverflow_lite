@@ -18,7 +18,7 @@ const getAllUserQuestionsService = async (username, queryStr) => {
   const theUserId = user.id;
 
   // filter questions
-  const questions = questionFilters.filterItems(theUserId, queryStr);
+  const questions = questionFilters.filterPersonalItems(theUserId, queryStr);
 
   return questions;
 };
