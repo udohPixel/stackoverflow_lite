@@ -5,11 +5,13 @@ const express = require('express');
 const { isLoggedIn } = require('../../../../users/middlewares/auth');
 const {
   isAddQuestionValidated,
+  isUpdatePersonalQuestionValidated,
 } = require('../../../middlewares/questionValidator');
 
 // import required controllers
 const addQuestion = require('../../../controllers/addQuestion.controller');
 const getAllUserQuestions = require('../../../controllers/getAllUserQuestions.controller');
+const updatePersonalQuestion = require('../../../controllers/updatePersonalQuestion.controller');
 
 // create router
 const router = express.Router();
@@ -30,6 +32,14 @@ router.post('/', isLoggedIn, isAddQuestionValidated, addQuestion);
  * @type    - GET
  */
 router.get('/:username', getAllUserQuestions);
+
+/**
+ * @desc    - route for adding question
+ * @api     - /api/v1/questions/:id
+ * @access  - PRIVATE
+ * @type    - PUT
+ */
+router.put('/:id', isLoggedIn, isUpdatePersonalQuestionValidated, updatePersonalQuestion);
 
 // export router
 module.exports = router;

@@ -1,5 +1,3 @@
-/* eslint-disable no-unused-expressions */
-/* eslint-disable no-undef */
 // import required modules
 const chai = require('chai');
 const chaiHttp = require('chai-http');
