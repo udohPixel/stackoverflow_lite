@@ -43,4 +43,5 @@ POST    /api/v1/questions                      add new question
 GET     /api/v1/questions/:username            get all user questions
 PUT     /api/v1/questions/:id                  update personal user question
 GET     /api/v1/questions                      get all questions
+GET     /api/v1/questions/:id                  delete question
 ```

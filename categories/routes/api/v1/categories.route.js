@@ -46,7 +46,7 @@ router.put('/:id', isLoggedIn, isTheAdmin, isUpdateCategoryValidated, updateCate
  * @desc    - route for delete category
  * @api     - /api/v1/categories/:id
  * @access  - PRIVATE
- * @type    - PUT
+ * @type    - DELETE
  */
 router.delete('/:id', isLoggedIn, isTheAdmin, deleteCategory);
 
