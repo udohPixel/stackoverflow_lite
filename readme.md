@@ -39,9 +39,16 @@ DELETE  /api/v1/categories/:id                  delete category
 
 ### Questions
 ``` js
-POST    /api/v1/questions                      add new question
-GET     /api/v1/questions/:username            get all user questions
-PUT     /api/v1/questions/:id                  update personal user question
-GET     /api/v1/questions                      get all questions
-GET     /api/v1/questions/:id                  delete question
+POST    /api/v1/questions                       add new question
+GET     /api/v1/questions/user/:username        get all user questions
+PUT     /api/v1/questions/:id                   update personal user question
+GET     /api/v1/questions                       get all questions
+DELETE  /api/v1/questions/:id                   delete question
+PUT     /api/v1/questions/:id/status            update question active status
+GET     /api/v1/questions/:id                   get question
+```
+
+### Answers
+``` js
+GET     /api/v1/answers/:questionId             get all answers to a question
 ```

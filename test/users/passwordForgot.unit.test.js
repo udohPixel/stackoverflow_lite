@@ -33,7 +33,7 @@ describe('PASSWORD FORGOT UNIT TEST', () => {
   const stubResetTokenData = token.resetToken;
 
   const stubCreateData = {
-    id: '3',
+    id: 3,
     email: 'john.doe123@gmail.com',
     passwordResetToken: '489e6170cfd8a6c2bec415f613881332e8defb201caf3c9cac4fd72801d3e8d224cf1ffc67e56b7d2e1b606d16047c650fe0b2aea2c0284c1dc2a6cf68a5db0c',
     passwordResetExpirationDate: '2022-12-22T11:50:21.898+00:00',

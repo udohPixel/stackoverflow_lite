@@ -15,6 +15,7 @@ const updatePersonalQuestion = require('../../../controllers/updatePersonalQuest
 const getAllQuestions = require('../../../controllers/getAllQuestions.controller');
 const deleteQuestion = require('../../../controllers/deleteQuestion.controller');
 const updateQuestionStatus = require('../../../controllers/updateQuestionStatus.controller');
+const getQuestion = require('../../../controllers/getQuestion.controller');
 
 // create router
 const router = express.Router();
@@ -30,11 +31,11 @@ router.post('/', isLoggedIn, isAddQuestionValidated, addQuestion);
 
 /**
  * @desc    - route for fetching all user questions
- * @api     - /api/v1/questions/:username
+ * @api     - /api/v1/questions/user/:username
  * @access  - PUBLIC
  * @type    - GET
  */
-router.get('/:username', getAllUserQuestions);
+router.get('/user/:username', getAllUserQuestions);
 
 /**
  * @desc    - route for adding question
@@ -67,6 +68,14 @@ router.delete('/:id', isLoggedIn, deleteQuestion);
  * @type    - PUT
  */
 router.put('/:id/status', isLoggedIn, isTheAdmin, updateQuestionStatus);
+
+/**
+ * @desc    - route for fetching a question
+ * @api     - /api/v1/questions/:id"
+ * @access  - PUBLIC
+ * @type    - GET
+ */
+router.get('/:id', getQuestion);
 
 // export router
 module.exports = router;

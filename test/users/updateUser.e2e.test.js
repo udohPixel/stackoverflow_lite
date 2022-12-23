@@ -26,7 +26,7 @@ describe('UPDATE USER E2E TEST', () => {
     const foundDataNone = updateData.foundData.validNone;
 
     const stubData = {
-      id: '23',
+      id: 23,
       firstname: inputData.firstname,
       lastname: inputData.lastname,
       username: inputData.username,

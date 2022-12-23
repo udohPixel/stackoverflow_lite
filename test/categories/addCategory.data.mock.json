@@ -8,7 +8,7 @@
   "foundData": {
     "valid": null,
     "invalid": {
-      "id": "2",
+      "id": 2,
       "title": "Phython",
       "createdAt": "2022-10-10T17:40:00.128Z",
       "updatedAt": "2022-10-10T17:40:00.128Z"

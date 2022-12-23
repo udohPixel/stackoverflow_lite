@@ -24,7 +24,7 @@ describe('UPDATE CATEGORY E2E TEST', () => {
     const foundData = { ...updateData.foundData.valid };
 
     const stubData = {
-      id: '12',
+      id: 12,
       title: inputData.title,
       createdAt: '2022-12-11T12:40:46.128Z',
       updatedAt: '2022-12-11T12:40:46.128Z',

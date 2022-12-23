@@ -8,7 +8,7 @@
   "foundData": {
       "valid": [
           {
-              "id": "17",
+              "id": 17,
               "firstname": "John",
               "lastname": "Dowey",
               "username": "johndoewey",
@@ -18,7 +18,7 @@
               "updatedAt": "2022-10-10T17:40:00.128Z"
           },
           {
-              "id": "15",
+              "id": 15,
               "firstname": "John",
               "lastname": "Doegh",
               "username": "johnnydoe",

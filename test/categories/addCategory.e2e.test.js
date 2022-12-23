@@ -23,7 +23,7 @@ describe('ADD CATEGORY E2E TEST', () => {
     const foundDataNone = addCategoryData.foundData.valid;
 
     const stubData = {
-      id: '7',
+      id: 7,
       title: inputData.title,
       createdAt: '2022-11-09T12:40:46.128Z',
       updatedAt: '2022-11-09T12:40:46.128Z',

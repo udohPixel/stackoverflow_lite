@@ -28,10 +28,6 @@ const Question = sequelize.define(
       type: DataTypes.INTEGER,
       allowNull: true,
     },
-    totalVotes: {
-      type: DataTypes.INTEGER,
-      allowNull: true,
-    },
     isActive: {
       type: DataTypes.BOOLEAN,
       allowNull: false,

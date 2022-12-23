@@ -24,7 +24,7 @@ describe('ADD QUESTION E2E TEST', () => {
     const foundDataNone = addQuestionData.foundData.valid;
 
     const stubData = {
-      id: '1',
+      id: 1,
       title: inputData.title,
       body: inputData.body,
       CategoryId: inputData.CategoryId,
