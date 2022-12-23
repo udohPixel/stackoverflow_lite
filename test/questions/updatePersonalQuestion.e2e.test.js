@@ -3,6 +3,8 @@ const chai = require('chai');
 const chaiHttp = require('chai-http');
 const sinon = require('sinon');
 
+const sandbox = sinon.createSandbox();
+
 // assertions
 const { expect } = chai;
 
@@ -42,9 +44,7 @@ describe('UPDATE PERSONAL QUESTION E2E TEST', () => {
     });
 
     afterEach(() => {
-      Question.findOne.restore();
-      Question.update.restore();
-      Question.findByPk.restore();
+      sandbox.restore();
     });
 
     it('should update a question successfully', async () => {
@@ -54,9 +54,9 @@ describe('UPDATE PERSONAL QUESTION E2E TEST', () => {
         params: paramsData,
       };
 
-      const stubFindOne = sinon.stub(Question, 'findOne').resolves(foundData);
-      const stubUpdate = sinon.stub(Question, 'update').resolves();
-      const stubFindByPk = sinon.stub(Question, 'findByPk').resolves(stubData);
+      const stubFindOne = sandbox.stub(Question, 'findOne').resolves(foundData);
+      const stubUpdate = sandbox.stub(Question, 'update').resolves();
+      const stubFindByPk = sandbox.stub(Question, 'findByPk').resolves(stubData);
 
       await updateQuestionCtrl(req, res);
 

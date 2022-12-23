@@ -21,22 +21,22 @@ describe('CHANGE USER STATE UNIT TEST', () => {
   const paramsData = { ...userData.paramsData.valid };
   const foundData = { ...userData.foundData.valid };
 
+  const stubData = {
+    id: foundData.id,
+    firstname: foundData.firstname,
+    lastname: foundData.lastname,
+    username: foundData.username,
+    email: foundData.email,
+    isActive: false,
+    createdAt: foundData.createdAt,
+    updatedAt: foundData.updatedAt,
+  };
+
   afterEach(() => {
     sandbox.restore();
   });
 
   it('should update a user active status successfully', async () => {
-    const stubData = {
-      id: foundData.id,
-      firstname: foundData.firstname,
-      lastname: foundData.lastname,
-      username: foundData.username,
-      email: foundData.email,
-      isActive: false,
-      createdAt: foundData.createdAt,
-      updatedAt: foundData.updatedAt,
-    };
-
     const stubFind = sandbox.stub(User, 'findByPk').resolves(foundData);
     const stubUpdate = sandbox.stub(User, 'update').resolves();
 

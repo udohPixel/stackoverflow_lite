@@ -38,9 +38,9 @@ describe('UPDATE PERSONAL QUESTION UNIT TEST', () => {
   });
 
   it('should update question successfully', async () => {
-    const stubFindOne = sinon.stub(Question, 'findOne').resolves(foundData);
-    const stubUpdate = sinon.stub(Question, 'update').resolves();
-    const stubFindByPk = sinon.stub(Question, 'findByPk').resolves(stubData);
+    const stubFindOne = sandbox.stub(Question, 'findOne').resolves(foundData);
+    const stubUpdate = sandbox.stub(Question, 'update').resolves();
+    const stubFindByPk = sandbox.stub(Question, 'findByPk').resolves(stubData);
 
     const { title, body, CategoryId } = inputData;
 
