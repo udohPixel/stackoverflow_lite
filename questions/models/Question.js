@@ -32,6 +32,11 @@ const Question = sequelize.define(
       type: DataTypes.INTEGER,
       allowNull: true,
     },
+    isActive: {
+      type: DataTypes.BOOLEAN,
+      allowNull: false,
+      defaultValue: true,
+    },
   },
   { timestamps: true },
 );
