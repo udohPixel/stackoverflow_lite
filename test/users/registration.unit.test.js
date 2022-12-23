@@ -22,7 +22,7 @@ describe('REGISTER USER UNIT TEST', () => {
   const foundData = registrationData.foundData.valid;
 
   const stubData = {
-    id: '7',
+    id: 7,
     firstname: inputData.firstname,
     lastname: inputData.lastname,
     username: inputData.username,

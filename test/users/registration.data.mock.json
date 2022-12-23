@@ -12,7 +12,7 @@
   "foundData": {
     "valid": null,
     "invalidEmail": {
-      "id": "2",
+      "id": 2,
       "firstname": "Jane",
       "lastname": "Dowey",
       "username": "janedowey",
@@ -23,7 +23,7 @@
       "updatedAt": "2022-10-10T17:40:00.128Z"
     },
     "invalidUsername": {
-      "id": "7",
+      "id": 7,
       "firstname": "Johnson",
       "lastname": "Doegh",
       "username": "johnnydoe",

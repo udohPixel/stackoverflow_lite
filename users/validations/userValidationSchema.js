@@ -80,7 +80,7 @@ const userValidatorSchema = {
       })
       .trim(true)
       .required(),
-    bio: Joi.string().min(10).max(5000).allow(''),
+    bio: Joi.string().min(10).max(2500).allow(''),
     facebook: Joi.string().min(3).max(50).trim(true)
       .allow(''),
     youtube: Joi.string().min(3).max(50).trim(true)
@@ -150,7 +150,7 @@ const userValidatorSchema = {
       .trim(true)
       .required(),
     RoleId: Joi.number().integer(),
-    bio: Joi.string().min(10).max(5000),
+    bio: Joi.string().min(10).max(2500),
     facebook: Joi.string().min(3).max(50).trim(true)
       .allow(''),
     youtube: Joi.string().min(3).max(50).trim(true)

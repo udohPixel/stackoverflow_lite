@@ -11,7 +11,7 @@
   },
   "foundData": {
     "valid": {
-      "id": "7",
+      "id": 7,
       "firstname": "John",
       "lastname": "Doe",
       "username": "johnnydoe",
@@ -23,7 +23,7 @@
     },
     "invalid": null,
     "invalidEmail": {
-      "id": "7",
+      "id": 7,
       "firstname": "John",
       "lastname": "Doe",
       "username": "johnnydoe",
@@ -34,7 +34,7 @@
       "updatedAt": "2022-11-09T12:40:46.128Z"
     },
     "invalidPassword": {
-      "id": "7",
+      "id": 7,
       "firstname": "John",
       "lastname": "Doe",
       "username": "johnnydoe",

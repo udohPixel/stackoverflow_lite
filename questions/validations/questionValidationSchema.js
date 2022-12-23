@@ -5,15 +5,15 @@ const Joi = require('joi');
 const questionValidatorSchema = {
   // add question validator schema
   addQuestion: Joi.object({
-    title: Joi.string().min(2).max(255).required(),
-    body: Joi.string().min(6).max(5000).required(),
+    title: Joi.string().min(2).max(150).required(),
+    body: Joi.string().min(6).max(2500).required(),
     CategoryId: Joi.number().integer().required(),
   }),
 
   // update personal question validator schema
   updatePersonalQuestion: Joi.object({
-    title: Joi.string().min(2).max(255).required(),
-    body: Joi.string().min(6).max(5000).required(),
+    title: Joi.string().min(2).max(150).required(),
+    body: Joi.string().min(6).max(2500).required(),
     CategoryId: Joi.number().integer().required(),
   }),
 };

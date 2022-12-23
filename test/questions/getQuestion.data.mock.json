@@ -1,0 +1,24 @@
+{
+  "paramsData": {
+    "valid": {
+      "id": 2
+    },
+    "invalid": {
+      "id": 233444444444444444444444
+    }
+  },
+  "foundData": {
+    "valid": {
+      "id": 2,
+      "title": "My second question title updated",
+      "body": "This is a sample question content for my second question updated",
+      "CategoryId": 2,
+      "UserId": 1,
+      "totalAnswers": null,
+      "isActive": true,
+      "createdAt": "2022-12-21T13:43:06.000Z",
+      "updatedAt": "2022-12-22T10:52:54.000Z"
+    },
+    "invalid": null
+  }
+}

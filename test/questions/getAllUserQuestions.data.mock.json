@@ -19,7 +19,7 @@
   },
   "foundData": {
     "validUser": {
-      "id": "1",
+      "id": 1,
       "firstname": "Udoh",
       "lastname": "Ndem",
       "username": "ipixel",

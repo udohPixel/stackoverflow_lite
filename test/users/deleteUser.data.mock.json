@@ -1,10 +1,10 @@
 {
   "paramsData": {
     "valid": {
-      "id": "11"
+      "id": 11
     },
     "invalid": {
-      "id": "777777777777777a77777777"
+      "id": 777777777777777777777777
     }
   },
   "userData": {
@@ -17,7 +17,7 @@
   },
   "foundData": {
     "valid": {
-      "id": "11",
+      "id": 11,
       "firstname": "Johnson",
       "lastname": "Doegh",
       "username": "johnnydoe",

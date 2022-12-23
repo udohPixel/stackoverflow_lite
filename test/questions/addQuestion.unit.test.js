@@ -23,7 +23,7 @@ describe('ADD QUESTION UNIT TEST', () => {
   const foundDataNone = addQuestionData.foundData.valid;
 
   const stubData = {
-    id: '1',
+    id: 1,
     title: inputData.title,
     body: inputData.body,
     CategoryId: inputData.CategoryId,
