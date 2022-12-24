@@ -63,7 +63,7 @@ describe('ADD QUESTION E2E TEST', () => {
       expect(status.args[0][0]).to.equal(201);
       expect(json.calledOnce).to.be.true;
       expect(json.args[0][0].success).to.equal(true);
-      expect(json.args[0][0].message).to.equal('Question added successful');
+      expect(json.args[0][0].message).to.equal('Question added successfully');
       expect(json.args[0][0].data).to.equal(stubData);
     });
   });

@@ -12,19 +12,25 @@ const { expect } = chai;
 chai.use(chaiHttp);
 
 // import other libraries
-const addCategoryData = require('./addCategory.data.mock.json');
-const Category = require('../../categories/models/Category');
-const addCategoryCtrl = require('../../categories/controllers/addCategory.controller');
+const addAnswerData = require('./addAnswer.data.mock.json');
+const Answer = require('../../answers/models/Answer');
+const addAnswerCtrl = require('../../answers/controllers/addAnswer.controller');
 
-// add category e2e test
-describe('ADD CATEGORY E2E TEST', () => {
+// add answer e2e test
+describe('ADD ANSWER E2E TEST', () => {
   describe('POSITIVE TEST', () => {
-    const inputData = { ...addCategoryData.bodyData.valid };
-    const foundDataNone = addCategoryData.foundData.valid;
+    const inputData = { ...addAnswerData.bodyData.valid };
+    const userData = { ...addAnswerData.userData.valid };
+    const foundDataNone = addAnswerData.foundData.valid;
 
     const stubData = {
-      id: 7,
-      title: inputData.title,
+      id: 1,
+      body: inputData.body,
+      QuestionId: inputData.QuestionId,
+      UserId: userData.id,
+      totalVotes: 0,
+      isAcceptedAnswer: false,
+      isActive: true,
       createdAt: '2022-11-09T12:40:46.128Z',
       updatedAt: '2022-11-09T12:40:46.128Z',
     };
@@ -42,15 +48,16 @@ describe('ADD CATEGORY E2E TEST', () => {
       sandbox.restore();
     });
 
-    it('should create category successfully', async () => {
+    it('should create answer successfully', async () => {
       const req = {
         body: inputData,
+        user: userData,
       };
 
-      const stubFindOne = sandbox.stub(Category, 'findOne').resolves(foundDataNone);
-      const stubCreate = sandbox.stub(Category, 'create').resolves(stubData);
+      const stubFindOne = sandbox.stub(Answer, 'findOne').resolves(foundDataNone);
+      const stubCreate = sandbox.stub(Answer, 'create').resolves(stubData);
 
-      await addCategoryCtrl(req, res);
+      await addAnswerCtrl(req, res);
 
       expect(stubFindOne.calledOnce).to.be.true;
       expect(stubCreate.calledOnce).to.be.true;
@@ -58,14 +65,15 @@ describe('ADD CATEGORY E2E TEST', () => {
       expect(status.args[0][0]).to.equal(201);
       expect(json.calledOnce).to.be.true;
       expect(json.args[0][0].success).to.equal(true);
-      expect(json.args[0][0].message).to.equal('Category added successfully');
+      expect(json.args[0][0].message).to.equal('Answer added successfully');
       expect(json.args[0][0].data).to.equal(stubData);
     });
   });
 
   describe('NEGATIVE TEST', () => {
-    const inputData = { ...addCategoryData.bodyData.valid };
-    const foundData = { ...addCategoryData.foundData.invalid };
+    const inputData = { ...addAnswerData.bodyData.valid };
+    const userData = { ...addAnswerData.userData.invalid };
+    const foundData = { ...addAnswerData.foundData.invalid };
 
     let status; let json; let res;
 
@@ -80,21 +88,22 @@ describe('ADD CATEGORY E2E TEST', () => {
       sandbox.restore();
     });
 
-    it('should not add category successfully when category is found with same title', async () => {
+    it('should not add answer successfully when answer is found with same body', async () => {
       const req = {
         body: inputData,
+        user: userData,
       };
 
-      const stubFind = sandbox.stub(Category, 'findOne').resolves(foundData);
+      const stubFind = sandbox.stub(Answer, 'findOne').resolves(foundData);
 
-      await addCategoryCtrl(req, res);
+      await addAnswerCtrl(req, res);
 
       expect(stubFind.calledOnce).to.be.true;
       expect(status.calledOnce).to.be.true;
       expect(status.args[0][0]).to.equal(400);
       expect(json.calledOnce).to.be.true;
       expect(json.args[0][0].success).to.equal(false);
-      expect(json.args[0][0].message).to.equal('Category has already been added. Try another');
+      expect(json.args[0][0].message).to.equal('Answer has already been added. Try another');
     });
   });
 });

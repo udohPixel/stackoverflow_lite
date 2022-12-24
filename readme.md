@@ -50,5 +50,6 @@ GET     /api/v1/questions/:id                   get question
 
 ### Answers
 ``` js
+POST    /api/v1/answers                         add new answer
 GET     /api/v1/answers/:questionId             get all answers to a question
 ```
