@@ -13,7 +13,7 @@ const addQuestionCtrl = async (req, res) => {
     // add question service
     const question = await addQuestionService(UserId, title, body, CategoryId);
 
-    return apiResponse.success(res, 'Question added successful', question, 201);
+    return apiResponse.success(res, 'Question added successfully', question, 201);
   } catch (error) {
     return apiResponse.errorObject(res, error, null, 'add-question');
   }

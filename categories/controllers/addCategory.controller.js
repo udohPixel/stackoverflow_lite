@@ -11,7 +11,7 @@ const addCategoryCtrl = async (req, res) => {
     // add category service
     const category = await addCategoryService(title);
 
-    return apiResponse.success(res, 'Category added successful', category, 201);
+    return apiResponse.success(res, 'Category added successfully', category, 201);
   } catch (error) {
     return apiResponse.errorObject(res, error, null, 'add-category');
   }
