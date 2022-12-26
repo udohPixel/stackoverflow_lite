@@ -36,6 +36,37 @@ const userFilters = {
       ],
     });
   },
+
+  filterPersonalItems: (theUserId, queryStr) => {
+    let queryObject = {};
+
+    // find by keyword
+    if (queryStr.keyword) {
+      queryObject = {
+        [Op.or]: [
+          { body: { [Op.like]: `%${queryStr.keyword}%` } },
+        ],
+      };
+    }
+
+    // find by total votes
+    if (queryStr.totalVotes) {
+      queryObject.totalVotes = queryStr.totalVotes;
+    }
+
+    // find by keyword and total votes
+    return Answer.findAll({
+      where: {
+        [Op.and]: [
+          queryObject,
+          { UserId: { [Op.eq]: theUserId } },
+        ],
+      },
+      order: [
+        ['createdAt', 'DESC'],
+      ],
+    });
+  },
 };
 
 // export
