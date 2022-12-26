@@ -27,6 +27,7 @@ DELETE  /api/v1/users/:id                       delete user
 PUT     /api/v1/users/:id/status                update user active status
 POST    /api/v1/users/password/forgot           generate password reset token
 PUT     /api/v1/users/password/reset/:token     reset password via reset link
+GET     /api/v1/users/:username/questions       get all user questions
 ```
 
 ### Categories
@@ -40,16 +41,15 @@ DELETE  /api/v1/categories/:id                  delete category
 ### Questions
 ``` js
 POST    /api/v1/questions                       add new question
-GET     /api/v1/questions/user/:username        get all user questions
 PUT     /api/v1/questions/:id                   update personal user question
 GET     /api/v1/questions                       get all questions
 DELETE  /api/v1/questions/:id                   delete question
 PUT     /api/v1/questions/:id/status            update question active status
 GET     /api/v1/questions/:id                   get question
+GET     /api/v1/questions/:questionId/answers   get all answers to a question
 ```
 
 ### Answers
 ``` js
-POST    /api/v1/answers                         add new answer
-GET     /api/v1/answers/:questionId             get all answers to a question
+POST    /api/v1/answers                                     add new answer
 ```

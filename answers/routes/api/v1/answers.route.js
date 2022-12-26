@@ -9,7 +9,6 @@ const {
 
 // import required controllers
 const addAnswer = require('../../../controllers/addAnswer.controller');
-const getAllAnswers = require('../../../controllers/getAllAnswers.controller');
 
 // create router
 const router = express.Router();
@@ -22,14 +21,6 @@ const router = express.Router();
  * @type    - POST
  */
 router.post('/', isLoggedIn, isAddAnswerValidated, addAnswer);
-
-/**
- * @desc    - route for fetching all user answers to a question
- * @api     - /api/v1/answers/question/:questionId
- * @access  - PUBLIC
- * @type    - GET
- */
-router.get('/question/:questionId', getAllAnswers);
 
 // export router
 module.exports = router;

@@ -10,12 +10,12 @@ const {
 
 // import required controllers
 const addQuestion = require('../../../controllers/addQuestion.controller');
-const getAllUserQuestions = require('../../../controllers/getAllUserQuestions.controller');
 const updatePersonalQuestion = require('../../../controllers/updatePersonalQuestion.controller');
 const getAllQuestions = require('../../../controllers/getAllQuestions.controller');
 const deleteQuestion = require('../../../controllers/deleteQuestion.controller');
 const updateQuestionStatus = require('../../../controllers/updateQuestionStatus.controller');
 const getQuestion = require('../../../controllers/getQuestion.controller');
+const getAllAnswers = require('../../../../answers/controllers/getAllAnswers.controller');
 
 // create router
 const router = express.Router();
@@ -28,14 +28,6 @@ const router = express.Router();
  * @type    - POST
  */
 router.post('/', isLoggedIn, isAddQuestionValidated, addQuestion);
-
-/**
- * @desc    - route for fetching all user questions
- * @api     - /api/v1/questions/user/:username
- * @access  - PUBLIC
- * @type    - GET
- */
-router.get('/user/:username', getAllUserQuestions);
 
 /**
  * @desc    - route for adding question
@@ -76,6 +68,14 @@ router.put('/:id/status', isLoggedIn, isTheAdmin, updateQuestionStatus);
  * @type    - GET
  */
 router.get('/:id', getQuestion);
+
+/**
+ * @desc    - route for fetching all answers to a question
+ * @api     - /api/v1/questions/:questionId/answers
+ * @access  - PUBLIC
+ * @type    - GET
+ */
+router.get('/:questionId/answers', getAllAnswers);
 
 // export router
 module.exports = router;
