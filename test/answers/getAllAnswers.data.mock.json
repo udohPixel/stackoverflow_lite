@@ -1,0 +1,35 @@
+{
+  "queryData": {
+    "valid": {
+      "keyword": "answer",
+      "totalVotes": 0
+    },
+    "invalid": {
+      "keyword": "wrong keyword",
+      "totalVotes": 999908999018999999999
+    }
+  },
+  "paramsData": {
+    "valid": {
+      "questionId": 2
+    },
+    "invalid": {
+      "questionId": 888888888888888888888888
+    }
+  },
+  "foundData": {
+    "valid": {
+      "id": 2,
+      "title": "My second question title updated",
+      "body": "This is a sample question content for my second question updated",
+      "CategoryId": 2,
+      "UserId": 1,
+      "totalAnswers": 0,
+      "hasAcceptedAnswer": false,
+      "isActive": true,
+      "createdAt": "2022-12-21T13:43:06.000Z",
+      "updatedAt": "2022-12-22T10:52:54.000Z"
+    },
+    "invalid": null
+  }
+}

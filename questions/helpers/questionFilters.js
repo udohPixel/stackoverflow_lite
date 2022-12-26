@@ -74,6 +74,16 @@ const userFilters = {
       queryObject.CategoryId = theCategory.id;
     }
 
+    // find by total answers
+    if (queryStr.totalAnswers) {
+      queryObject.totalAnswers = queryStr.totalAnswers;
+    }
+
+    // find by hasAcceptedAnswer
+    if (queryStr.hasAcceptedAnswer) {
+      queryObject.hasAcceptedAnswer = queryStr.hasAcceptedAnswer;
+    }
+
     // find by keyword and category
     return Question.findAll({
       where: {
@@ -83,7 +93,7 @@ const userFilters = {
         ],
       },
       order: [
-        ['createdAt', 'DESC'],
+        ['totalAnswers', 'DESC'],
       ],
     });
   },

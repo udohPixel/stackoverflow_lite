@@ -9,12 +9,16 @@
   },
   "queryData": {
       "valid": {
-          "keyword": "question",
-          "category": "Python"
+        "keyword": "question",
+        "category": "Python",
+        "totalAnswers": 0,
+        "hasAcceptedAnswer": false
       },
       "invalid": {
         "keyword": "grass",
-        "category": "Cartoon"
+        "category": "Cartoon",
+        "totalAnswers": 9999999999988888888333,
+        "hasAcceptedAnswer": true
       }
   },
   "foundData": {

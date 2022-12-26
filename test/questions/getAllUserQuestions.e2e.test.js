@@ -33,7 +33,8 @@ describe('GET ALL USER QUESTIONS E2E TEST', () => {
         body: 'This is a sample question content for my third question',
         CategoryId: 1,
         UserId: 1,
-        totalAnswers: null,
+        totalAnswers: 0,
+        hasAcceptedAnswer: false,
         createdAt: '2022-12-21T13:43:25.000Z',
         updatedAt: '2022-12-21T13:43:25.000Z',
       },
@@ -43,7 +44,8 @@ describe('GET ALL USER QUESTIONS E2E TEST', () => {
         body: 'This is a sample question content for my second question',
         CategoryId: 1,
         UserId: 1,
-        totalAnswers: null,
+        totalAnswers: 0,
+        hasAcceptedAnswer: false,
         createdAt: '2022-12-21T13:43:06.000Z',
         updatedAt: '2022-12-21T13:43:06.000Z',
       },
@@ -63,14 +65,14 @@ describe('GET ALL USER QUESTIONS E2E TEST', () => {
     });
 
     it('should get all user questions successfully', async () => {
-      const stubFindUser = sandbox.stub(User, 'findOne').resolves(foundDataUser);
-      const stubFindCategory = sandbox.stub(Category, 'findOne').resolves(foundDataCategory);
-      const stubFindQuestions = sandbox.stub(Question, 'findAll').resolves(stubData);
-
       const req = {
         params: paramsData,
         query: queryData,
       };
+
+      const stubFindUser = sandbox.stub(User, 'findOne').resolves(foundDataUser);
+      const stubFindCategory = sandbox.stub(Category, 'findOne').resolves(foundDataCategory);
+      const stubFindQuestions = sandbox.stub(Question, 'findAll').resolves(stubData);
 
       await getAllUserQuestionsCtrl(req, res);
 
@@ -89,9 +91,6 @@ describe('GET ALL USER QUESTIONS E2E TEST', () => {
   });
 
   describe('NEGATIVE TEST', () => {
-    const paramsData = { ...questionData.paramsData.invalid };
-    const foundDataUser = questionData.foundData.invalid;
-
     let status; let json; let res;
 
     beforeEach(() => {
@@ -105,12 +104,42 @@ describe('GET ALL USER QUESTIONS E2E TEST', () => {
       sandbox.restore();
     });
 
-    it('should get all user questions successfully when user is not found', async () => {
+    it('should not get all user questions successfully when category is not found', async () => {
+      const paramsData = { ...questionData.paramsData.valid };
+      const queryData = { ...questionData.queryData.valid };
+      const foundDataUser = { ...questionData.foundData.validUser };
+      const foundDataNone = questionData.foundData.invalid;
+
+      const req = {
+        params: paramsData,
+        query: queryData,
+      };
+
       const stubFindUser = sandbox.stub(User, 'findOne').resolves(foundDataUser);
+      const stubFindCategory = sandbox.stub(Category, 'findOne').resolves(foundDataNone);
+
+      await getAllUserQuestionsCtrl(req, res);
+
+      expect(stubFindUser.calledOnce).to.be.true;
+      expect(stubFindCategory.calledOnce).to.be.true;
+      const stubFindCategoryCallArg = stubFindCategory.getCalls()[0].args[0];
+      expect(stubFindCategoryCallArg).to.be.an('object');
+      expect(status.calledOnce).to.be.true;
+      expect(status.args[0][0]).to.equal(404);
+      expect(json.calledOnce).to.be.true;
+      expect(json.args[0][0].success).to.equal(false);
+      expect(json.args[0][0].message).to.equal('Category does not exist');
+    });
+
+    it('should not get all user questions successfully when user is not found', async () => {
+      const paramsData = { ...questionData.paramsData.invalid };
+      const foundDataUser = questionData.foundData.invalid;
 
       const req = {
         params: paramsData,
       };
+
+      const stubFindUser = sandbox.stub(User, 'findOne').resolves(foundDataUser);
 
       await getAllUserQuestionsCtrl(req, res);
 
