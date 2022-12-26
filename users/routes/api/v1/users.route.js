@@ -21,6 +21,7 @@ const deleteUser = require('../../../controllers/deleteUser.controller');
 const updateUserStatus = require('../../../controllers/updateUserStatus.controller');
 const passwordForgot = require('../../../controllers/passwordForgot.controller');
 const passwordReset = require('../../../controllers/passwordReset.controller');
+const getAllUserQuestions = require('../../../../questions/controllers/getAllUserQuestions.controller');
 
 // create router
 const router = express.Router();
@@ -102,6 +103,14 @@ router.post('/password/forgot', isPasswordForgotValidated, passwordForgot);
  * @type    - PUT
  */
 router.put('/password/reset/:token', isPasswordResetValidated, passwordReset);
+
+/**
+ * @desc    - route for fetching all user questions
+ * @api     - /api/v1/users/:username/questions
+ * @access  - PUBLIC
+ * @type    - GET
+ */
+router.get('/:username/questions', getAllUserQuestions);
 
 // export router
 module.exports = router;
