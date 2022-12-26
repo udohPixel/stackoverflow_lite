@@ -27,6 +27,12 @@ const Question = sequelize.define(
     totalAnswers: {
       type: DataTypes.INTEGER,
       allowNull: true,
+      defaultValue: 0,
+    },
+    hasAcceptedAnswer: {
+      type: DataTypes.BOOLEAN,
+      allowNull: false,
+      defaultValue: false,
     },
     isActive: {
       type: DataTypes.BOOLEAN,

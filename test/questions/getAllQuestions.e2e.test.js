@@ -30,7 +30,7 @@ describe('GET ALL USER QUESTIONS E2E TEST', () => {
         body: 'This is a sample question content for my third question',
         CategoryId: 1,
         UserId: 1,
-        totalAnswers: null,
+        totalAnswers: 0,
         createdAt: '2022-12-21T13:43:25.000Z',
         updatedAt: '2022-12-21T13:43:25.000Z',
       },
@@ -40,7 +40,7 @@ describe('GET ALL USER QUESTIONS E2E TEST', () => {
         body: 'This is a sample question content for my second question',
         CategoryId: 1,
         UserId: 1,
-        totalAnswers: null,
+        totalAnswers: 0,
         createdAt: '2022-12-21T13:43:06.000Z',
         updatedAt: '2022-12-21T13:43:06.000Z',
       },
@@ -60,12 +60,12 @@ describe('GET ALL USER QUESTIONS E2E TEST', () => {
     });
 
     it('should get all questions successfully', async () => {
-      const stubFindCategory = sandbox.stub(Category, 'findOne').resolves(foundDataCategory);
-      const stubFindQuestions = sandbox.stub(Question, 'findAll').resolves(stubData);
-
       const req = {
         query: queryData,
       };
+
+      const stubFindCategory = sandbox.stub(Category, 'findOne').resolves(foundDataCategory);
+      const stubFindQuestions = sandbox.stub(Question, 'findAll').resolves(stubData);
 
       await getAllQuestionsCtrl(req, res);
 
@@ -100,10 +100,11 @@ describe('GET ALL USER QUESTIONS E2E TEST', () => {
     });
 
     it('should get all questions successfully when user is not found', async () => {
-      const stubFindCategory = sandbox.stub(Category, 'findOne').resolves(foundDataCategoryNone);
       const req = {
         query: queryData,
       };
+
+      const stubFindCategory = sandbox.stub(Category, 'findOne').resolves(foundDataCategoryNone);
 
       await getAllQuestionsCtrl(req, res);
 
