@@ -18,7 +18,7 @@ const addAnswerService = async (UserId, body, QuestionId) => {
 
   // save new answer object in DB
   const newAnswer = Answer.create({
-    UserId, body, QuestionId,
+    UserId, body, QuestionId: Number(QuestionId),
   });
 
   return newAnswer;

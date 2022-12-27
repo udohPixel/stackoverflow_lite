@@ -18,7 +18,7 @@ const addQuestionService = async (UserId, title, body, CategoryId) => {
 
   // save new question object in DB
   const newQuestion = Question.create({
-    UserId, title, body, CategoryId,
+    UserId, title, body, CategoryId: Number(CategoryId),
   });
 
   return newQuestion;
