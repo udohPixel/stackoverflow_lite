@@ -54,6 +54,16 @@ const updateAnswerStatusService = async (UserId, answerId) => {
     },
   );
 
+  // update that question hasAcceptedAnswer
+  await Question.update(
+    { hasAcceptedAnswer: true },
+    {
+      where: {
+        id: answer.QuestionId,
+      },
+    },
+  );
+
   // fetch accepted answer
   const acceptedAnswer = await Answer.findAll({
     where: {
