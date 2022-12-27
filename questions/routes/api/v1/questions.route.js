@@ -46,7 +46,7 @@ router.put('/:id', isLoggedIn, isUpdatePersonalQuestionValidated, updatePersonal
 router.get('/', getAllQuestions);
 
 /**
- * @desc    - route for delete category
+ * @desc    - route for delete question
  * @api     - /api/v1/questions/:id
  * @access  - PRIVATE
  * @type    - DELETE

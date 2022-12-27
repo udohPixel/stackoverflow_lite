@@ -48,6 +48,7 @@ describe('UPDATE ACCEPTED ANSWER UNIT TEST', () => {
     const stubFindQuestion = sandbox.stub(Question, 'findByPk').resolves(foundDataQuestion);
     const stubFindFormerAcceptedAnswer = sandbox.stub(Answer, 'findOne').resolves(foundDataFormerAcceptedAnswer);
     const stubUpdate = sandbox.stub(Answer, 'update').resolves();
+    const stubUpdateQuestion = sandbox.stub(Question, 'update').resolves();
     const stubReturnAcceptedAnswer = sandbox.stub(Answer, 'findAll').resolves(stubData);
 
     const response = await updateAcceptedAnswerService(userData.id, paramsData.id);
@@ -56,6 +57,7 @@ describe('UPDATE ACCEPTED ANSWER UNIT TEST', () => {
     expect(stubFindQuestion.calledOnce).to.be.true;
     expect(stubFindFormerAcceptedAnswer.calledOnce).to.be.true;
     expect(stubUpdate.calledTwice).to.be.true;
+    expect(stubUpdateQuestion.calledOnce).to.be.true;
     expect(stubReturnAcceptedAnswer.calledOnce).to.be.true;
     expect(response).to.be.a('boolean');
     expect(response).to.equal(stubData[0].isAcceptedAnswer);

@@ -11,7 +11,10 @@ const Role = sequelize.define(
       allowNull: false,
     },
   },
-  { timestamps: true },
+  {
+    timestamps: true,
+    paranoid: true,
+  },
 );
 
 // create table, check & perform changes in table to match model

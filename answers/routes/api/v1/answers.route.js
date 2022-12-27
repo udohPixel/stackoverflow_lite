@@ -10,6 +10,7 @@ const {
 // import required controllers
 const addAnswer = require('../../../controllers/addAnswer.controller');
 const updateAcceptedAnswer = require('../../../controllers/updateAcceptedAnswer.controller');
+const deleteAnswer = require('../../../controllers/deleteAnswer.controller');
 
 // create router
 const router = express.Router();
@@ -30,6 +31,14 @@ router.post('/', isLoggedIn, isAddAnswerValidated, addAnswer);
  * @type    - PUT
  */
 router.put('/:id/accepted/update', isLoggedIn, updateAcceptedAnswer);
+
+/**
+ * @desc    - route for delete answer
+ * @api     - /api/v1/answers/:id
+ * @access  - PRIVATE
+ * @type    - DELETE
+ */
+router.delete('/:id', isLoggedIn, deleteAnswer);
 
 // export router
 module.exports = router;

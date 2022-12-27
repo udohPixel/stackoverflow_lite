@@ -40,7 +40,10 @@ const Question = sequelize.define(
       defaultValue: true,
     },
   },
-  { timestamps: true },
+  {
+    timestamps: true,
+    paranoid: true,
+  },
 );
 
 // create table, check & perform changes in table to match model
