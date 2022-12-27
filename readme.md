@@ -52,5 +52,6 @@ GET     /api/v1/questions/:questionId/answers   get all answers to a question
 
 ### Answers
 ``` js
-POST    /api/v1/answers                                     add new answer
+POST    /api/v1/answers                         add new answer
+PUT     /api/v1/answers/:id/accepted/update     update accepted answer
 ```
