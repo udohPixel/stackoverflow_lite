@@ -9,6 +9,7 @@ const {
 
 // import required controllers
 const addAnswer = require('../../../controllers/addAnswer.controller');
+const updateAcceptedAnswer = require('../../../controllers/updateAcceptedAnswer.controller');
 
 // create router
 const router = express.Router();
@@ -21,6 +22,14 @@ const router = express.Router();
  * @type    - POST
  */
 router.post('/', isLoggedIn, isAddAnswerValidated, addAnswer);
+
+/**
+ * @desc    - route for updating accepted answer
+ * @api     - /api/v1/answers/:id/accepted/update
+ * @access  - PRIVATE
+ * @type    - PUT
+ */
+router.put('/:id/accepted/update', isLoggedIn, updateAcceptedAnswer);
 
 // export router
 module.exports = router;
