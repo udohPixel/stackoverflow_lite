@@ -3,6 +3,7 @@ const Answer = require('../models/Answer');
 const ApplicationException = require('../../common/ApplicationException');
 const { isAdmin } = require('../../common/helpers');
 const Role = require('../../roles/models/Role');
+const Question = require('../../questions/models/Question');
 
 // delete answer service
 const deleteAnswerService = async (UserId, RoleId, answerId) => {
@@ -33,6 +34,23 @@ const deleteAnswerService = async (UserId, RoleId, answerId) => {
     {
       where: {
         id: answerId,
+      },
+    },
+  );
+
+  // fetch all answers
+  const allAnswers = await Answer.findAll({
+    where: {
+      QuestionId: Number(answer.QuestionId),
+    },
+  });
+
+  // update totalAnswers
+  await Question.update(
+    { totalAnswers: allAnswers.length - 1 },
+    {
+      where: {
+        id: Number(answer.QuestionId),
       },
     },
   );
