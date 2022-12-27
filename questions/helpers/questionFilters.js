@@ -36,6 +36,16 @@ const userFilters = {
       queryObject.CategoryId = theCategory.id;
     }
 
+    // find by total answers
+    if (queryStr.totalAnswers) {
+      queryObject.totalAnswers = queryStr.totalAnswers;
+    }
+
+    // find by whether or not question has an accepted answer
+    if (queryStr.hasAcceptedAnswer) {
+      queryObject.hasAcceptedAnswer = queryStr.hasAcceptedAnswer;
+    }
+
     // find by keyword and category
     return Question.findAll({
       where: queryObject,

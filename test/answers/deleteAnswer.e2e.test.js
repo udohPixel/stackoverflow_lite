@@ -16,14 +16,16 @@ const deleteData = require('./deleteAnswer.data.mock.json');
 const Answer = require('../../answers/models/Answer');
 const deleteAnswerCtrl = require('../../answers/controllers/deleteAnswer.controller');
 const Role = require('../../roles/models/Role');
+const Question = require('../../questions/models/Question');
 
 // delete answer test
-describe('DELETE QUESTION E2E TEST', () => {
+describe('DELETE ANSWER E2E TEST', () => {
   describe('POSITIVE TEST', () => {
     const paramsData = { ...deleteData.paramsData.valid };
     const userData = { ...deleteData.userData.valid };
     const foundData = { ...deleteData.foundData.valid };
     const foundDataRole = { ...deleteData.foundData.validRole };
+    const foundDataAll = { ...deleteData.foundData.validAllAnswers };
 
     const stubData = {
       id: foundData.id,
@@ -59,12 +61,16 @@ describe('DELETE QUESTION E2E TEST', () => {
       const stubFind = sandbox.stub(Answer, 'findOne').resolves(foundData);
       const stubFindRole = sandbox.stub(Role, 'findByPk').resolves(foundDataRole);
       const stubDelete = sandbox.stub(Answer, 'destroy').resolves(stubData);
+      const stubFindAll = sandbox.stub(Answer, 'findAll').resolves(foundDataAll);
+      const stubUpdate = sandbox.stub(Question, 'update').resolves();
 
       await deleteAnswerCtrl(req, res);
 
       expect(stubFind.calledOnce).to.be.true;
       expect(stubFindRole.calledOnce).to.be.true;
       expect(stubDelete.calledOnce).to.be.true;
+      expect(stubFindAll.calledOnce).to.be.true;
+      expect(stubUpdate.calledOnce).to.be.true;
       expect(status.calledOnce).to.be.true;
       expect(status.args[0][0]).to.equal(200);
       expect(json.calledOnce).to.be.true;

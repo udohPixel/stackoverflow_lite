@@ -16,10 +16,34 @@
   },
   "foundData": {
     "valid": null,
+    "validAllAnswers": [
+      {
+        "id": 2,
+        "body": "This is a sample answer content for a question. Some more sample content of the answer body to fill up more space goes here. ",
+        "QuestionId": 2,
+        "UserId": 1,
+        "totalVotes": 0,
+        "isAcceptedAnswer": false,
+        "isActive": true,
+        "createdAt": "2022-12-26T09:40:02.000Z",
+        "updatedAt": "2022-12-27T11:47:05.000Z"
+      },
+      {
+        "id": 1,
+        "body": "This is a sample answer content for my second question",
+        "QuestionId": 2,
+        "UserId": 1,
+        "totalVotes": 0,
+        "isAcceptedAnswer": true,
+        "isActive": true,
+        "createdAt": "2022-12-24T05:10:15.000Z",
+        "updatedAt": "2022-12-27T11:47:05.000Z"
+      }
+    ],
     "invalid": {
       "id": 1,
       "body": "This is a sample answer content for my second question",
-      "QuestionId": "2",
+      "QuestionId": 2,
       "UserId": 1,
       "totalVotes": 0,
       "isAcceptedAnswer": false,
