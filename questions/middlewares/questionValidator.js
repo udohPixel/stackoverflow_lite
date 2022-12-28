@@ -8,7 +8,7 @@ const {
 
 // is add question values validated
 const isAddQuestionValidated = async (req, res, next) => {
-  // validate question-imputed values
+  // validate user-imputed values
   const questionValidator = await addQuestion.validate(req.body);
 
   // check if user-imputed values had errors
@@ -21,7 +21,7 @@ const isAddQuestionValidated = async (req, res, next) => {
 
 // is update personal question values validated
 const isUpdatePersonalQuestionValidated = async (req, res, next) => {
-  // validate question-imputed values
+  // validate user-imputed values
   const questionValidator = await updatePersonalQuestion.validate(req.body);
 
   // check if user-imputed values had errors
