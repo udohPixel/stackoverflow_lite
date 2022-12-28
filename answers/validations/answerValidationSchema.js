@@ -7,7 +7,12 @@ const answerValidatorSchema = {
   addAnswer: Joi.object({
     body: Joi.string().min(6).max(2500).required(),
     QuestionId: Joi.number().integer().required(),
-    totalVotes: Joi.number().integer().allow(null),
+  }),
+
+  // update personal answer validator schema
+  updatePersonalAnswer: Joi.object({
+    body: Joi.string().min(6).max(2500).required(),
+    QuestionId: Joi.number().integer().required(),
   }),
 };
 

@@ -30,7 +30,7 @@ const router = express.Router();
 router.post('/', isLoggedIn, isAddQuestionValidated, addQuestion);
 
 /**
- * @desc    - route for adding question
+ * @desc    - route for updating question
  * @api     - /api/v1/questions/:id
  * @access  - PRIVATE
  * @type    - PUT
