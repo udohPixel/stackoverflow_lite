@@ -18,9 +18,14 @@ const userFilters = {
       };
     }
 
-    // find by total votes
-    if (queryStr.totalVotes) {
-      queryObject.totalVotes = queryStr.totalVotes;
+    // find by up votes
+    if (queryStr.upVotes) {
+      queryObject.upVotes = queryStr.upVotes;
+    }
+
+    // find by down votes
+    if (queryStr.downVotes) {
+      queryObject.downVotes = queryStr.downVotes;
     }
 
     // find by keyword and total votes
@@ -49,9 +54,14 @@ const userFilters = {
       };
     }
 
-    // find by total votes
-    if (queryStr.totalVotes) {
-      queryObject.totalVotes = queryStr.totalVotes;
+    // find by up votes
+    if (queryStr.upVotes) {
+      queryObject.upVotes = queryStr.upVotes;
+    }
+
+    // find by down votes
+    if (queryStr.downVotes) {
+      queryObject.downVotes = queryStr.downVotes;
     }
 
     // find by keyword and total votes

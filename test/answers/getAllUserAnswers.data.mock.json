@@ -10,11 +10,13 @@
   "queryData": {
     "valid": {
       "keyword": "answer",
-      "totalVotes": 0
+      "upVotes": 0,
+      "downVotes": 0
     },
     "invalid": {
       "keyword": "wrong keyword",
-      "totalVotes": 999908999018999999999
+      "upVotes": 999908999018999999999,
+      "downVotes": 777777999018999999999
     }
   },
   "foundData": {
