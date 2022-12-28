@@ -56,4 +56,6 @@ POST    /api/v1/answers                         add new answer
 PUT     /api/v1/answers/:id/accepted/update     update accepted answer
 DELETE  /api/v1/answers/:id                     delete answer
 PUT     /api/v1/answers/:id                     update personal user answer
+PUT     /api/v1/answers/:id/upvote              upvote an answer
+PUT     /api/v1/answers/:id/downvote            downvote an answer
 ```

@@ -20,7 +20,12 @@ const Answer = sequelize.define(
       type: DataTypes.INTEGER,
       allowNull: false,
     },
-    totalVotes: {
+    upVotes: {
+      type: DataTypes.INTEGER,
+      allowNull: true,
+      defaultValue: 0,
+    },
+    downVotes: {
       type: DataTypes.INTEGER,
       allowNull: true,
       defaultValue: 0,

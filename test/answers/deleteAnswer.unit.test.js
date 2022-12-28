@@ -31,7 +31,8 @@ describe('DELETE ANSWER UNIT TEST', () => {
     body: foundData.body,
     QuestionId: foundData.QuestionId,
     UserId: foundData.UserId,
-    totalVotes: foundData.totalVotes,
+    upVotes: foundData.upVotes,
+    downVotes: foundData.downVotes,
     isAcceptedAnswer: foundData.isAcceptedAnswer,
     isActive: foundData.isActive,
     createdAt: foundData.createdAt,
@@ -63,7 +64,8 @@ describe('DELETE ANSWER UNIT TEST', () => {
     expect(response).to.have.property('body', stubData.body);
     expect(response).to.have.property('QuestionId', stubData.QuestionId);
     expect(response).to.have.property('UserId', stubData.UserId);
-    expect(response).to.have.property('totalVotes', stubData.totalVotes);
+    expect(response).to.have.property('upVotes', stubData.upVotes);
+    expect(response).to.have.property('downVotes', stubData.downVotes);
     expect(response).to.have.property('isAcceptedAnswer', stubData.isAcceptedAnswer);
     expect(response).to.have.property('isActive', stubData.isActive);
     expect(response).to.have.property('createdAt', stubData.createdAt);
