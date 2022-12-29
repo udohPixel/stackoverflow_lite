@@ -14,7 +14,7 @@ const updateAcceptedAnswer = require('../../../controllers/updateAcceptedAnswer.
 const deleteAnswer = require('../../../controllers/deleteAnswer.controller');
 const updatePersonalAnswer = require('../../../controllers/updatePersonalAnswer.controller');
 const upvoteAnswer = require('../../../../votes/controllers/upvoteAnswer.controller');
-const downvoteAnswer = require('../../../../votes/controllers/upvoteAnswer.controller');
+const downvoteAnswer = require('../../../../votes/controllers/downvoteAnswer.controller');
 
 // create router
 const router = express.Router();

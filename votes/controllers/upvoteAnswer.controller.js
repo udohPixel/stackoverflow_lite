@@ -1,18 +1,15 @@
 // import required modules
 const apiResponse = require('../../common/ApiResponse');
-const addVoteService = require('../services/upvoteAnswer.service');
+const upvoteAnswerService = require('../services/upvoteAnswer.service');
 
-// add vote controller
+// upvote answer controller
 const upvoteAnswerCtrl = async (req, res) => {
   try {
-    // // object destructuring assignment
-    // const { productId, quantity } = req.body;
-
     const AnswerId = req.params.id;
     const UserId = req.user.id;
 
-    // add vote service
-    const vote = await addVoteService(AnswerId, UserId);
+    // upvote answer service
+    const vote = await upvoteAnswerService(AnswerId, UserId);
 
     return apiResponse.success(res, 'Answer upvoted successfully', vote, 200);
   } catch (error) {
