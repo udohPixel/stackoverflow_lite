@@ -5,7 +5,7 @@ const Vote = require('../models/Vote');
 const ApplicationException = require('../../common/ApplicationException');
 const { isEmpty } = require('../../common/helpers');
 
-const upvoteAnswerService = async (AnswerId, UserId) => {
+const downvoteAnswerService = async (AnswerId, UserId) => {
   // fetch answer by id from dB
   const answer = await Answer.findByPk(AnswerId);
 
@@ -29,41 +29,41 @@ const upvoteAnswerService = async (AnswerId, UserId) => {
 
   // check if user has voted answer
   if (isEmpty(hasVotedAnswer)) {
-    // create new user answer upvote
-    const newUpvote = await Vote.create({
-      AnswerId: Number(AnswerId), UserId, isUpvote: true,
+    // create new user answer downvote
+    const newDownvote = await Vote.create({
+      AnswerId: Number(AnswerId), UserId, isUpvote: false,
     });
 
-    // increase total answer upvotes
+    // increase total answer downvotes
     await Answer.update(
-      { upVotes: answer.upVotes + 1 },
+      { downVotes: answer.downVotes + 1 },
       {
         where: { id: AnswerId },
       },
     );
 
-    return newUpvote;
+    return newDownvote;
   }
 
-  // fetch user upvoted answer
-  const hasUpvotedAnswer = await Vote.findOne({
+  // fetch user downvoted answer
+  const hasDownvotedAnswer = await Vote.findOne({
     where: {
       [Op.and]: [
         userOption,
         answerOption,
-        { isUpvote: { [Op.eq]: true } },
+        { isUpvote: { [Op.eq]: false } },
       ],
     },
   });
 
-  // check if user has upvoted answer
-  if (hasUpvotedAnswer) {
-    throw new ApplicationException('You have already upvoted this answer');
+  // check if user has downvoted answer
+  if (hasDownvotedAnswer) {
+    throw new ApplicationException('You have already downvoted this answer');
   }
 
-  // update user upvoted answer
-  const updatedUpvote = await Vote.update(
-    { isUpvote: true },
+  // update user downvoted answer
+  const updatedDownvote = await Vote.update(
+    { isUpvote: false },
     {
       where: {
         [Op.and]: [
@@ -74,19 +74,19 @@ const upvoteAnswerService = async (AnswerId, UserId) => {
     },
   );
 
-  // decrease total answer downvotes & increase total answer upvotes
+  // decrease total answer upvotes & increase total answer downvotes
   await Answer.update(
     {
-      downVotes: answer.downVotes - 1,
-      upVotes: answer.upVotes + 1,
+      upVotes: answer.upVotes - 1,
+      downVotes: answer.downVotes + 1,
     },
     {
       where: { id: AnswerId },
     },
   );
 
-  return updatedUpvote;
+  return updatedDownvote;
 };
 
 // export service
-module.exports = upvoteAnswerService;
+module.exports = downvoteAnswerService;
