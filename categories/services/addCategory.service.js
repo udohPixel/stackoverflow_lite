@@ -6,7 +6,7 @@ const Category = require('../models/Category');
 
 // add category service
 const addCategoryService = async (title) => {
-  // fetch category by email from dB
+  // fetch category
   const category = await Category.findOne({
     where: { title },
   });
