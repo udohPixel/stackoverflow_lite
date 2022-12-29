@@ -35,6 +35,11 @@ const Answer = sequelize.define(
       allowNull: false,
       defaultValue: false,
     },
+    totalComments: {
+      type: DataTypes.INTEGER,
+      allowNull: true,
+      defaultValue: 0,
+    },
     isActive: {
       type: DataTypes.BOOLEAN,
       allowNull: false,

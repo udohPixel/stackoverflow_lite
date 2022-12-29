@@ -6,7 +6,7 @@ const Question = require('../models/Question');
 
 // add question service
 const addQuestionService = async (UserId, title, body, CategoryId) => {
-  // fetch question by email from dB
+  // fetch question
   const question = await Question.findOne({
     where: { title },
   });

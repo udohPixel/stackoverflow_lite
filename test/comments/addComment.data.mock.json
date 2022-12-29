@@ -1,0 +1,46 @@
+{
+  "bodyData": {
+    "valid": {
+      "body": "This is a sample comment content for my second answer",
+      "AnswerId": 2
+    },
+    "invalid": null
+  },
+  "userData": {
+    "valid": {
+      "id": 1
+    },
+    "invalid": {
+      "id": 999999999999999999999999
+    }
+  },
+  "foundData": {
+    "valid": null,
+    "validAllComments": [
+      {
+        "id": 2,
+        "body": "This is a sample comment content for an answer. Some more sample content of the comment body to fill up more space goes here. ",
+        "AnswerId": 2,
+        "UserId": 1,
+        "createdAt": "2022-12-26T09:40:02.000Z",
+        "updatedAt": "2022-12-27T11:47:05.000Z"
+      },
+      {
+        "id": 1,
+        "body": "This is a sample comment content for my second answer",
+        "AnswerId": 2,
+        "UserId": 1,
+        "createdAt": "2022-12-24T05:10:15.000Z",
+        "updatedAt": "2022-12-27T11:47:05.000Z"
+      }
+    ],
+    "invalid": {
+      "id": 1,
+      "body": "This is a sample comment content for my second answer",
+      "AnswerId": 2,
+      "UserId": 1,
+      "updatedAt": "2022-12-24T05:10:15.643Z",
+      "createdAt": "2022-12-24T05:10:15.643Z"
+    }
+  }
+}

@@ -7,7 +7,7 @@ const Answer = require('../models/Answer');
 
 // add answer service
 const addAnswerService = async (UserId, body, QuestionId) => {
-  // fetch answer by email from dB
+  // fetch answer
   const answer = await Answer.findOne({
     where: { body },
   });
