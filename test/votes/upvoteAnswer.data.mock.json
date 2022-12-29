@@ -1,0 +1,57 @@
+{
+  "paramsData": {
+    "valid": {
+      "id": 5
+    },
+    "invalid": {
+      "id": 888888888888888888888888
+    }
+  },
+  "userData": {
+    "valid": {
+      "id": 1
+    },
+    "invalid": {
+      "id": 999999999999999999999999
+    }
+  },
+  "foundData": {
+    "validAnswer": {
+      "id": 5,
+      "body": "This is a sample answer content for my fifth question",
+      "QuestionId": 2,
+      "UserId": 1,
+      "upVotes": 3,
+      "downVotes": 0,
+      "isAcceptedAnswer": false,
+      "isActive": true,
+      "createdAt": "2022-12-26T09:40:02.000Z",
+      "updatedAt": "2022-12-27T11:47:05.000Z"
+    },
+    "invalid": null,
+    "validCreateVote": {
+      "id": 29,
+      "AnswerId": 5,
+      "UserId": 1,
+      "isUpvote": true,
+      "updatedAt": "2022-12-29T05:51:30.820Z",
+      "createdAt": "2022-12-29T05:51:30.820Z"
+    },
+    "validFoundVote": {
+      "id": 12,
+      "AnswerId": 5,
+      "UserId": 1,
+      "isUpvote": false,
+      "updatedAt": "2022-12-29T05:51:30.820Z",
+      "createdAt": "2022-12-29T05:51:30.820Z"
+    },
+    "invalidFoundVote": {
+      "id": 12,
+      "AnswerId": 5,
+      "UserId": 1,
+      "isUpvote": true,
+      "updatedAt": "2022-12-29T05:51:30.820Z",
+      "createdAt": "2022-12-29T05:51:30.820Z"
+    }
+  }
+}
