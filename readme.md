@@ -58,6 +58,7 @@ DELETE  /api/v1/answers/:id                     delete answer
 PUT     /api/v1/answers/:id                     update personal user answer
 PUT     /api/v1/answers/:id/upvote              upvote an answer
 PUT     /api/v1/answers/:id/downvote            downvote an answer
+GET     /api/v1/answers/:answerId/comments      get all comments on an answer
 ```
 
 ### Comments

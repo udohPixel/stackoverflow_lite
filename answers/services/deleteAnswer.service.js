@@ -47,7 +47,7 @@ const deleteAnswerService = async (UserId, RoleId, answerId) => {
 
   // update totalAnswers
   await Question.update(
-    { totalAnswers: allAnswers.length - 1 },
+    { totalAnswers: allAnswers.length },
     {
       where: {
         id: Number(answer.QuestionId),
