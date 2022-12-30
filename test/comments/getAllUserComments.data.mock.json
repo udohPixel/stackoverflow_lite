@@ -1,0 +1,31 @@
+{
+  "paramsData": {
+    "valid": {
+        "username": "ipixel"
+    },
+    "invalid": {
+        "username": "wrong-username"
+    }
+  },
+  "queryData": {
+    "valid": {
+      "keyword": "comment"
+    },
+    "invalid": {
+      "keyword": "wrong keyword"
+    }
+  },
+  "foundData": {
+    "validUser": {
+      "id": 1,
+      "firstname": "Udoh",
+      "lastname": "Ndem",
+      "username": "ipixel",
+      "email": "udohndem@gmail.com",
+      "isActive": false,
+      "createdAt": "2022-11-09T12:17:02.106Z",
+      "updatedAt": "2022-11-09T12:17:02.106Z"
+    },
+    "invalid": null
+  }
+}

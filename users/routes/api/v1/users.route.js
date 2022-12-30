@@ -23,6 +23,7 @@ const passwordForgot = require('../../../controllers/passwordForgot.controller')
 const passwordReset = require('../../../controllers/passwordReset.controller');
 const getAllUserQuestions = require('../../../../questions/controllers/getAllUserQuestions.controller');
 const getAllUserAnswers = require('../../../../answers/controllers/getAllUserAnswers.controller');
+const getAllUserComments = require('../../../../comments/controllers/getAllUserComments.controller');
 
 // create router
 const router = express.Router();
@@ -120,6 +121,14 @@ router.get('/:username/questions', getAllUserQuestions);
  * @type    - GET
  */
 router.get('/:username/answers', getAllUserAnswers);
+
+/**
+ * @desc    - route for fetching all user comments
+ * @api     - /api/v1/users/:username/comments
+ * @access  - PUBLIC
+ * @type    - GET
+ */
+router.get('/:username/comments', getAllUserComments);
 
 // export router
 module.exports = router;
