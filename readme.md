@@ -59,3 +59,9 @@ PUT     /api/v1/answers/:id                     update personal user answer
 PUT     /api/v1/answers/:id/upvote              upvote an answer
 PUT     /api/v1/answers/:id/downvote            downvote an answer
 ```
+
+### Comments
+``` js
+POST    /api/v1/comments                        add new comment
+PUT     /api/v1/comments/:id                    update personal user comment
+```
