@@ -64,4 +64,5 @@ PUT     /api/v1/answers/:id/downvote            downvote an answer
 ``` js
 POST    /api/v1/comments                        add new comment
 PUT     /api/v1/comments/:id                    update personal user comment
+DELETE  /api/v1/comments/:id                    delete comment
 ```

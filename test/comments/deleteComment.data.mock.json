@@ -1,0 +1,55 @@
+{
+  "paramsData": {
+    "valid": {
+      "id": 2
+    },
+    "invalid": {
+      "id": 888888888888888888888888
+    }
+  },
+  "userData": {
+    "valid": {
+      "id": 1,
+      "RoleId": 2
+    },
+    "invalid": {
+      "id": 999999999999999999999999,
+      "RoleId": 777777777777777777784777
+    }
+  },
+  "foundData": {
+    "valid": {
+      "id": 2,
+      "body": "This is a sample comment content for a question. Some more sample content of the comment body to fill up more space goes here. ",
+      "AnswerId": 2,
+      "UserId": 1,
+      "createdAt": "2022-12-26T09:40:02.000Z",
+      "updatedAt": "2022-12-27T11:47:05.000Z"
+    },
+    "validAllComments": [
+      {
+        "id": 2,
+        "body": "This is a sample comment content for a question. Some more sample content of the comment body to fill up more space goes here. ",
+        "AnswerId": 2,
+        "UserId": 1,
+        "createdAt": "2022-12-26T09:40:02.000Z",
+        "updatedAt": "2022-12-27T11:47:05.000Z"
+      },
+      {
+        "id": 1,
+        "body": "This is a sample comment content for my second question",
+        "AnswerId": 2,
+        "UserId": 1,
+        "createdAt": "2022-12-24T05:10:15.000Z",
+        "updatedAt": "2022-12-27T11:47:05.000Z"
+      }
+    ],
+    "validRole": {
+      "id": 2,
+      "title": "Admin",
+      "createdAt": "2022-11-10T17:40:00.128Z",
+      "updatedAt": "2022-11-10T17:40:00.128Z"
+    },
+    "invalid": null
+  }
+}

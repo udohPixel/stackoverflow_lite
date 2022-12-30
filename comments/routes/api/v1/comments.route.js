@@ -11,6 +11,7 @@ const {
 // import required controllers
 const addComment = require('../../../controllers/addComment.controller');
 const updatePersonalComment = require('../../../controllers/updatePersonalComment.controller');
+const deleteComment = require('../../../controllers/deleteComment.controller');
 
 // create router
 const router = express.Router();
@@ -31,6 +32,14 @@ router.post('/', isLoggedIn, isAddCommentValidated, addComment);
  * @type    - PUT
  */
 router.put('/:id', isLoggedIn, isUpdatePersonalCommentValidated, updatePersonalComment);
+
+/**
+ * @desc    - route for deleting comment
+ * @api     - /api/v1/comments/:id
+ * @access  - PRIVATE
+ * @type    - DELETE
+ */
+router.delete('/:id', isLoggedIn, deleteComment);
 
 // export router
 module.exports = router;
