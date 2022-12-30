@@ -47,7 +47,7 @@ const deleteCommentService = async (UserId, RoleId, commentId) => {
 
   // update totalComments
   await Answer.update(
-    { totalComments: allComments.length - 1 },
+    { totalComments: allComments.length },
     {
       where: {
         id: Number(comment.AnswerId),
