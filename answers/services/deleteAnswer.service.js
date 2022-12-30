@@ -25,7 +25,7 @@ const deleteAnswerService = async (UserId, RoleId, answerId) => {
   const role = await Role.findByPk(RoleId);
 
   // check if currently logged in user is creator of the answer
-  if ((UserId !== answer.UserId) || !isAdmin(role.title)) {
+  if (!((UserId === answer.UserId) || isAdmin(role.title))) {
     throw new ApplicationException('Unauthorized', 401);
   }
 
