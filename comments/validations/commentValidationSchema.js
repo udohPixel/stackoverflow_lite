@@ -8,6 +8,12 @@ const commentValidatorSchema = {
     body: Joi.string().min(6).max(2500).required(),
     AnswerId: Joi.number().integer().required(),
   }),
+
+  // update comment validator schema
+  updatePersonalComment: Joi.object({
+    body: Joi.string().min(6).max(2500).required(),
+    AnswerId: Joi.number().integer().required(),
+  }),
 };
 
 // export user validator schema
