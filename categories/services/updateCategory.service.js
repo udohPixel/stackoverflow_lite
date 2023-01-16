@@ -19,17 +19,9 @@ const updateCategoryService = async (categoryId, title) => {
   }
 
   // update category
-  await Category.update(
-    { title },
-    {
-      where: {
-        id: categoryId,
-      },
-    },
-  );
+  category.title = title;
 
-  // get updated category
-  const updatedCategory = await Category.findByPk(categoryId);
+  const updatedCategory = await category.save();
 
   return updatedCategory;
 };

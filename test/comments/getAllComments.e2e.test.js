@@ -15,14 +15,17 @@ chai.use(chaiHttp);
 const commentData = require('./getAllComments.data.mock.json');
 const Comment = require('../../comments/models/Comment');
 const Answer = require('../../answers/models/Answer');
+const User = require('../../users/models/User');
+
 const getAllCommentsCtrl = require('../../comments/controllers/getAllComments.controller');
 
 // get all comments test
 describe('GET ALL COMMENTS E2E TEST', () => {
   describe('POSITIVE TEST', () => {
     const queryData = { ...commentData.queryData.valid };
-    const paramsData = { ...commentData.paramsData.valid };
+    const inputData = { ...commentData.bodyData.valid };
     const foundDataAnswer = { ...commentData.foundData.valid };
+    const foundDataUser = { ...commentData.foundData.validUser };
 
     const stubData = [
       {
@@ -59,15 +62,17 @@ describe('GET ALL COMMENTS E2E TEST', () => {
     it('should get all comments successfully', async () => {
       const req = {
         query: queryData,
-        params: paramsData,
+        body: inputData,
       };
 
       const stubFindAnswer = sandbox.stub(Answer, 'findByPk').resolves(foundDataAnswer);
+      const stubFindUser = sandbox.stub(User, 'findOne').resolves(foundDataUser);
       const stubFindComments = sandbox.stub(Comment, 'findAll').resolves(stubData);
 
       await getAllCommentsCtrl(req, res);
 
       expect(stubFindAnswer.calledOnce).to.be.true;
+      expect(stubFindUser.calledOnce).to.be.true;
       expect(stubFindComments.calledOnce).to.be.true;
       const stubFindCommentsCallArg = stubFindComments.getCalls()[0].args[0];
       expect(stubFindCommentsCallArg).to.be.an('object');
@@ -81,7 +86,7 @@ describe('GET ALL COMMENTS E2E TEST', () => {
   });
 
   describe('NEGATIVE TEST', () => {
-    const paramsData = { ...commentData.paramsData.invalid };
+    const inputData = { ...commentData.bodyData.invalid };
     const foundDataAnswerNone = commentData.foundData.invalid;
 
     let status; let json; let res;
@@ -99,7 +104,7 @@ describe('GET ALL COMMENTS E2E TEST', () => {
 
     it('should not get all comments successfully when answer is not found', async () => {
       const req = {
-        params: paramsData,
+        body: inputData,
       };
 
       const stubFindAnswer = sandbox.stub(Answer, 'findByPk').resolves(foundDataAnswerNone);

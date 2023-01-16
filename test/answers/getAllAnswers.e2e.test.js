@@ -14,15 +14,18 @@ chai.use(chaiHttp);
 // import other libraries
 const answerData = require('./getAllAnswers.data.mock.json');
 const Answer = require('../../answers/models/Answer');
+const User = require('../../users/models/User');
 const Question = require('../../questions/models/Question');
+
 const getAllAnswersCtrl = require('../../answers/controllers/getAllAnswers.controller');
 
 // get all answers test
 describe('GET ALL ANSWERS E2E TEST', () => {
   describe('POSITIVE TEST', () => {
     const queryData = { ...answerData.queryData.valid };
-    const paramsData = { ...answerData.paramsData.valid };
+    const inputData = { ...answerData.bodyData.valid };
     const foundDataQuestion = { ...answerData.foundData.valid };
+    const foundDataUser = { ...answerData.foundData.validUser };
 
     const stubData = [
       {
@@ -33,6 +36,7 @@ describe('GET ALL ANSWERS E2E TEST', () => {
         upVotes: 0,
         downVotes: 0,
         isAcceptedAnswer: false,
+        totalComments: 4,
         isActive: true,
         createdAt: '2022-12-26T09:40:02.000Z',
         updatedAt: '2022-12-26T09:40:02.000Z',
@@ -45,6 +49,7 @@ describe('GET ALL ANSWERS E2E TEST', () => {
         upVotes: 0,
         downVotes: 0,
         isAcceptedAnswer: false,
+        totalComments: 4,
         isActive: true,
         createdAt: '2022-12-24T05:10:15.000Z',
         updatedAt: '2022-12-24T05:10:15.000Z',
@@ -67,15 +72,17 @@ describe('GET ALL ANSWERS E2E TEST', () => {
     it('should get all answers successfully', async () => {
       const req = {
         query: queryData,
-        params: paramsData,
+        body: inputData,
       };
 
       const stubFindQuestion = sandbox.stub(Question, 'findByPk').resolves(foundDataQuestion);
+      const stubFindUser = sandbox.stub(User, 'findOne').resolves(foundDataUser);
       const stubFindAnswers = sandbox.stub(Answer, 'findAll').resolves(stubData);
 
       await getAllAnswersCtrl(req, res);
 
       expect(stubFindQuestion.calledOnce).to.be.true;
+      expect(stubFindUser.calledOnce).to.be.true;
       expect(stubFindAnswers.calledOnce).to.be.true;
       const stubFindAnswersCallArg = stubFindAnswers.getCalls()[0].args[0];
       expect(stubFindAnswersCallArg).to.be.an('object');
@@ -89,7 +96,8 @@ describe('GET ALL ANSWERS E2E TEST', () => {
   });
 
   describe('NEGATIVE TEST', () => {
-    const paramsData = { ...answerData.paramsData.invalid };
+    const inputData = { ...answerData.bodyData.invalid };
+
     const foundDataQuestionNone = answerData.foundData.invalid;
 
     let status; let json; let res;
@@ -107,7 +115,7 @@ describe('GET ALL ANSWERS E2E TEST', () => {
 
     it('should not get all answers successfully when question is not found', async () => {
       const req = {
-        params: paramsData,
+        body: inputData,
       };
 
       const stubFindQuestion = sandbox.stub(Question, 'findByPk').resolves(foundDataQuestionNone);

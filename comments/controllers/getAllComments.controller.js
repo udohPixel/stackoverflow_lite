@@ -5,11 +5,11 @@ const getAllCommentsService = require('../services/getAllComments.service');
 // get all comments controller
 const getAllCommentsCtrl = async (req, res) => {
   try {
-    const { answerId } = req.params;
+    const { AnswerId } = req.body;
     const queryStr = req.query;
 
     // get all comments service
-    const comments = await getAllCommentsService(answerId, queryStr);
+    const comments = await getAllCommentsService(AnswerId, queryStr);
 
     return apiResponse.success(res, 'Comments found successfully', comments);
   } catch (error) {

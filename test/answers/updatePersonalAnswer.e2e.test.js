@@ -14,6 +14,7 @@ chai.use(chaiHttp);
 // import other libraries
 const answerData = require('./updatePersonalAnswer.data.mock.json');
 const Answer = require('../../answers/models/Answer');
+const Question = require('../../questions/models/Question');
 const updateAnswerCtrl = require('../../answers/controllers/updatePersonalAnswer.controller');
 
 // update answer test
@@ -23,6 +24,7 @@ describe('UPDATE PERSONAL ANSWER E2E TEST', () => {
     const userData = { ...answerData.userData.valid };
     const paramsData = { ...answerData.paramsData.valid };
     const foundData = { ...answerData.foundData.valid };
+    const foundDataQuestion = { ...answerData.foundData.validQuestion };
 
     const stubData = {
       id: paramsData.id,
@@ -57,15 +59,19 @@ describe('UPDATE PERSONAL ANSWER E2E TEST', () => {
         params: paramsData,
       };
 
-      const stubFindOne = sandbox.stub(Answer, 'findOne').resolves(foundData);
-      const stubUpdate = sandbox.stub(Answer, 'update').resolves();
-      const stubFindByPk = sandbox.stub(Answer, 'findByPk').resolves(stubData);
+      const foundDataSaveAnswer = {
+        ...foundData,
+        save: sandbox.stub().resolves(stubData),
+      };
+
+      const stubFindQuestion = sandbox.stub(Question, 'findOne').resolves(foundDataQuestion);
+      const stubFindOne = sandbox.stub(Answer, 'findOne').resolves(foundDataSaveAnswer);
 
       await updateAnswerCtrl(req, res);
 
+      expect(stubFindQuestion.calledOnce).to.be.true;
       expect(stubFindOne.calledOnce).to.be.true;
-      expect(stubUpdate.calledOnce).to.be.true;
-      expect(stubFindByPk.calledOnce).to.be.true;
+      expect(foundDataSaveAnswer.save.calledOnce).to.be.true;
       expect(status.calledOnce).to.be.true;
       expect(status.args[0][0]).to.equal(200);
       expect(json.calledOnce).to.be.true;
@@ -86,14 +92,15 @@ describe('UPDATE PERSONAL ANSWER E2E TEST', () => {
     });
 
     afterEach(() => {
-      Answer.findOne.restore();
+      sandbox.restore();
     });
 
     it('should not update a answer successfully when answer is not found by id', async () => {
-      const inputData = { ...answerData.bodyData.valid.answerInfo };
+      const inputData = { ...answerData.bodyData.valid };
       const userData = { ...answerData.userData.valid };
       const paramsData = { ...answerData.paramsData.invalid };
       const foundDataNone = answerData.foundData.invalid;
+      const foundDataQuestion = { ...answerData.foundData.validQuestion };
 
       const req = {
         body: inputData,
@@ -101,10 +108,12 @@ describe('UPDATE PERSONAL ANSWER E2E TEST', () => {
         params: paramsData,
       };
 
-      const stubFindOne = sinon.stub(Answer, 'findOne').resolves(foundDataNone);
+      const stubFindQuestion = sandbox.stub(Question, 'findOne').resolves(foundDataQuestion);
+      const stubFindOne = sandbox.stub(Answer, 'findOne').resolves(foundDataNone);
 
       await updateAnswerCtrl(req, res);
 
+      expect(stubFindQuestion.calledOnce).to.be.true;
       expect(stubFindOne.calledOnce).to.be.true;
       expect(status.calledOnce).to.be.true;
       expect(status.args[0][0]).to.equal(404);
@@ -114,10 +123,11 @@ describe('UPDATE PERSONAL ANSWER E2E TEST', () => {
     });
 
     it('should not update a answer successfully when logged in user is not creator of the answer', async () => {
-      const inputData = { ...answerData.bodyData.valid.answerInfo };
+      const inputData = { ...answerData.bodyData.valid };
       const userData = { ...answerData.userData.invalid };
       const paramsData = { ...answerData.paramsData.valid };
       const foundData = { ...answerData.foundData.invalidUser };
+      const foundDataQuestion = { ...answerData.foundData.validQuestion };
 
       const req = {
         body: inputData,
@@ -125,16 +135,18 @@ describe('UPDATE PERSONAL ANSWER E2E TEST', () => {
         params: paramsData,
       };
 
-      const stubFindOne = sinon.stub(Answer, 'findOne').resolves(foundData);
+      const stubFindQuestion = sandbox.stub(Question, 'findOne').resolves(foundDataQuestion);
+      const stubFindOne = sandbox.stub(Answer, 'findOne').resolves(foundData);
 
       await updateAnswerCtrl(req, res);
 
+      expect(stubFindQuestion.calledOnce).to.be.true;
       expect(stubFindOne.calledOnce).to.be.true;
       expect(status.calledOnce).to.be.true;
-      expect(status.args[0][0]).to.equal(401);
+      expect(status.args[0][0]).to.equal(403);
       expect(json.calledOnce).to.be.true;
       expect(json.args[0][0].success).to.equal(false);
-      expect(json.args[0][0].message).to.equal('Unauthorized');
+      expect(json.args[0][0].message).to.equal('You are not allowed to update answer');
     });
   });
 });

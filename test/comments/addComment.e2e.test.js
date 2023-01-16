@@ -22,8 +22,7 @@ describe('ADD COMMENT E2E TEST', () => {
   describe('POSITIVE TEST', () => {
     const inputData = { ...addCommentData.bodyData.valid };
     const userData = { ...addCommentData.userData.valid };
-    const foundDataNone = addCommentData.foundData.valid;
-    const foundDataAll = { ...addCommentData.foundData.validAllComments };
+    const foundDataAnswer = { ...addCommentData.foundData.validAnswer };
 
     const stubData = {
       id: 1,
@@ -53,16 +52,14 @@ describe('ADD COMMENT E2E TEST', () => {
         user: userData,
       };
 
-      const stubFindOne = sandbox.stub(Comment, 'findOne').resolves(foundDataNone);
+      const stubFindAnswer = sandbox.stub(Answer, 'findOne').resolves(foundDataAnswer);
       const stubCreate = sandbox.stub(Comment, 'create').resolves(stubData);
-      const stubFindAll = sandbox.stub(Comment, 'findAll').resolves(foundDataAll);
       const stubUpdate = sandbox.stub(Answer, 'update').resolves();
 
       await addCommentCtrl(req, res);
 
-      expect(stubFindOne.calledOnce).to.be.true;
+      expect(stubFindAnswer.calledOnce).to.be.true;
       expect(stubCreate.calledOnce).to.be.true;
-      expect(stubFindAll.calledOnce).to.be.true;
       expect(stubUpdate.calledOnce).to.be.true;
       expect(status.calledOnce).to.be.true;
       expect(status.args[0][0]).to.equal(201);
@@ -76,7 +73,7 @@ describe('ADD COMMENT E2E TEST', () => {
   describe('NEGATIVE TEST', () => {
     const inputData = { ...addCommentData.bodyData.valid };
     const userData = { ...addCommentData.userData.invalid };
-    const foundData = { ...addCommentData.foundData.invalid };
+    const foundDataNone = addCommentData.foundData.invalid;
 
     let status; let json; let res;
 
@@ -91,22 +88,22 @@ describe('ADD COMMENT E2E TEST', () => {
       sandbox.restore();
     });
 
-    it('should not add comment successfully when comment is found with same body', async () => {
+    it('should not add comment successfully when answer is not found by id', async () => {
       const req = {
         body: inputData,
         user: userData,
       };
 
-      const stubFind = sandbox.stub(Comment, 'findOne').resolves(foundData);
+      const stubFind = sandbox.stub(Answer, 'findOne').resolves(foundDataNone);
 
       await addCommentCtrl(req, res);
 
       expect(stubFind.calledOnce).to.be.true;
       expect(status.calledOnce).to.be.true;
-      expect(status.args[0][0]).to.equal(400);
+      expect(status.args[0][0]).to.equal(404);
       expect(json.calledOnce).to.be.true;
       expect(json.args[0][0].success).to.equal(false);
-      expect(json.args[0][0].message).to.equal('Comment has already been added. Try another');
+      expect(json.args[0][0].message).to.equal('Answer does not exist');
     });
   });
 });

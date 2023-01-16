@@ -51,7 +51,7 @@ describe('CHANGE USER STATE E2E TEST', () => {
         params: paramsData,
       };
 
-      const stubFind = sandbox.stub(User, 'findByPk').resolves(foundData);
+      const stubFind = sandbox.stub(User, 'findOne').resolves(foundData);
       const stubUpdate = sandbox.stub(User, 'update').resolves();
 
       await updateUserStatusCtrl(req, res);
@@ -63,7 +63,7 @@ describe('CHANGE USER STATE E2E TEST', () => {
       expect(json.calledOnce).to.be.true;
       expect(json.args[0][0].success).to.equal(true);
       expect(json.args[0][0].message).to.equal('User status updated successfully');
-      expect(json.args[0][0].data).to.equal(stubData.isActive);
+      expect(json.args[0][0].data).to.contain(stubData);
     });
   });
 
@@ -89,7 +89,7 @@ describe('CHANGE USER STATE E2E TEST', () => {
         params: paramsData,
       };
 
-      const stubFind = sandbox.stub(User, 'findByPk').resolves(foundDataNone);
+      const stubFind = sandbox.stub(User, 'findOne').resolves(foundDataNone);
 
       await updateUserStatusCtrl(req, res);
 

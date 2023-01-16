@@ -23,6 +23,12 @@
     }
   },
   "foundData": {
+    "validCategory": {
+      "id": 2,
+      "title": "Phython",
+      "createdAt": "2022-12-10T17:40:00.128Z",
+      "updatedAt": "2022-12-10T17:40:00.128Z"
+    },
     "valid": {
       "id": 2,
       "title": "My second question title",

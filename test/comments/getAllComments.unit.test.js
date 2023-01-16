@@ -15,13 +15,16 @@ chai.use(chaiHttp);
 const commentData = require('./getAllComments.data.mock.json');
 const Comment = require('../../comments/models/Comment');
 const Answer = require('../../answers/models/Answer');
+const User = require('../../users/models/User');
+
 const getAllCommentsService = require('../../comments/services/getAllComments.service');
 
 // get all comments unit test
 describe('GET ALL COMMENTS UNIT TEST', () => {
   const queryData = { ...commentData.queryData.valid };
-  const paramsData = { ...commentData.paramsData.valid };
+  const inputData = { ...commentData.bodyData.valid };
   const foundDataAnswer = { ...commentData.foundData.valid };
+  const foundDataUser = { ...commentData.foundData.validUser };
 
   const stubData = [
     {
@@ -48,11 +51,13 @@ describe('GET ALL COMMENTS UNIT TEST', () => {
 
   it('should get all comments successfully', async () => {
     const stubFindAnswer = sandbox.stub(Answer, 'findByPk').resolves(foundDataAnswer);
+    const stubFindUser = sandbox.stub(User, 'findOne').resolves(foundDataUser);
     const stubFindComments = sandbox.stub(Comment, 'findAll').resolves(stubData);
 
-    const response = await getAllCommentsService(paramsData.answerId, queryData);
+    const response = await getAllCommentsService(inputData.answerId, queryData);
 
     expect(stubFindAnswer.calledOnce).to.be.true;
+    expect(stubFindUser.calledOnce).to.be.true;
     expect(stubFindComments.calledOnce).to.be.true;
     expect(response).to.be.an('array');
     expect(response).to.be.an('array').that.is.not.empty;

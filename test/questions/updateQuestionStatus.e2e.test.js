@@ -24,10 +24,10 @@ describe('CHANGE USER STATE E2E TEST', () => {
 
     const stubData = {
       id: foundData.id,
-      firstname: foundData.firstname,
-      lastname: foundData.lastname,
-      questionname: foundData.questionname,
-      email: foundData.email,
+      title: foundData.title,
+      body: foundData.body,
+      CategoryId: foundData.CategoryId,
+      UserId: foundData.UserId,
       isActive: false,
       createdAt: foundData.createdAt,
       updatedAt: foundData.updatedAt,
@@ -63,7 +63,7 @@ describe('CHANGE USER STATE E2E TEST', () => {
       expect(json.calledOnce).to.be.true;
       expect(json.args[0][0].success).to.equal(true);
       expect(json.args[0][0].message).to.equal('Question status updated successfully');
-      expect(json.args[0][0].data).to.equal(stubData.isActive);
+      expect(json.args[0][0].data).to.contain(stubData);
     });
   });
 

@@ -14,6 +14,7 @@ chai.use(chaiHttp);
 // import other libraries
 const commentData = require('./updatePersonalComment.data.mock.json');
 const Comment = require('../../comments/models/Comment');
+const Answer = require('../../answers/models/Answer');
 const updateCommentCtrl = require('../../comments/controllers/updatePersonalComment.controller');
 
 // update comment test
@@ -23,18 +24,15 @@ describe('UPDATE COMMENT ANSWER E2E TEST', () => {
     const userData = { ...commentData.userData.valid };
     const paramsData = { ...commentData.paramsData.valid };
     const foundData = { ...commentData.foundData.valid };
+    const foundDataAnswer = { ...commentData.foundData.validAnswer };
 
     const stubData = {
-      id: paramsData.id,
+      id: 1,
       body: inputData.body,
       AnswerId: inputData.AnswerId,
       UserId: userData.id,
-      upVotes: foundData.upVotes,
-      downVotes: foundData.downVotes,
-      isAcceptedComment: foundData.isAcceptedComment,
-      isActive: foundData.isActive,
       createdAt: foundData.createdAt,
-      updatedAt: '2022-11-10T17:40:00.128Z',
+      updatedAt: '2022-11-09T12:40:46.128Z',
     };
 
     let status; let json; let res;
@@ -50,22 +48,26 @@ describe('UPDATE COMMENT ANSWER E2E TEST', () => {
       sandbox.restore();
     });
 
-    it('should update a comment successfully', async () => {
+    it('should update comment successfully', async () => {
       const req = {
         body: inputData,
         user: userData,
         params: paramsData,
       };
 
-      const stubFindOne = sandbox.stub(Comment, 'findOne').resolves(foundData);
-      const stubUpdate = sandbox.stub(Comment, 'update').resolves();
-      const stubFindByPk = sandbox.stub(Comment, 'findByPk').resolves(stubData);
+      const foundDataSaveComment = {
+        ...foundData,
+        save: sandbox.stub().resolves(stubData),
+      };
+
+      const stubFindAnswer = sandbox.stub(Answer, 'findOne').resolves(foundDataAnswer);
+      const stubFindOne = sandbox.stub(Comment, 'findOne').resolves(foundDataSaveComment);
 
       await updateCommentCtrl(req, res);
 
+      expect(stubFindAnswer.calledOnce).to.be.true;
       expect(stubFindOne.calledOnce).to.be.true;
-      expect(stubUpdate.calledOnce).to.be.true;
-      expect(stubFindByPk.calledOnce).to.be.true;
+      expect(foundDataSaveComment.save.calledOnce).to.be.true;
       expect(status.calledOnce).to.be.true;
       expect(status.args[0][0]).to.equal(200);
       expect(json.calledOnce).to.be.true;
@@ -86,25 +88,27 @@ describe('UPDATE COMMENT ANSWER E2E TEST', () => {
     });
 
     afterEach(() => {
-      Comment.findOne.restore();
+      sandbox.restore();
     });
 
     it('should not update a comment successfully when comment is not found by id', async () => {
-      const inputData = { ...commentData.bodyData.valid.commentInfo };
+      const inputData = { ...commentData.bodyData.valid };
       const userData = { ...commentData.userData.valid };
       const paramsData = { ...commentData.paramsData.invalid };
       const foundDataNone = commentData.foundData.invalid;
+      const foundDataAnswer = { ...commentData.foundData.validAnswer };
 
       const req = {
         body: inputData,
         user: userData,
         params: paramsData,
       };
-
-      const stubFindOne = sinon.stub(Comment, 'findOne').resolves(foundDataNone);
+      const stubFindAnswer = sandbox.stub(Answer, 'findOne').resolves(foundDataAnswer);
+      const stubFindOne = sandbox.stub(Comment, 'findOne').resolves(foundDataNone);
 
       await updateCommentCtrl(req, res);
 
+      expect(stubFindAnswer.calledOnce).to.be.true;
       expect(stubFindOne.calledOnce).to.be.true;
       expect(status.calledOnce).to.be.true;
       expect(status.args[0][0]).to.equal(404);
@@ -114,10 +118,11 @@ describe('UPDATE COMMENT ANSWER E2E TEST', () => {
     });
 
     it('should not update a comment successfully when logged in user is not creator of the comment', async () => {
-      const inputData = { ...commentData.bodyData.valid.commentInfo };
+      const inputData = { ...commentData.bodyData.valid };
       const userData = { ...commentData.userData.invalid };
       const paramsData = { ...commentData.paramsData.valid };
       const foundData = { ...commentData.foundData.invalidUser };
+      const foundDataAnswer = { ...commentData.foundData.validAnswer };
 
       const req = {
         body: inputData,
@@ -125,16 +130,18 @@ describe('UPDATE COMMENT ANSWER E2E TEST', () => {
         params: paramsData,
       };
 
-      const stubFindOne = sinon.stub(Comment, 'findOne').resolves(foundData);
+      const stubFindAnswer = sandbox.stub(Answer, 'findOne').resolves(foundDataAnswer);
+      const stubFindOne = sandbox.stub(Comment, 'findOne').resolves(foundData);
 
       await updateCommentCtrl(req, res);
 
+      expect(stubFindAnswer.calledOnce).to.be.true;
       expect(stubFindOne.calledOnce).to.be.true;
       expect(status.calledOnce).to.be.true;
-      expect(status.args[0][0]).to.equal(401);
+      expect(status.args[0][0]).to.equal(403);
       expect(json.calledOnce).to.be.true;
       expect(json.args[0][0].success).to.equal(false);
-      expect(json.args[0][0].message).to.equal('Unauthorized');
+      expect(json.args[0][0].message).to.equal('You are not allowed to update comment');
     });
   });
 });

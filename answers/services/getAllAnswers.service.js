@@ -4,9 +4,9 @@ const Question = require('../../questions/models/Question');
 const answerFilters = require('../helpers/answerFilters');
 
 // get all answers service
-const getAllAnswersService = async (questionId, queryStr) => {
+const getAllAnswersService = async (QuestionId, queryStr) => {
   // fetch question by id
-  const question = await Question.findByPk(questionId);
+  const question = await Question.findByPk(QuestionId);
 
   // check if question already exist
   if (!question) {
@@ -14,7 +14,7 @@ const getAllAnswersService = async (questionId, queryStr) => {
   }
 
   // filter answers
-  const answers = answerFilters.filterItems(questionId, queryStr);
+  const answers = answerFilters.filterItems(QuestionId, queryStr);
 
   return answers;
 };

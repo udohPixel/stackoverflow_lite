@@ -24,8 +24,8 @@ const deleteQuestionService = async (UserId, RoleId, questionId) => {
   const role = await Role.findByPk(RoleId);
 
   // check if currently logged in user is creator of the question
-  if ((UserId !== question.UserId) || !isAdmin(role.title)) {
-    throw new ApplicationException('Unauthorized', 401);
+  if (!(UserId === question.UserId || isAdmin(role.title))) {
+    throw new ApplicationException('You are not allowed to delete question', 403);
   }
 
   // delete question

@@ -22,6 +22,17 @@
     }
   },
   "foundData": {
+    "validQuestion": {
+      "id": 2,
+      "title": "My second question title",
+      "body": "This is a sample question content for my second question",
+      "CategoryId": 2,
+      "UserId": 1,
+      "totalAnswers": null,
+      "isActive": true,
+      "createdAt": "2022-12-21T13:43:06.000Z",
+      "updatedAt": "2022-12-22T10:52:54.000Z"
+    },
     "valid": {
       "id": 2,
       "body": "This is a sample answer content for my second question",

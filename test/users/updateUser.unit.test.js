@@ -30,6 +30,7 @@ describe('UPDATE USER UNIT TEST', () => {
     lastname: inputData.lastname,
     username: inputData.username,
     email: inputData.email,
+    RoleId: inputData.RoleId,
     facebook: inputData.facebook,
     twitter: inputData.twitter,
     isActive: true,
@@ -42,10 +43,13 @@ describe('UPDATE USER UNIT TEST', () => {
   });
 
   it('should update user information successfully', async () => {
-    const stubFindOne = sandbox.stub(User, 'findOne').resolves(foundData);
+    const foundDataUpdateUser = {
+      ...foundData,
+      save: sandbox.stub().resolves(stubData),
+    };
+
+    const stubFindOne = sandbox.stub(User, 'findOne').resolves(foundDataUpdateUser);
     const stubFindAll = sandbox.stub(User, 'findAll').resolves(foundDataNone);
-    const stubUpdate = sandbox.stub(User, 'update').resolves();
-    const stubFindId = sandbox.stub(User, 'findByPk').resolves(stubData);
 
     const userInfo = { ...inputData };
 
@@ -53,14 +57,13 @@ describe('UPDATE USER UNIT TEST', () => {
 
     expect(stubFindOne.calledOnce).to.be.true;
     expect(stubFindAll.calledTwice).to.be.true;
-    expect(stubUpdate.calledOnce).to.be.true;
-    expect(stubFindId.calledOnce).to.be.true;
     expect(response).to.be.an('object');
     expect(response).to.have.property('id', stubData.id);
     expect(response).to.have.property('firstname', stubData.firstname);
     expect(response).to.have.property('lastname', stubData.lastname);
     expect(response).to.have.property('username', stubData.username);
     expect(response).to.have.property('email', stubData.email);
+    expect(response).to.have.property('RoleId', stubData.RoleId);
     expect(response).to.have.property('isActive', stubData.isActive);
     expect(response).to.have.property('facebook', stubData.facebook);
     expect(response).to.have.property('twitter', stubData.twitter);

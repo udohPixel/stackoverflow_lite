@@ -3,7 +3,6 @@ const { Op } = require('sequelize');
 const Answer = require('../../answers/models/Answer');
 const Vote = require('../models/Vote');
 const ApplicationException = require('../../common/ApplicationException');
-const { isEmpty } = require('../../common/helpers');
 
 const downvoteAnswerService = async (AnswerId, UserId) => {
   // fetch answer by id from dB
@@ -14,21 +13,18 @@ const downvoteAnswerService = async (AnswerId, UserId) => {
     throw new ApplicationException('Answer does not exist', 404);
   }
 
-  const userOption = { UserId: { [Op.eq]: UserId } };
-  const answerOption = { AnswerId: { [Op.eq]: AnswerId } };
-
   // fetch user voted answer
-  const hasVotedAnswer = await Vote.findAll({
+  const hasVotedAnswer = await Vote.findOne({
     where: {
       [Op.and]: [
-        userOption,
-        answerOption,
+        { UserId: { [Op.eq]: UserId } },
+        { AnswerId: { [Op.eq]: AnswerId } },
       ],
     },
   });
 
   // check if user has voted answer
-  if (isEmpty(hasVotedAnswer)) {
+  if (!hasVotedAnswer) {
     // create new user answer downvote
     const newDownvote = await Vote.create({
       AnswerId: Number(AnswerId), UserId, isUpvote: false,
@@ -45,34 +41,15 @@ const downvoteAnswerService = async (AnswerId, UserId) => {
     return newDownvote;
   }
 
-  // fetch user downvoted answer
-  const hasDownvotedAnswer = await Vote.findOne({
-    where: {
-      [Op.and]: [
-        userOption,
-        answerOption,
-        { isUpvote: { [Op.eq]: false } },
-      ],
-    },
-  });
-
   // check if user has downvoted answer
-  if (hasDownvotedAnswer) {
+  if (hasVotedAnswer.isUpvote === false) {
     throw new ApplicationException('You have already downvoted this answer');
   }
 
+  hasVotedAnswer.isUpvote = false;
+
   // update user downvoted answer
-  const updatedDownvote = await Vote.update(
-    { isUpvote: false },
-    {
-      where: {
-        [Op.and]: [
-          userOption,
-          answerOption,
-        ],
-      },
-    },
-  );
+  const updatedDownvote = await hasVotedAnswer.save();
 
   // decrease total answer upvotes & increase total answer downvotes
   await Answer.update(

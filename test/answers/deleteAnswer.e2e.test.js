@@ -25,7 +25,6 @@ describe('DELETE ANSWER E2E TEST', () => {
     const userData = { ...deleteData.userData.valid };
     const foundData = { ...deleteData.foundData.valid };
     const foundDataRole = { ...deleteData.foundData.validRole };
-    const foundDataAll = { ...deleteData.foundData.validAllAnswers };
 
     const stubData = {
       id: foundData.id,
@@ -35,6 +34,7 @@ describe('DELETE ANSWER E2E TEST', () => {
       upVotes: foundData.upVotes,
       downVotes: foundData.downVotes,
       isAcceptedAnswer: foundData.isAcceptedAnswer,
+      totalComments: foundData.totalComments,
       isActive: foundData.isActive,
       createdAt: foundData.createdAt,
       updatedAt: foundData.updatedAt,
@@ -62,7 +62,6 @@ describe('DELETE ANSWER E2E TEST', () => {
       const stubFind = sandbox.stub(Answer, 'findOne').resolves(foundData);
       const stubFindRole = sandbox.stub(Role, 'findByPk').resolves(foundDataRole);
       const stubDelete = sandbox.stub(Answer, 'destroy').resolves(stubData);
-      const stubFindAll = sandbox.stub(Answer, 'findAll').resolves(foundDataAll);
       const stubUpdate = sandbox.stub(Question, 'update').resolves();
 
       await deleteAnswerCtrl(req, res);
@@ -70,7 +69,6 @@ describe('DELETE ANSWER E2E TEST', () => {
       expect(stubFind.calledOnce).to.be.true;
       expect(stubFindRole.calledOnce).to.be.true;
       expect(stubDelete.calledOnce).to.be.true;
-      expect(stubFindAll.calledOnce).to.be.true;
       expect(stubUpdate.calledOnce).to.be.true;
       expect(status.calledOnce).to.be.true;
       expect(status.args[0][0]).to.equal(200);

@@ -4,6 +4,7 @@ const ApplicationException = require('../../common/ApplicationException');
 const { isAdmin } = require('../../common/helpers');
 const Role = require('../../roles/models/Role');
 const Answer = require('../../answers/models/Answer');
+const { sequelize } = require('../../providers/db');
 
 // delete comment service
 const deleteCommentService = async (UserId, RoleId, commentId) => {
@@ -26,7 +27,7 @@ const deleteCommentService = async (UserId, RoleId, commentId) => {
 
   // check if currently logged in user is creator of the comment
   if (!((UserId === comment.UserId) || isAdmin(role.title))) {
-    throw new ApplicationException('Unauthorized', 401);
+    throw new ApplicationException('You are not allowed to delete comment', 403);
   }
 
   // delete comment
@@ -38,16 +39,8 @@ const deleteCommentService = async (UserId, RoleId, commentId) => {
     },
   );
 
-  // fetch all comments
-  const allComments = await Comment.findAll({
-    where: {
-      AnswerId: Number(comment.AnswerId),
-    },
-  });
-
-  // update totalComments
   await Answer.update(
-    { totalComments: allComments.length },
+    { totalComments: sequelize.literal('totalComments - 1') },
     {
       where: {
         id: Number(comment.AnswerId),

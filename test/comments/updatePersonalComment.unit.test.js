@@ -14,7 +14,8 @@ chai.use(chaiHttp);
 // import other libraries
 const commentData = require('./updatePersonalComment.data.mock.json');
 const Comment = require('../../comments/models/Comment');
-const updateQuestnService = require('../../comments/services/updatePersonalComment.service');
+const Answer = require('../../answers/models/Answer');
+const updateCommentService = require('../../comments/services/updatePersonalComment.service');
 
 // update comment test
 describe('UPDATE PERSONAL COMMENT UNIT TEST', () => {
@@ -22,9 +23,10 @@ describe('UPDATE PERSONAL COMMENT UNIT TEST', () => {
   const userData = { ...commentData.userData.valid };
   const paramsData = { ...commentData.paramsData.valid };
   const foundData = { ...commentData.foundData.valid };
+  const foundDataAnswer = { ...commentData.foundData.validAnswer };
 
   const stubData = {
-    id: 1,
+    id: paramsData.id,
     body: inputData.body,
     AnswerId: inputData.AnswerId,
     UserId: userData.id,
@@ -37,17 +39,21 @@ describe('UPDATE PERSONAL COMMENT UNIT TEST', () => {
   });
 
   it('should update comment successfully', async () => {
-    const stubFindOne = sandbox.stub(Comment, 'findOne').resolves(foundData);
-    const stubUpdate = sandbox.stub(Comment, 'update').resolves();
-    const stubFindByPk = sandbox.stub(Comment, 'findByPk').resolves(stubData);
+    const foundDataSaveComment = {
+      ...foundData,
+      save: sandbox.stub().resolves(stubData),
+    };
+
+    const stubFindAnswer = sandbox.stub(Answer, 'findOne').resolves(foundDataAnswer);
+    const stubFindOne = sandbox.stub(Comment, 'findOne').resolves(foundDataSaveComment);
 
     const { body, AnswerId } = inputData;
 
-    const response = await updateQuestnService(userData.id, paramsData.id, body, AnswerId);
+    const response = await updateCommentService(userData.id, paramsData.id, body, AnswerId);
 
+    expect(stubFindAnswer.calledOnce).to.be.true;
     expect(stubFindOne.calledOnce).to.be.true;
-    expect(stubUpdate.calledOnce).to.be.true;
-    expect(stubFindByPk.calledOnce).to.be.true;
+    expect(foundDataSaveComment.save.calledOnce).to.be.true;
     expect(response).to.be.an('object');
     expect(response).to.have.property('id', stubData.id);
     expect(response).to.have.property('body', stubData.body);

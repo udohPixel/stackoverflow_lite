@@ -10,6 +10,20 @@ const helperService = {
 
   // check if is empty
   isEmpty: (param) => (!param || param.length === 0),
+
+  // order params checker
+  orderItemsBy: (sortQueryStr, sortArray) => {
+    let orderParam; let orderValue;
+    if (sortQueryStr && sortArray.includes(sortQueryStr)) {
+      orderParam = sortQueryStr.substr(0, sortQueryStr.indexOf('-'));
+      orderValue = sortQueryStr.substr(sortQueryStr.indexOf('-') + 1).toUpperCase();
+    } else {
+      orderParam = 'createdAt';
+      orderValue = 'DESC';
+    }
+
+    return { orderParam, orderValue };
+  },
 };
 
 // export helper

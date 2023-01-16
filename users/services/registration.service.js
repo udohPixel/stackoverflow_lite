@@ -32,7 +32,7 @@ const registrationService = async (firstname, lastname, username, email, passwor
   const hashedPassword = await hashPassword(password);
 
   // save new user object in DB
-  const newUser = User.create({
+  const newUser = await User.create({
     firstname,
     lastname,
     username,
@@ -40,7 +40,18 @@ const registrationService = async (firstname, lastname, username, email, passwor
     password: hashedPassword,
   });
 
-  return newUser;
+  const theNewUser = {
+    id: newUser.id,
+    firstname,
+    lastname,
+    username,
+    email,
+    isActive: newUser.isActive,
+    createdAt: newUser.createdAt,
+    updatedAt: newUser.updatedAt,
+  };
+
+  return theNewUser;
 };
 
 // export service

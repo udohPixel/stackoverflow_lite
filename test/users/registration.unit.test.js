@@ -27,7 +27,6 @@ describe('REGISTER USER UNIT TEST', () => {
     lastname: inputData.lastname,
     username: inputData.username,
     email: inputData.email,
-    password: inputData.password,
     isActive: true,
     createdAt: '2022-11-09T12:40:46.128Z',
     updatedAt: '2022-11-09T12:40:46.128Z',
@@ -37,14 +36,14 @@ describe('REGISTER USER UNIT TEST', () => {
     sandbox.restore();
   });
 
-  it('should create registration successfully', async () => {
+  it('should register user successfully', async () => {
     const stubFindOne = sandbox.stub(User, 'findOne').resolves(foundData);
     const stubFindAll = sandbox.stub(User, 'findAll').resolves(foundData);
     const stubCreate = sandbox.stub(User, 'create').resolves(stubData);
 
     const {
       firstname, lastname, username, email, password,
-    } = stubData;
+    } = inputData;
 
     const response = await registrationService(firstname, lastname, username, email, password);
 
@@ -57,7 +56,6 @@ describe('REGISTER USER UNIT TEST', () => {
     expect(response).to.have.property('lastname', stubData.lastname);
     expect(response).to.have.property('username', stubData.username);
     expect(response).to.have.property('email', stubData.email);
-    expect(response).to.have.property('password', stubData.password);
     expect(response).to.have.property('isActive', stubData.isActive);
     expect(response).to.have.property('createdAt', stubData.createdAt);
     expect(response).to.have.property('updatedAt', stubData.updatedAt);

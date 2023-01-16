@@ -14,12 +14,14 @@ chai.use(chaiHttp);
 // import other libraries
 const addQuestionData = require('./addQuestion.data.mock.json');
 const Question = require('../../questions/models/Question');
+const Category = require('../../categories/models/Category');
 const addQuestionService = require('../../questions/services/addQuestion.service');
 
 // add question unit test
 describe('ADD QUESTION UNIT TEST', () => {
   const inputData = { ...addQuestionData.bodyData.valid };
   const userData = { ...addQuestionData.userData.valid };
+  const foundDataCategory = { ...addQuestionData.foundData.validCategory };
   const foundDataNone = addQuestionData.foundData.valid;
 
   const stubData = {
@@ -37,6 +39,7 @@ describe('ADD QUESTION UNIT TEST', () => {
   });
 
   it('should create addQuestion successfully', async () => {
+    const stubFindCategory = sandbox.stub(Category, 'findOne').resolves(foundDataCategory);
     const stubFindOne = sandbox.stub(Question, 'findOne').resolves(foundDataNone);
     const stubCreate = sandbox.stub(Question, 'create').resolves(stubData);
 
@@ -44,6 +47,7 @@ describe('ADD QUESTION UNIT TEST', () => {
 
     const response = await addQuestionService(userData.id, title, body, CategoryId);
 
+    expect(stubFindCategory.calledOnce).to.be.true;
     expect(stubFindOne.calledOnce).to.be.true;
     expect(stubCreate.calledOnce).to.be.true;
     expect(response).to.be.an('object');

@@ -15,7 +15,7 @@ const deleteAnswer = require('../../../controllers/deleteAnswer.controller');
 const updatePersonalAnswer = require('../../../controllers/updatePersonalAnswer.controller');
 const upvoteAnswer = require('../../../../votes/controllers/upvoteAnswer.controller');
 const downvoteAnswer = require('../../../../votes/controllers/downvoteAnswer.controller');
-const getAllComments = require('../../../../comments/controllers/getAllComments.controller');
+const getAllAnswers = require('../../../controllers/getAllAnswers.controller');
 
 // create router
 const router = express.Router();
@@ -31,11 +31,11 @@ router.post('/', isLoggedIn, isAddAnswerValidated, addAnswer);
 
 /**
  * @desc    - route for updating accepted answer
- * @api     - /api/v1/answers/:id/accepted/update
+ * @api     - /api/v1/answers/:id/accepted
  * @access  - PRIVATE
  * @type    - PUT
  */
-router.put('/:id/accepted/update', isLoggedIn, updateAcceptedAnswer);
+router.put('/:id/accepted', isLoggedIn, updateAcceptedAnswer);
 
 /**
  * @desc    - route for delete answer
@@ -70,12 +70,12 @@ router.put('/:id/upvote', isLoggedIn, upvoteAnswer);
 router.put('/:id/downvote', isLoggedIn, downvoteAnswer);
 
 /**
- * @desc    - route for fetching all answer comments
- * @api     - /api/v1/answers/:answerId/comments
+ * @desc    - route for fetching all answers to a question
+ * @api     - /api/v1/answers
  * @access  - PUBLIC
  * @type    - GET
  */
-router.get('/:answerId/comments', getAllComments);
+router.get('/', getAllAnswers);
 
 // export router
 module.exports = router;

@@ -8,7 +8,11 @@ const { hashPassword } = require('../helpers/checkers');
 // update personal user service
 const updatePersonalPasswordService = async (userId, oldPassword, password) => {
   // fetch user by id from dB
-  const user = await User.findOne({ where: { id: userId } });
+  const user = await User.findOne({
+    where: {
+      id: userId,
+    },
+  });
 
   // check if user already exits in dB
   if (!user) {
@@ -44,7 +48,24 @@ const updatePersonalPasswordService = async (userId, oldPassword, password) => {
     message: passwordResetMessage,
   });
 
-  return theHashedPassword;
+  const theUser = {
+    id: user.id,
+    firstname: user.firstname,
+    lastname: user.lastname,
+    username: user.username,
+    email: user.email,
+    bio: user.bio,
+    facebook: user.facebook,
+    youtube: user.youtube,
+    instagram: user.instagram,
+    linkedIn: user.linkedIn,
+    twitter: user.twitter,
+    isActive: user.isActive,
+    createdAt: user.createdAt,
+    updatedAt: user.updatedAt,
+  };
+
+  return theUser;
 };
 
 // export service

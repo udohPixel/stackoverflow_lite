@@ -11,16 +11,13 @@ const updatePersonalPasswordCtrl = async (req, res) => {
     const userId = req.user.id;
 
     // update personal password service
-    await updatePersonalPasswordService(
+    const user = await updatePersonalPasswordService(
       userId,
       oldPassword,
       password,
     );
 
-    return apiResponse.success(
-      res,
-      'Password updated successfully',
-    );
+    return apiResponse.success(res, 'Password updated successfully', user);
   } catch (error) {
     return apiResponse.errorObject(res, error, null, 'personal-password-update');
   }

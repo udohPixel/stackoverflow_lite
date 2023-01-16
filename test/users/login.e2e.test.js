@@ -25,7 +25,7 @@ describe('LOGIN E2E TEST', () => {
     const inputData = { ...loginData.bodyData.valid };
     const foundData = loginData.foundData.valid;
 
-    const stubData = token.token;
+    const stubData = token.tokenObject;
 
     let status; let json; let res;
 
@@ -40,13 +40,13 @@ describe('LOGIN E2E TEST', () => {
       sandbox.restore();
     });
 
-    it('should create a situation successfully', async () => {
+    it('should login user successfully', async () => {
       const req = {
         body: inputData,
       };
 
       const stubFind = sandbox.stub(User, 'findOne').resolves(foundData);
-      const stubSign = sandbox.stub(jwt, 'sign').resolves(stubData);
+      const stubSign = sandbox.stub(jwt, 'sign').resolves(stubData.token);
 
       await loginCtrl(req, res);
 
@@ -57,7 +57,7 @@ describe('LOGIN E2E TEST', () => {
       expect(json.calledOnce).to.be.true;
       expect(json.args[0][0].success).to.equal(true);
       expect(json.args[0][0].message).to.equal('You logged in successfully');
-      expect(json.args[0][0].data).to.equal(`Bearer ${stubData}`);
+      expect(json.args[0][0].data.token).to.equal(stubData.token);
     });
   });
 

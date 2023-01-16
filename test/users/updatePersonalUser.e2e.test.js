@@ -21,7 +21,7 @@ describe('UPDATE PERSONAL USER E2E TEST', () => {
   describe('POSITIVE TEST', () => {
     const inputData = { ...updateData.bodyData.valid.userInfo };
     const userData = { ...updateData.userData.valid };
-    const foundDataId = { ...updateData.foundData.valid };
+    const foundData = { ...updateData.foundData.valid };
     const foundDataNone = updateData.foundData.validNone;
 
     const stubData = {
@@ -56,17 +56,18 @@ describe('UPDATE PERSONAL USER E2E TEST', () => {
         user: userData,
       };
 
-      const stubFindByPkUser = sandbox.stub(User, 'findByPk').resolves(foundDataId);
+      const foundDataUpdateUser = {
+        ...foundData,
+        save: sandbox.stub().resolves(stubData),
+      };
+
+      const stubFindOne = sandbox.stub(User, 'findOne').resolves(foundDataUpdateUser);
       const stubFindAll = sandbox.stub(User, 'findAll').resolves(foundDataNone);
-      const stubUpdate = sandbox.stub(User, 'update').resolves();
-      const stubFindOneUser = sandbox.stub(User, 'findOne').resolves(stubData);
 
       await updatePersonalUserCtrl(req, res);
 
-      expect(stubFindByPkUser.calledOnce).to.be.true;
+      expect(stubFindOne.calledOnce).to.be.true;
       expect(stubFindAll.calledTwice).to.be.true;
-      expect(stubUpdate.calledOnce).to.be.true;
-      expect(stubFindOneUser.calledOnce).to.be.true;
       expect(status.calledOnce).to.be.true;
       expect(status.args[0][0]).to.equal(200);
       expect(json.calledOnce).to.be.true;
@@ -102,11 +103,11 @@ describe('UPDATE PERSONAL USER E2E TEST', () => {
         user: userData,
       };
 
-      const stubFindByPkUser = sandbox.stub(User, 'findByPk').resolves(foundDataNone);
+      const stubFindOneUser = sandbox.stub(User, 'findOne').resolves(foundDataNone);
 
       await updatePersonalUserCtrl(req, res);
 
-      expect(stubFindByPkUser.calledOnce).to.be.true;
+      expect(stubFindOneUser.calledOnce).to.be.true;
       expect(status.calledOnce).to.be.true;
       expect(status.args[0][0]).to.equal(404);
       expect(json.calledOnce).to.be.true;
@@ -120,12 +121,12 @@ describe('UPDATE PERSONAL USER E2E TEST', () => {
         user: userData,
       };
 
-      const stubFindByPkUser = sandbox.stub(User, 'findByPk').resolves(foundDataId);
+      const stubFindOneUser = sandbox.stub(User, 'findOne').resolves(foundDataId);
       const stubFindEmail = sandbox.stub(User, 'findAll').resolves(foundDataEmail);
 
       await updatePersonalUserCtrl(req, res);
 
-      expect(stubFindByPkUser.calledOnce).to.be.true;
+      expect(stubFindOneUser.calledOnce).to.be.true;
       expect(stubFindEmail.calledOnce).to.be.true;
       expect(status.calledOnce).to.be.true;
       expect(status.args[0][0]).to.equal(409);

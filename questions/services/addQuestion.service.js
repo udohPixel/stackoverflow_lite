@@ -1,11 +1,22 @@
 // import required modules
 const ApplicationException = require('../../common/ApplicationException');
+const Category = require('../../categories/models/Category');
 
 // import Question model
 const Question = require('../models/Question');
 
 // add question service
 const addQuestionService = async (UserId, title, body, CategoryId) => {
+  // fetch category
+  const category = await Category.findOne({
+    where: { id: CategoryId },
+  });
+
+  // check if category exists or not in dB
+  if (!category) {
+    throw new ApplicationException('Category does not exist', 404);
+  }
+
   // fetch question
   const question = await Question.findOne({
     where: { title },
