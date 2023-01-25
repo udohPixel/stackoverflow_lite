@@ -25,7 +25,6 @@ describe('DELETE COMMENT E2E TEST', () => {
     const userData = { ...deleteData.userData.valid };
     const foundData = { ...deleteData.foundData.valid };
     const foundDataRole = { ...deleteData.foundData.validRole };
-    const foundDataAll = { ...deleteData.foundData.validAllComments };
 
     const stubData = {
       id: foundData.id,
@@ -58,7 +57,6 @@ describe('DELETE COMMENT E2E TEST', () => {
       const stubFind = sandbox.stub(Comment, 'findOne').resolves(foundData);
       const stubFindRole = sandbox.stub(Role, 'findByPk').resolves(foundDataRole);
       const stubDelete = sandbox.stub(Comment, 'destroy').resolves(stubData);
-      const stubFindAll = sandbox.stub(Comment, 'findAll').resolves(foundDataAll);
       const stubUpdate = sandbox.stub(Answer, 'update').resolves();
 
       await deleteCommentCtrl(req, res);
@@ -66,7 +64,6 @@ describe('DELETE COMMENT E2E TEST', () => {
       expect(stubFind.calledOnce).to.be.true;
       expect(stubFindRole.calledOnce).to.be.true;
       expect(stubDelete.calledOnce).to.be.true;
-      expect(stubFindAll.calledOnce).to.be.true;
       expect(stubUpdate.calledOnce).to.be.true;
       expect(status.calledOnce).to.be.true;
       expect(status.args[0][0]).to.equal(200);

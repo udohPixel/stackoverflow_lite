@@ -55,6 +55,7 @@ describe('UPDATE PERSONAL PASSWORD E2E TEST', () => {
       expect(json.calledOnce).to.be.true;
       expect(json.args[0][0].success).to.equal(true);
       expect(json.args[0][0].message).to.equal('Password updated successfully');
+      expect(json.args[0][0].data).to.be.an('object');
     });
   });
 

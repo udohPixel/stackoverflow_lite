@@ -14,12 +14,15 @@ chai.use(chaiHttp);
 // import other libraries
 const questionData = require('./getAllQuestions.data.mock.json');
 const Question = require('../../questions/models/Question');
+const User = require('../../users/models/User');
 const Category = require('../../categories/models/Category');
+
 const getAllQuestionsService = require('../../questions/services/getAllQuestions.service');
 
 // get all questions unit test
 describe('GET ALL QUESTIONS UNIT TEST', () => {
   const queryData = { ...questionData.queryData.valid };
+  const foundDataUser = { ...questionData.foundData.validUser };
   const foundDataCategory = { ...questionData.foundData.validCategory };
 
   const stubData = [
@@ -50,11 +53,13 @@ describe('GET ALL QUESTIONS UNIT TEST', () => {
   });
 
   it('should get all questions successfully', async () => {
+    const stubFindUser = sandbox.stub(User, 'findOne').resolves(foundDataUser);
     const stubFindCategory = sandbox.stub(Category, 'findOne').resolves(foundDataCategory);
     const stubFindQuestions = sandbox.stub(Question, 'findAll').resolves(stubData);
 
     const response = await getAllQuestionsService(queryData);
 
+    expect(stubFindUser.calledOnce).to.be.true;
     expect(stubFindCategory.calledOnce).to.be.true;
     expect(stubFindQuestions.calledOnce).to.be.true;
     expect(response).to.be.an('array');

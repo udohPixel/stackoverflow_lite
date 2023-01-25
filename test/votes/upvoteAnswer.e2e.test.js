@@ -65,7 +65,7 @@ describe('UPVOTE ANSWER E2E TEST', () => {
       };
 
       const stubFindAnswer = sandbox.stub(Answer, 'findByPk').resolves(foundDataAnswer);
-      const stubFindVote = sandbox.stub(Vote, 'findAll').resolves(foundDataNone);
+      const stubFindVote = sandbox.stub(Vote, 'findOne').resolves(foundDataNone);
       const stubCreateVote = sandbox.stub(Vote, 'create').resolves(stubDataNewUpvote);
       const stubUpdateAnswer = sandbox.stub(Answer, 'update').resolves();
 
@@ -89,18 +89,19 @@ describe('UPVOTE ANSWER E2E TEST', () => {
         params: paramsData,
       };
 
+      const foundDataUpdateVote = {
+        ...foundDataVote,
+        save: sandbox.stub().resolves(stubDataUpdatedUpvote),
+      };
       const stubFindAnswer = sandbox.stub(Answer, 'findByPk').resolves(foundDataAnswer);
-      const stubFindVoteAll = sandbox.stub(Vote, 'findAll').resolves(foundDataVote);
-      const stubFindVoteOne = sandbox.stub(Vote, 'findOne').resolves(foundDataNone);
-      const stubUpdateVote = sandbox.stub(Vote, 'update').resolves(stubDataUpdatedUpvote);
+      const stubFindVote = sandbox.stub(Vote, 'findOne').resolves(foundDataUpdateVote);
       const stubUpdateAnswer = sandbox.stub(Answer, 'update').resolves();
 
       await upvoteAnswerCtrl(req, res);
 
       expect(stubFindAnswer.calledOnce).to.be.true;
-      expect(stubFindVoteAll.calledOnce).to.be.true;
-      expect(stubFindVoteOne.calledOnce).to.be.true;
-      expect(stubUpdateVote.calledOnce).to.be.true;
+      expect(stubFindVote.calledOnce).to.be.true;
+      expect(foundDataUpdateVote.save.calledOnce).to.be.true;
       expect(stubUpdateAnswer.calledOnce).to.be.true;
       expect(status.calledOnce).to.be.true;
       expect(status.args[0][0]).to.equal(200);
@@ -121,12 +122,8 @@ describe('UPVOTE ANSWER E2E TEST', () => {
       status.returns(res);
     });
 
-    after(() => {
-      sandbox.restore();
-    });
-
     afterEach(() => {
-      Answer.findByPk.restore();
+      sandbox.restore();
     });
 
     it('should not upvote an answer successfully when answer is not found by id', async () => {
@@ -139,7 +136,7 @@ describe('UPVOTE ANSWER E2E TEST', () => {
         params: paramsData,
       };
 
-      const stubFindAnswer = sinon.stub(Answer, 'findByPk').resolves(foundDataNone);
+      const stubFindAnswer = sandbox.stub(Answer, 'findByPk').resolves(foundDataNone);
 
       await upvoteAnswerCtrl(req, res);
 
@@ -156,8 +153,7 @@ describe('UPVOTE ANSWER E2E TEST', () => {
       const userData = { ...voteData.userData.valid };
       const paramsData = { ...voteData.paramsData.valid };
       const foundDataAnswer = { ...voteData.foundData.validAnswer };
-      const foundDataVoteAll = { ...voteData.foundData.validFoundVote };
-      const foundDataVoteOne = { ...voteData.foundData.invalidFoundVote };
+      const foundDataVote = { ...voteData.foundData.invalidFoundVote };
 
       const req = {
         user: userData,
@@ -165,14 +161,12 @@ describe('UPVOTE ANSWER E2E TEST', () => {
       };
 
       const stubFindAnswer = sandbox.stub(Answer, 'findByPk').resolves(foundDataAnswer);
-      const stubFindVoteAll = sandbox.stub(Vote, 'findAll').resolves(foundDataVoteAll);
-      const stubFindVoteOne = sandbox.stub(Vote, 'findOne').resolves(foundDataVoteOne);
+      const stubFindVote = sandbox.stub(Vote, 'findOne').resolves(foundDataVote);
 
       await upvoteAnswerCtrl(req, res);
 
       expect(stubFindAnswer.calledOnce).to.be.true;
-      expect(stubFindVoteAll.calledOnce).to.be.true;
-      expect(stubFindVoteOne.calledOnce).to.be.true;
+      expect(stubFindVote.calledOnce).to.be.true;
       expect(status.calledOnce).to.be.true;
       expect(status.args[0][0]).to.equal(400);
       expect(json.calledOnce).to.be.true;

@@ -20,7 +20,7 @@ const updatePersonalUserService = require('../../users/services/updatePersonalUs
 describe('UPDATE PERSONAL USER UNIT TEST', () => {
   const inputData = { ...updateData.bodyData.valid.userInfo };
   const userData = { ...updateData.userData.valid };
-  const foundDataId = { ...updateData.foundData.valid };
+  const foundData = { ...updateData.foundData.valid };
   const foundDataNone = updateData.foundData.validNone;
 
   const stubData = {
@@ -41,19 +41,20 @@ describe('UPDATE PERSONAL USER UNIT TEST', () => {
   });
 
   it('should update personal user information successfully', async () => {
-    const stubFindByPkUser = sandbox.stub(User, 'findByPk').resolves(foundDataId);
+    const foundDataUpdateUser = {
+      ...foundData,
+      save: sandbox.stub().resolves(stubData),
+    };
+
+    const stubFindOne = sandbox.stub(User, 'findOne').resolves(foundDataUpdateUser);
     const stubFindAll = sandbox.stub(User, 'findAll').resolves(foundDataNone);
-    const stubUpdate = sandbox.stub(User, 'update').resolves();
-    const stubFindOneUser = sandbox.stub(User, 'findOne').resolves(stubData);
 
     const userInfo = { ...inputData };
 
     const response = await updatePersonalUserService(userData.id, userInfo);
 
-    expect(stubFindByPkUser.calledOnce).to.be.true;
+    expect(stubFindOne.calledOnce).to.be.true;
     expect(stubFindAll.calledTwice).to.be.true;
-    expect(stubUpdate.calledOnce).to.be.true;
-    expect(stubFindOneUser.calledOnce).to.be.true;
     expect(response).to.be.an('object');
     expect(response).to.have.property('id', stubData.id);
     expect(response).to.have.property('firstname', stubData.firstname);

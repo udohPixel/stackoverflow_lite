@@ -24,7 +24,6 @@ describe('DELETE COMMENT UNIT TEST', () => {
   const userData = { ...deleteData.userData.valid };
   const foundData = { ...deleteData.foundData.valid };
   const foundDataRole = { ...deleteData.foundData.validRole };
-  const foundDataAll = { ...deleteData.foundData.validAllComments };
 
   const stubData = {
     id: foundData.id,
@@ -43,7 +42,6 @@ describe('DELETE COMMENT UNIT TEST', () => {
     const stubFind = sandbox.stub(Comment, 'findOne').resolves(foundData);
     const stubFindRole = sandbox.stub(Role, 'findByPk').resolves(foundDataRole);
     const stubDelete = sandbox.stub(Comment, 'destroy').resolves(stubData);
-    const stubFindAll = sandbox.stub(Comment, 'findAll').resolves(foundDataAll);
     const stubUpdate = sandbox.stub(Answer, 'update').resolves();
 
     const response = await deleteCommentService(userData.id, userData.RoleId, paramsData.id);
@@ -51,7 +49,6 @@ describe('DELETE COMMENT UNIT TEST', () => {
     expect(stubFind.calledOnce).to.be.true;
     expect(stubFindRole.calledOnce).to.be.true;
     expect(stubDelete.calledOnce).to.be.true;
-    expect(stubFindAll.calledOnce).to.be.true;
     expect(stubUpdate.calledOnce).to.be.true;
     const stubDeleteCallArg = stubDelete.getCalls()[0].args[0];
     expect(stubDeleteCallArg).to.be.an('object');

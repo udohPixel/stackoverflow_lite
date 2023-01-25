@@ -22,8 +22,7 @@ describe('ADD ANSWER E2E TEST', () => {
   describe('POSITIVE TEST', () => {
     const inputData = { ...addAnswerData.bodyData.valid };
     const userData = { ...addAnswerData.userData.valid };
-    const foundDataNone = addAnswerData.foundData.valid;
-    const foundDataAll = { ...addAnswerData.foundData.validAllAnswers };
+    const foundDataQuestion = { ...addAnswerData.foundData.validQuestion };
 
     const stubData = {
       id: 1,
@@ -57,16 +56,14 @@ describe('ADD ANSWER E2E TEST', () => {
         user: userData,
       };
 
-      const stubFindOne = sandbox.stub(Answer, 'findOne').resolves(foundDataNone);
+      const stubFindQuestion = sandbox.stub(Question, 'findOne').resolves(foundDataQuestion);
       const stubCreate = sandbox.stub(Answer, 'create').resolves(stubData);
-      const stubFindAll = sandbox.stub(Answer, 'findAll').resolves(foundDataAll);
       const stubUpdate = sandbox.stub(Question, 'update').resolves();
 
       await addAnswerCtrl(req, res);
 
-      expect(stubFindOne.calledOnce).to.be.true;
+      expect(stubFindQuestion.calledOnce).to.be.true;
       expect(stubCreate.calledOnce).to.be.true;
-      expect(stubFindAll.calledOnce).to.be.true;
       expect(stubUpdate.calledOnce).to.be.true;
       expect(status.calledOnce).to.be.true;
       expect(status.args[0][0]).to.equal(201);
@@ -78,9 +75,9 @@ describe('ADD ANSWER E2E TEST', () => {
   });
 
   describe('NEGATIVE TEST', () => {
-    const inputData = { ...addAnswerData.bodyData.valid };
+    const inputData = { ...addAnswerData.bodyData.invalid };
     const userData = { ...addAnswerData.userData.invalid };
-    const foundData = { ...addAnswerData.foundData.invalid };
+    const foundDataNone = addAnswerData.foundData.invalid;
 
     let status; let json; let res;
 
@@ -95,22 +92,22 @@ describe('ADD ANSWER E2E TEST', () => {
       sandbox.restore();
     });
 
-    it('should not add answer successfully when answer is found with same body', async () => {
+    it('should not create answer successfully when question is not found by id', async () => {
       const req = {
         body: inputData,
         user: userData,
       };
 
-      const stubFind = sandbox.stub(Answer, 'findOne').resolves(foundData);
+      const stubFind = sandbox.stub(Question, 'findOne').resolves(foundDataNone);
 
       await addAnswerCtrl(req, res);
 
       expect(stubFind.calledOnce).to.be.true;
       expect(status.calledOnce).to.be.true;
-      expect(status.args[0][0]).to.equal(400);
+      expect(status.args[0][0]).to.equal(404);
       expect(json.calledOnce).to.be.true;
       expect(json.args[0][0].success).to.equal(false);
-      expect(json.args[0][0].message).to.equal('Answer has already been added. Try another');
+      expect(json.args[0][0].message).to.equal('Question does not exist');
     });
   });
 });

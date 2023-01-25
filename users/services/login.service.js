@@ -37,12 +37,16 @@ const loginService = async (email, password) => {
     email: user.email,
   };
 
-  // generate token
-  const token = jwt.sign(payload, APP_PRIVATE_KEY, {
+  const signToken = await jwt.sign(payload, APP_PRIVATE_KEY, {
     expiresIn: APP_LOGIN_TOKEN_EXPIRATION,
   });
 
-  return token;
+  // generate token
+  const theToken = {
+    token: signToken,
+  };
+
+  return theToken;
 };
 
 // export service

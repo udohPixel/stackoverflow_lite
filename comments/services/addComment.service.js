@@ -1,5 +1,6 @@
 // import required modules
 const ApplicationException = require('../../common/ApplicationException');
+const { sequelize } = require('../../providers/db');
 const Answer = require('../../answers/models/Answer');
 
 // import Comment model
@@ -7,14 +8,15 @@ const Comment = require('../models/Comment');
 
 // add comment service
 const addCommentService = async (UserId, body, AnswerId) => {
-  // fetch comment
-  const comment = await Comment.findOne({
-    where: { body },
+  // fetch answer
+  const answer = await Answer.findOne({
+    where: { id: AnswerId },
+    attributes: ['id'],
   });
 
-  // check if comment exists or not in dB
-  if (comment) {
-    throw new ApplicationException('Comment has already been added. Try another');
+  // check if answer exists or not in dB
+  if (!answer) {
+    throw new ApplicationException('Answer does not exist', 404);
   }
 
   // save new comment object in DB
@@ -22,16 +24,9 @@ const addCommentService = async (UserId, body, AnswerId) => {
     UserId, body, AnswerId: Number(AnswerId),
   });
 
-  // fetch all comments
-  const allComments = await Comment.findAll({
-    where: {
-      AnswerId: Number(AnswerId),
-    },
-  });
-
   // update totalComments
   await Answer.update(
-    { totalComments: allComments.length + 1 },
+    { totalComments: sequelize.literal('totalComments + 1') },
     {
       where: {
         id: Number(AnswerId),

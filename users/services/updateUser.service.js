@@ -28,23 +28,11 @@ const updateUserService = async (userId, adminRoleId, userInfo) => {
         RoleId: { [Op.ne]: adminRoleId }, // should not update admin info
         id: userId,
       },
+      attributes: {
+        exclude: ['password'],
+      },
     },
   );
-
-  // pass user-imputed values into userValues object
-  const userValues = {
-    firstname,
-    lastname,
-    username,
-    email,
-    RoleId,
-    bio,
-    facebook,
-    youtube,
-    instagram,
-    linkedIn,
-    twitter,
-  };
 
   // check if user already exits in dB
   if (!user) {
@@ -57,6 +45,7 @@ const updateUserService = async (userId, adminRoleId, userInfo) => {
       where: {
         id: { [Op.ne]: userId },
         email: email.toLowerCase(),
+        attributes: ['id', 'email'],
       },
     },
   );
@@ -75,6 +64,7 @@ const updateUserService = async (userId, adminRoleId, userInfo) => {
       where: {
         id: { [Op.ne]: userId },
         username: username.toLowerCase(),
+        attributes: ['id', 'username'],
       },
     },
   );
@@ -88,24 +78,19 @@ const updateUserService = async (userId, adminRoleId, userInfo) => {
   }
 
   // update user
-  await User.update(
-    userValues,
-    {
-      where: {
-        id: userId,
-      },
-    },
-  );
+  user.firstname = firstname;
+  user.lastname = lastname;
+  user.username = username;
+  user.email = email;
+  user.RoleId = RoleId;
+  user.bio = bio;
+  user.facebook = facebook;
+  user.youtube = youtube;
+  user.instagram = instagram;
+  user.linkedIn = linkedIn;
+  user.twitter = twitter;
 
-  // get updated user
-  const updatedUser = await User.findByPk(
-    userId,
-    {
-      attributes: {
-        exclude: ['password', 'RoleId'],
-      },
-    },
-  );
+  const updatedUser = await user.save();
 
   return updatedUser;
 };

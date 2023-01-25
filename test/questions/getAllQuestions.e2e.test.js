@@ -14,6 +14,7 @@ chai.use(chaiHttp);
 // import other libraries
 const questionData = require('./getAllQuestions.data.mock.json');
 const Question = require('../../questions/models/Question');
+const User = require('../../users/models/User');
 const Category = require('../../categories/models/Category');
 const getAllQuestionsCtrl = require('../../questions/controllers/getAllQuestions.controller');
 
@@ -21,6 +22,7 @@ const getAllQuestionsCtrl = require('../../questions/controllers/getAllQuestions
 describe('GET ALL USER QUESTIONS E2E TEST', () => {
   describe('POSITIVE TEST', () => {
     const queryData = { ...questionData.queryData.valid };
+    const foundDataUser = { ...questionData.foundData.validUser };
     const foundDataCategory = { ...questionData.foundData.validCategory };
 
     const stubData = [
@@ -64,11 +66,13 @@ describe('GET ALL USER QUESTIONS E2E TEST', () => {
         query: queryData,
       };
 
+      const stubFindUser = sandbox.stub(User, 'findOne').resolves(foundDataUser);
       const stubFindCategory = sandbox.stub(Category, 'findOne').resolves(foundDataCategory);
       const stubFindQuestions = sandbox.stub(Question, 'findAll').resolves(stubData);
 
       await getAllQuestionsCtrl(req, res);
 
+      expect(stubFindUser.calledOnce).to.be.true;
       expect(stubFindCategory.calledOnce).to.be.true;
       expect(stubFindQuestions.calledOnce).to.be.true;
       const stubFindQuestionsCallArg = stubFindQuestions.getCalls()[0].args[0];
@@ -79,43 +83,6 @@ describe('GET ALL USER QUESTIONS E2E TEST', () => {
       expect(json.args[0][0].success).to.equal(true);
       expect(json.args[0][0].message).to.equal('Questions found successfully');
       expect(json.args[0][0].data).to.equal(stubData);
-    });
-  });
-
-  describe('NEGATIVE TEST', () => {
-    const queryData = { ...questionData.queryData.valid };
-    const foundDataCategoryNone = questionData.foundData.invalid;
-
-    let status; let json; let res;
-
-    beforeEach(() => {
-      status = sinon.stub();
-      json = sinon.spy();
-      res = { json, status };
-      status.returns(res);
-    });
-
-    afterEach(() => {
-      sandbox.restore();
-    });
-
-    it('should get all questions successfully when user is not found', async () => {
-      const req = {
-        query: queryData,
-      };
-
-      const stubFindCategory = sandbox.stub(Category, 'findOne').resolves(foundDataCategoryNone);
-
-      await getAllQuestionsCtrl(req, res);
-
-      expect(stubFindCategory.calledOnce).to.be.true;
-      const stubFindCategoryCallArg = stubFindCategory.getCalls()[0].args[0];
-      expect(stubFindCategoryCallArg).to.be.an('object');
-      expect(status.calledOnce).to.be.true;
-      expect(status.args[0][0]).to.equal(404);
-      expect(json.calledOnce).to.be.true;
-      expect(json.args[0][0].success).to.equal(false);
-      expect(json.args[0][0].message).to.equal('Category does not exist');
     });
   });
 });

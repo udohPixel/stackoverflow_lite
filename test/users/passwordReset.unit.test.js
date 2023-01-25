@@ -31,18 +31,6 @@ describe('PASSWORD RESET UNIT TEST', () => {
   const foundResetTokenData = { ...passwordResetData.foundData.valid };
   const foundUserData = { ...passwordResetData.foundData.valid1 };
 
-  const stubUpdateData = {
-    id: foundUserData.id,
-    firstname: foundUserData.firstname,
-    lastname: foundUserData.lastname,
-    username: foundUserData.username,
-    email: foundUserData.email,
-    password: inputData.password,
-    isActive: foundUserData.isActive,
-    createdAt: foundUserData.createdAt,
-    updatedAt: foundUserData.updatedAt,
-  };
-
   const stubMailTransportData = {
     email: 'john.doe123@gmail.com',
     subject: 'Stackoverflow-Lite account password reset',
@@ -62,7 +50,7 @@ describe('PASSWORD RESET UNIT TEST', () => {
   it('should create password reset token successfully', async () => {
     const stubResetToken = sandbox.stub(PasswordReset, 'findOne').resolves(foundResetTokenData);
     const stubFindUser = sandbox.stub(User, 'findOne').resolves(foundUserData);
-    const stubUpdate = sandbox.stub(User, 'update').resolves(stubUpdateData);
+    const stubUpdate = sandbox.stub(User, 'update').resolves();
     const stubMailer = stubCreateTransport(stubMailTransportData);
 
     const response = await passwordResetService(paramsData.token, inputData.password);
@@ -71,6 +59,6 @@ describe('PASSWORD RESET UNIT TEST', () => {
     expect(stubFindUser.calledOnce).to.be.true;
     expect(stubUpdate.calledOnce).to.be.true;
     expect(stubMailer.calledOnce).to.be.true;
-    expect(response).to.be.a('string');
+    expect(response).to.be.an('object');
   });
 });

@@ -50,7 +50,7 @@ describe('UPVOTE ANSWER UNIT TEST', () => {
 
   it('should create new answer upvote successfully when user upvoted answer does not exist', async () => {
     const stubFindAnswer = sandbox.stub(Answer, 'findByPk').resolves(foundDataAnswer);
-    const stubFindVote = sandbox.stub(Vote, 'findAll').resolves(foundDataNone);
+    const stubFindVote = sandbox.stub(Vote, 'findOne').resolves(foundDataNone);
     const stubCreateVote = sandbox.stub(Vote, 'create').resolves(stubDataNewUpvote);
     const stubUpdateAnswer = sandbox.stub(Answer, 'update').resolves();
 
@@ -70,18 +70,20 @@ describe('UPVOTE ANSWER UNIT TEST', () => {
   });
 
   it('should update user upvoted answer successfully when user had previously downvoted answer', async () => {
+    const foundDataSaveVote = {
+      ...foundDataVote,
+      save: sandbox.stub().resolves(stubDataUpdatedUpvote),
+    };
+
     const stubFindAnswer = sandbox.stub(Answer, 'findByPk').resolves(foundDataAnswer);
-    const stubFindVoteAll = sandbox.stub(Vote, 'findAll').resolves(foundDataVote);
-    const stubFindVoteOne = sandbox.stub(Vote, 'findOne').resolves(foundDataNone);
-    const stubUpdateVote = sandbox.stub(Vote, 'update').resolves(stubDataUpdatedUpvote);
+    const stubFindVote = sandbox.stub(Vote, 'findOne').resolves(foundDataSaveVote);
     const stubUpdateAnswer = sandbox.stub(Answer, 'update').resolves();
 
     const response = await upvoteAnswerService(paramsData.id, userData.id);
 
     expect(stubFindAnswer.calledOnce).to.be.true;
-    expect(stubFindVoteAll.calledOnce).to.be.true;
-    expect(stubFindVoteOne.calledOnce).to.be.true;
-    expect(stubUpdateVote.calledOnce).to.be.true;
+    expect(stubFindVote.calledOnce).to.be.true;
+    expect(foundDataSaveVote.save.calledOnce).to.be.true;
     expect(stubUpdateAnswer.calledOnce).to.be.true;
     expect(response).to.be.an('object');
     expect(response).to.have.property('id', stubDataUpdatedUpvote.id);

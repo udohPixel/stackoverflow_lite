@@ -19,7 +19,7 @@ const updateCategoryCtrl = require('../../categories/controllers/updateCategory.
 // update category test
 describe('UPDATE CATEGORY E2E TEST', () => {
   describe('POSITIVE TEST', () => {
-    const inputData = { ...updateData.bodyData.valid.categoryInfo };
+    const inputData = { ...updateData.bodyData.valid };
     const paramsData = { ...updateData.paramsData.valid };
     const foundData = { ...updateData.foundData.valid };
 
@@ -49,15 +49,17 @@ describe('UPDATE CATEGORY E2E TEST', () => {
         params: paramsData,
       };
 
-      const stubFindOne = sandbox.stub(Category, 'findOne').resolves(foundData);
-      const stubUpdate = sandbox.stub(Category, 'update').resolves();
-      const stubFindId = sandbox.stub(Category, 'findByPk').resolves(stubData);
+      const foundDataSaveCategory = {
+        ...foundData,
+        save: sandbox.stub().resolves(stubData),
+      };
+
+      const stubFindOne = sandbox.stub(Category, 'findOne').resolves(foundDataSaveCategory);
 
       await updateCategoryCtrl(req, res);
 
       expect(stubFindOne.calledOnce).to.be.true;
-      expect(stubUpdate.calledOnce).to.be.true;
-      expect(stubFindId.calledOnce).to.be.true;
+      expect(foundDataSaveCategory.save.calledOnce).to.be.true;
       expect(status.calledOnce).to.be.true;
       expect(status.args[0][0]).to.equal(200);
       expect(json.calledOnce).to.be.true;
@@ -68,7 +70,7 @@ describe('UPDATE CATEGORY E2E TEST', () => {
   });
 
   describe('NEGATIVE TEST', () => {
-    const inputData = { ...updateData.bodyData.valid.categoryInfo };
+    const inputData = { ...updateData.bodyData.valid };
     const paramsData = { ...updateData.paramsData.invalid };
     const foundDataNone = updateData.foundData.invalid;
 

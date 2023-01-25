@@ -4,8 +4,10 @@ const logger = require('../../logger/index');
 const config = require('../../settings/settings.config');
 
 const sequelize = new Sequelize(config.APP_DB, config.APP_DB_USERNAME, config.APP_DB_PASSWORD, {
-  host: 'localhost',
+  host: config.APP_DB_HOST,
+  port: process.env.PORT,
   dialect: 'mysql', // explicitely specify dialect
+  requestTimeout: 30000,
 });
 
 // dbSetup module

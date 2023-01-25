@@ -23,21 +23,21 @@ describe('LOGIN UNIT TEST', () => {
   const inputData = { ...loginData.bodyData.valid };
   const foundData = { ...loginData.foundData.valid };
 
-  const stubData = token.token;
+  const stubData = token.tokenObject;
 
   afterEach(() => {
     sandbox.restore();
   });
 
-  it('should log in user successfully', async () => {
+  it('should login user successfully', async () => {
     const stubFind = sandbox.stub(User, 'findOne').resolves(foundData);
-    const stubSign = sandbox.stub(jwt, 'sign').resolves(stubData);
+    const stubSign = sandbox.stub(jwt, 'sign').resolves(stubData.token);
 
     const response = await loginService(inputData.email, inputData.password);
 
     expect(stubFind.calledOnce).to.be.true;
     expect(stubSign.calledOnce).to.be.true;
-    expect(response).to.be.a('string');
-    expect(response).to.equal(stubData);
+    expect(response).to.be.an('object');
+    expect(response.token).to.equal(stubData.token);
   });
 });

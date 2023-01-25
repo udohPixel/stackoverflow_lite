@@ -12,6 +12,9 @@ const deleteUserService = async (userId, adminRoleId) => {
         RoleId: { [Op.ne]: adminRoleId }, // should not delete admin info
         id: userId,
       },
+      attributes: {
+        exclude: ['password', 'RoleId'],
+      },
     },
   );
 

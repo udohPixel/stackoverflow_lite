@@ -1,9 +1,21 @@
 // import required modules
 const Comment = require('../models/Comment');
 const ApplicationException = require('../../common/ApplicationException');
+const Answer = require('../../answers/models/Answer');
 
 // update comment service
 const updateCommentService = async (UserId, commentId, body, AnswerId) => {
+  // fetch answer
+  const answer = await Answer.findOne({
+    where: { id: AnswerId },
+    attributes: ['id'],
+  });
+
+  // check if answer exists or not in dB
+  if (!answer) {
+    throw new ApplicationException('Answer does not exist', 404);
+  }
+
   // fetch comment from dB
   const comment = await Comment.findOne(
     {
@@ -20,23 +32,15 @@ const updateCommentService = async (UserId, commentId, body, AnswerId) => {
 
   // check if currently logged in user is creator of the comment
   if (UserId !== comment.UserId) {
-    throw new ApplicationException('Unauthorized', 401);
+    throw new ApplicationException('You are not allowed to update comment', 403);
   }
 
   // update comment
-  await Comment.update(
-    {
-      body, AnswerId, UserId,
-    },
-    {
-      where: {
-        id: commentId,
-      },
-    },
-  );
+  comment.body = body;
+  comment.AnswerId = Number(AnswerId);
+  comment.UserId = UserId;
 
-  // get updated comment
-  const updatedComment = await Comment.findByPk(commentId);
+  const updatedComment = await comment.save();
 
   return updatedComment;
 };

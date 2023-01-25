@@ -1,18 +1,20 @@
 {
-  "queryData": {
+  "bodyData": {
     "valid": {
-      "keyword": "comment"
+      "AnswerId": 2
     },
     "invalid": {
-      "keyword": "wrong keyword"
+      "AnswerId": 888888888888888888888888
     }
   },
-  "paramsData": {
+  "queryData": {
     "valid": {
-      "answerId": 2
+      "keyword": "comment",
+      "username": "ipixel"
     },
     "invalid": {
-      "answerId": 888888888888888888888888
+      "keyword": "wrong keyword",
+      "username": "wrong-username"
     }
   },
   "foundData": {
@@ -28,6 +30,16 @@
       "isActive": true,
       "createdAt": "2022-12-21T13:43:06.000Z",
       "updatedAt": "2022-12-22T10:52:54.000Z"
+    },
+    "validUser": {
+      "id": 1,
+      "firstname": "Udoh",
+      "lastname": "Ndem",
+      "username": "ipixel",
+      "email": "udohndem@gmail.com",
+      "isActive": false,
+      "createdAt": "2022-11-09T12:17:02.106Z",
+      "updatedAt": "2022-11-09T12:17:02.106Z"
     },
     "invalid": null
   }

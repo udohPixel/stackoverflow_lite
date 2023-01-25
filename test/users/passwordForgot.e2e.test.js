@@ -27,7 +27,7 @@ describe('PASSWORD FOTGOT E2E TEST', () => {
     const inputData = { ...passwordForgotData.bodyData.valid };
     const protocolData = passwordForgotData.protocolData.valid;
     const hostData = passwordForgotData.hostData.valid;
-    const foundData = { ...passwordForgotData.foundData.valid };
+    const foundData = { ...passwordForgotData.foundData.validUser };
     const foundDataNone = passwordForgotData.foundData.invalid;
 
     const stubRandomBytes = token.randomByte;
@@ -94,7 +94,7 @@ describe('PASSWORD FOTGOT E2E TEST', () => {
       expect(status.args[0][0]).to.equal(200);
       expect(json.calledOnce).to.be.true;
       expect(json.args[0][0].success).to.equal(true);
-      expect(json.args[0][0].message).to.equal(`Email sent to ${foundData.email} successfully`);
+      expect(json.args[0][0].message).to.equal('Email sent successfully');
     });
 
     it('should create password reset token successfully', async () => {
@@ -123,7 +123,7 @@ describe('PASSWORD FOTGOT E2E TEST', () => {
       expect(status.args[0][0]).to.equal(200);
       expect(json.calledOnce).to.be.true;
       expect(json.args[0][0].success).to.equal(true);
-      expect(json.args[0][0].message).to.equal(`Email sent to ${foundData.email} successfully`);
+      expect(json.args[0][0].message).to.equal('Email sent successfully');
     });
   });
 

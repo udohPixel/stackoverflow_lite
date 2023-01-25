@@ -1,13 +1,15 @@
 {
   "queryData": {
-      "valid": {
-        "keyword": "question",
-        "category": "Python"
-      },
-      "invalid": {
-        "keyword": "grass",
-        "category": "Cartoon"
-      }
+    "valid": {
+      "keyword": "question",
+      "username": "ipixel",
+      "category": "Python"
+    },
+    "invalid": {
+      "keyword": "grass",
+      "username": "wrong-username",
+      "category": "Cartoon"
+    }
   },
   "foundData": {
     "validUser": {

@@ -4,6 +4,7 @@ const ApplicationException = require('../../common/ApplicationException');
 const { isAdmin } = require('../../common/helpers');
 const Role = require('../../roles/models/Role');
 const Question = require('../../questions/models/Question');
+const { sequelize } = require('../../providers/db');
 
 // delete answer service
 const deleteAnswerService = async (UserId, RoleId, answerId) => {
@@ -26,7 +27,7 @@ const deleteAnswerService = async (UserId, RoleId, answerId) => {
 
   // check if currently logged in user is creator of the answer
   if (!((UserId === answer.UserId) || isAdmin(role.title))) {
-    throw new ApplicationException('Unauthorized', 401);
+    throw new ApplicationException('You are not allowed to delete answer', 403);
   }
 
   // delete answer
@@ -38,16 +39,9 @@ const deleteAnswerService = async (UserId, RoleId, answerId) => {
     },
   );
 
-  // fetch all answers
-  const allAnswers = await Answer.findAll({
-    where: {
-      QuestionId: Number(answer.QuestionId),
-    },
-  });
-
   // update totalAnswers
   await Question.update(
-    { totalAnswers: allAnswers.length },
+    { totalAnswers: sequelize.literal('totalAnswers - 1') },
     {
       where: {
         id: Number(answer.QuestionId),

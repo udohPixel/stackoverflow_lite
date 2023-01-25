@@ -23,44 +23,48 @@ describe('UPDATE ACCEPTED ANSWER UNIT TEST', () => {
   const userData = { ...answerData.userData.valid };
   const foundDataAcceptedAnswer = { ...answerData.foundData.validAnswer };
   const foundDataQuestion = { ...answerData.foundData.validQuestion };
-  const foundDataFormerAcceptedAnswer = { ...answerData.foundData.validFormerAcceptedAnswer };
+  const foundDataAcceptedAnswer2 = { ...answerData.foundData.validAnswer2 };
 
-  const stubData = [
-    {
-      id: foundDataAcceptedAnswer.id,
-      body: foundDataAcceptedAnswer.body,
-      QuestionId: foundDataAcceptedAnswer.QuestionId,
-      UserId: foundDataAcceptedAnswer.UserId,
-      upVotes: foundDataAcceptedAnswer.upVotes,
-      downVotes: foundDataAcceptedAnswer.downVotes,
-      isAcceptedAnswer: true,
-      isActive: foundDataAcceptedAnswer.isActive,
-      createdAt: foundDataAcceptedAnswer.createdAt,
-      updatedAt: foundDataAcceptedAnswer.updatedAt,
-    },
-  ];
+  const stubData = {
+    id: foundDataAcceptedAnswer.id,
+    body: foundDataAcceptedAnswer.body,
+    QuestionId: foundDataAcceptedAnswer.QuestionId,
+    UserId: foundDataAcceptedAnswer.UserId,
+    upVotes: foundDataAcceptedAnswer.upVotes,
+    downVotes: foundDataAcceptedAnswer.downVotes,
+    isAcceptedAnswer: true,
+    isActive: foundDataAcceptedAnswer.isActive,
+    createdAt: foundDataAcceptedAnswer.createdAt,
+    updatedAt: foundDataAcceptedAnswer.updatedAt,
+  };
 
   afterEach(() => {
     sandbox.restore();
   });
 
   it('should update accepted answer successfully', async () => {
-    const stubFindAcceptedAnswer = sandbox.stub(Answer, 'findByPk').resolves(foundDataAcceptedAnswer);
+    const foundDataSaveAcceptedAnswer = {
+      ...foundDataAcceptedAnswer,
+      save: sandbox.stub().resolves(foundDataAcceptedAnswer2),
+    };
+    const foundDataSaveFormerAcceptedAnswer = {
+      ...foundDataAcceptedAnswer2,
+      save: sandbox.stub().resolves(foundDataAcceptedAnswer),
+    };
+
+    const stubFindAcceptedAnswer = sandbox.stub(Answer, 'findByPk').resolves(foundDataSaveAcceptedAnswer);
     const stubFindQuestion = sandbox.stub(Question, 'findByPk').resolves(foundDataQuestion);
-    const stubFindFormerAcceptedAnswer = sandbox.stub(Answer, 'findOne').resolves(foundDataFormerAcceptedAnswer);
-    const stubUpdate = sandbox.stub(Answer, 'update').resolves();
+    const stubFindFormerAcceptedAnswer = sandbox.stub(Answer, 'findOne').resolves(foundDataSaveFormerAcceptedAnswer);
     const stubUpdateQuestion = sandbox.stub(Question, 'update').resolves();
-    const stubReturnAcceptedAnswer = sandbox.stub(Answer, 'findAll').resolves(stubData);
 
     const response = await updateAcceptedAnswerService(userData.id, paramsData.id);
 
     expect(stubFindAcceptedAnswer.calledOnce).to.be.true;
     expect(stubFindQuestion.calledOnce).to.be.true;
     expect(stubFindFormerAcceptedAnswer.calledOnce).to.be.true;
-    expect(stubUpdate.calledTwice).to.be.true;
+    expect(foundDataSaveAcceptedAnswer.save.calledOnce).to.be.true;
     expect(stubUpdateQuestion.calledOnce).to.be.true;
-    expect(stubReturnAcceptedAnswer.calledOnce).to.be.true;
-    expect(response).to.be.a('boolean');
-    expect(response).to.equal(stubData[0].isAcceptedAnswer);
+    expect(response).to.be.an('object');
+    expect(response).to.contain(stubData);
   });
 });

@@ -21,21 +21,16 @@ const updatePersonalUserService = async (userId, userInfo) => {
   } = userInfo;
 
   // fetch user by id from dB
-  const user = await User.findByPk(userId);
-
-  // pass user-imputed values into userValues object
-  const userValues = {
-    firstname,
-    lastname,
-    username,
-    email,
-    bio,
-    facebook,
-    youtube,
-    instagram,
-    linkedIn,
-    twitter,
-  };
+  const user = await User.findOne(
+    {
+      where: {
+        id: userId,
+      },
+      attributes: {
+        exclude: ['password', 'RoleId'],
+      },
+    },
+  );
 
   // check if user already exits in dB
   if (!user) {
@@ -79,22 +74,18 @@ const updatePersonalUserService = async (userId, userInfo) => {
   }
 
   // update user
-  await User.update(
-    userValues,
-    {
-      where: { id: userId },
-    },
-  );
+  user.firstname = firstname;
+  user.lastname = lastname;
+  user.username = username;
+  user.email = email;
+  user.bio = bio;
+  user.facebook = facebook;
+  user.youtube = youtube;
+  user.instagram = instagram;
+  user.linkedIn = linkedIn;
+  user.twitter = twitter;
 
-  // get updated user
-  const updatedUser = await User.findOne({
-    where: {
-      id: userId,
-    },
-    attributes: {
-      exclude: ['password', 'RoleId'],
-    },
-  });
+  const updatedUser = await user.save();
 
   return updatedUser;
 };

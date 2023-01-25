@@ -31,6 +31,7 @@ describe('UPDATE USER E2E TEST', () => {
       lastname: inputData.lastname,
       username: inputData.username,
       email: inputData.email,
+      RoleId: inputData.RoleId,
       facebook: inputData.facebook,
       twitter: inputData.twitter,
       isActive: true,
@@ -58,17 +59,18 @@ describe('UPDATE USER E2E TEST', () => {
         params: paramsData,
       };
 
-      const stubFindOne = sandbox.stub(User, 'findOne').resolves(foundData);
+      const foundDataUpdateUser = {
+        ...foundData,
+        save: sandbox.stub().resolves(stubData),
+      };
+
+      const stubFindOne = sandbox.stub(User, 'findOne').resolves(foundDataUpdateUser);
       const stubFindAll = sandbox.stub(User, 'findAll').resolves(foundDataNone);
-      const stubUpdate = sandbox.stub(User, 'update').resolves();
-      const stubFindId = sandbox.stub(User, 'findByPk').resolves(stubData);
 
       await updateUserCtrl(req, res);
 
       expect(stubFindOne.calledOnce).to.be.true;
       expect(stubFindAll.calledTwice).to.be.true;
-      expect(stubUpdate.calledOnce).to.be.true;
-      expect(stubFindId.calledOnce).to.be.true;
       expect(status.calledOnce).to.be.true;
       expect(status.args[0][0]).to.equal(200);
       expect(json.calledOnce).to.be.true;

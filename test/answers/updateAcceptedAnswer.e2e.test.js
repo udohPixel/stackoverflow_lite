@@ -24,22 +24,20 @@ describe('UPDATE ACCEPTED ANSWER E2E TEST', () => {
     const userData = { ...answerData.userData.valid };
     const foundDataAcceptedAnswer = { ...answerData.foundData.validAnswer };
     const foundDataQuestion = { ...answerData.foundData.validQuestion };
-    const foundDataFormerAcceptedAnswer = { ...answerData.foundData.validFormerAcceptedAnswer };
+    const foundDataAcceptedAnswer2 = { ...answerData.foundData.validAnswer2 };
 
-    const stubData = [
-      {
-        id: foundDataAcceptedAnswer.id,
-        body: foundDataAcceptedAnswer.body,
-        QuestionId: foundDataAcceptedAnswer.QuestionId,
-        UserId: foundDataAcceptedAnswer.UserId,
-        upVotes: foundDataAcceptedAnswer.upVotes,
-        downVotes: foundDataAcceptedAnswer.downVotes,
-        isAcceptedAnswer: true,
-        isActive: foundDataAcceptedAnswer.isActive,
-        createdAt: foundDataAcceptedAnswer.createdAt,
-        updatedAt: foundDataAcceptedAnswer.updatedAt,
-      },
-    ];
+    const stubData = {
+      id: foundDataAcceptedAnswer.id,
+      body: foundDataAcceptedAnswer.body,
+      QuestionId: foundDataAcceptedAnswer.QuestionId,
+      UserId: foundDataAcceptedAnswer.UserId,
+      upVotes: foundDataAcceptedAnswer.upVotes,
+      downVotes: foundDataAcceptedAnswer.downVotes,
+      isAcceptedAnswer: true,
+      isActive: foundDataAcceptedAnswer.isActive,
+      createdAt: foundDataAcceptedAnswer.createdAt,
+      updatedAt: foundDataAcceptedAnswer.updatedAt,
+    };
 
     let status; let json; let res;
 
@@ -60,27 +58,33 @@ describe('UPDATE ACCEPTED ANSWER E2E TEST', () => {
         user: userData,
       };
 
-      const stubFindAcceptedAnswer = sandbox.stub(Answer, 'findByPk').resolves(foundDataAcceptedAnswer);
+      const foundDataSaveAcceptedAnswer = {
+        ...foundDataAcceptedAnswer,
+        save: sandbox.stub().resolves(foundDataAcceptedAnswer2),
+      };
+      const foundDataSaveFormerAcceptedAnswer = {
+        ...foundDataAcceptedAnswer2,
+        save: sandbox.stub().resolves(foundDataAcceptedAnswer),
+      };
+
+      const stubFindAcceptedAnswer = sandbox.stub(Answer, 'findByPk').resolves(foundDataSaveAcceptedAnswer);
       const stubFindQuestion = sandbox.stub(Question, 'findByPk').resolves(foundDataQuestion);
-      const stubFindFormerAcceptedAnswer = sandbox.stub(Answer, 'findOne').resolves(foundDataFormerAcceptedAnswer);
-      const stubUpdate = sandbox.stub(Answer, 'update').resolves();
+      const stubFindFormerAcceptedAnswer = sandbox.stub(Answer, 'findOne').resolves(foundDataSaveFormerAcceptedAnswer);
       const stubUpdateQuestion = sandbox.stub(Question, 'update').resolves();
-      const stubReturnAcceptedAnswer = sandbox.stub(Answer, 'findAll').resolves(stubData);
 
       await updateAcceptedAnswerCtrl(req, res);
 
       expect(stubFindAcceptedAnswer.calledOnce).to.be.true;
       expect(stubFindQuestion.calledOnce).to.be.true;
       expect(stubFindFormerAcceptedAnswer.calledOnce).to.be.true;
-      expect(stubUpdate.calledTwice).to.be.true;
+      expect(foundDataSaveAcceptedAnswer.save.calledOnce).to.be.true;
       expect(stubUpdateQuestion.calledOnce).to.be.true;
-      expect(stubReturnAcceptedAnswer.calledOnce).to.be.true;
       expect(status.calledOnce).to.be.true;
       expect(status.args[0][0]).to.equal(200);
       expect(json.calledOnce).to.be.true;
       expect(json.args[0][0].success).to.equal(true);
       expect(json.args[0][0].message).to.equal('Accepted answer updated successfully');
-      expect(json.args[0][0].data).to.equal(stubData[0].isAcceptedAnswer);
+      expect(json.args[0][0].data).to.contain(stubData);
     });
   });
 
@@ -124,7 +128,7 @@ describe('UPDATE ACCEPTED ANSWER E2E TEST', () => {
       const paramsData = { ...answerData.paramsData.valid };
       const userData = { ...answerData.userData.invalid };
       const foundDataAcceptedAnswer = { ...answerData.foundData.validAnswer };
-      const foundDataQuestion = { ...answerData.foundData.validQuestion };
+      const foundDataQuestion = { ...answerData.foundData.invalidQuestion };
 
       const req = {
         params: paramsData,
@@ -139,10 +143,10 @@ describe('UPDATE ACCEPTED ANSWER E2E TEST', () => {
       expect(stubFindAcceptedAnswer.calledOnce).to.be.true;
       expect(stubFindQuestion.calledOnce).to.be.true;
       expect(status.calledOnce).to.be.true;
-      expect(status.args[0][0]).to.equal(401);
+      expect(status.args[0][0]).to.equal(403);
       expect(json.calledOnce).to.be.true;
       expect(json.args[0][0].success).to.equal(false);
-      expect(json.args[0][0].message).to.equal('Unauthorized');
+      expect(json.args[0][0].message).to.equal('You are not allowed to update accepted answer');
     });
   });
 });

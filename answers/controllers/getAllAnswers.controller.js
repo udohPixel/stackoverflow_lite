@@ -5,11 +5,11 @@ const getAllAnswersService = require('../services/getAllAnswers.service');
 // get all answers controller
 const getAllAnswersCtrl = async (req, res) => {
   try {
-    const { questionId } = req.params;
+    const { QuestionId } = req.body;
     const queryStr = req.query;
 
     // get all answers service
-    const answers = await getAllAnswersService(questionId, queryStr);
+    const answers = await getAllAnswersService(QuestionId, queryStr);
 
     return apiResponse.success(res, 'Answers found successfully', answers);
   } catch (error) {

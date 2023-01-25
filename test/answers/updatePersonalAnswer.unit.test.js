@@ -14,6 +14,7 @@ chai.use(chaiHttp);
 // import other libraries
 const answerData = require('./updatePersonalAnswer.data.mock.json');
 const Answer = require('../../answers/models/Answer');
+const Question = require('../../questions/models/Question');
 const updateQuestnService = require('../../answers/services/updatePersonalAnswer.service');
 
 // update answer test
@@ -22,6 +23,7 @@ describe('UPDATE PERSONAL ANSWER UNIT TEST', () => {
   const userData = { ...answerData.userData.valid };
   const paramsData = { ...answerData.paramsData.valid };
   const foundData = { ...answerData.foundData.valid };
+  const foundDataQuestion = { ...answerData.foundData.validQuestion };
 
   const stubData = {
     id: paramsData.id,
@@ -41,17 +43,21 @@ describe('UPDATE PERSONAL ANSWER UNIT TEST', () => {
   });
 
   it('should update answer successfully', async () => {
-    const stubFindOne = sandbox.stub(Answer, 'findOne').resolves(foundData);
-    const stubUpdate = sandbox.stub(Answer, 'update').resolves();
-    const stubFindByPk = sandbox.stub(Answer, 'findByPk').resolves(stubData);
+    const foundDataSaveAnswer = {
+      ...foundData,
+      save: sandbox.stub().resolves(stubData),
+    };
+
+    const stubFindQuestion = sandbox.stub(Question, 'findOne').resolves(foundDataQuestion);
+    const stubFindOne = sandbox.stub(Answer, 'findOne').resolves(foundDataSaveAnswer);
 
     const { body, QuestionId } = inputData;
 
     const response = await updateQuestnService(userData.id, paramsData.id, body, QuestionId);
 
+    expect(stubFindQuestion.calledOnce).to.be.true;
     expect(stubFindOne.calledOnce).to.be.true;
-    expect(stubUpdate.calledOnce).to.be.true;
-    expect(stubFindByPk.calledOnce).to.be.true;
+    expect(foundDataSaveAnswer.save.calledOnce).to.be.true;
     expect(response).to.be.an('object');
     expect(response).to.have.property('id', stubData.id);
     expect(response).to.have.property('body', stubData.body);

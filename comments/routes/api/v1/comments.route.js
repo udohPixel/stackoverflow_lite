@@ -12,6 +12,7 @@ const {
 const addComment = require('../../../controllers/addComment.controller');
 const updatePersonalComment = require('../../../controllers/updatePersonalComment.controller');
 const deleteComment = require('../../../controllers/deleteComment.controller');
+const getAllComments = require('../../../controllers/getAllComments.controller');
 
 // create router
 const router = express.Router();
@@ -40,6 +41,14 @@ router.put('/:id', isLoggedIn, isUpdatePersonalCommentValidated, updatePersonalC
  * @type    - DELETE
  */
 router.delete('/:id', isLoggedIn, deleteComment);
+
+/**
+ * @desc    - route for fetching all answer comments
+ * @api     - /api/v1/comments
+ * @access  - PUBLIC
+ * @type    - GET
+ */
+router.get('/', getAllComments);
 
 // export router
 module.exports = router;

@@ -71,7 +71,7 @@ const passwordForgotService = async (email, protocol, host) => {
 
     await sendMail(mailOptions);
 
-    return passwordResetToken;
+    return passwordResetInfo;
   }
 
   // create password reset token and email
@@ -79,7 +79,7 @@ const passwordForgotService = async (email, protocol, host) => {
 
   await sendMail(mailOptions);
 
-  return passwordResetToken;
+  return passwordResetInfo;
 };
 
 // export service

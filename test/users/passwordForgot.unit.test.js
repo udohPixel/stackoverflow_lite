@@ -26,7 +26,7 @@ describe('PASSWORD FORGOT UNIT TEST', () => {
   const inputData = { ...passwordForgotData.bodyData.valid };
   const protocolData = passwordForgotData.protocolData.valid;
   const hostData = passwordForgotData.hostData.valid;
-  const foundData = { ...passwordForgotData.foundData.valid };
+  const foundData = { ...passwordForgotData.foundData.validUser };
   const foundDataNone = passwordForgotData.foundData.invalid;
 
   const stubRandomBytes = token.randomByte;
@@ -63,7 +63,7 @@ describe('PASSWORD FORGOT UNIT TEST', () => {
     const stubToken = sandbox.stub(crypto, 'randomBytes').resolves(stubRandomBytes);
     const stubResetToken = stubCreateHash(stubResetTokenData);
     const stubFindResetToken = sandbox.stub(PasswordReset, 'findOne').resolves(stubCreateData);
-    const stubUpdate = sandbox.stub(PasswordReset, 'update').resolves(stubCreateData);
+    const stubUpdate = sandbox.stub(PasswordReset, 'update').resolves();
     const stubMailer = stubCreateTransport(stubMailTransportData);
 
     const response = await passwordForgotService(inputData.email, protocolData);
@@ -74,8 +74,7 @@ describe('PASSWORD FORGOT UNIT TEST', () => {
     expect(stubFindResetToken.calledOnce).to.be.true;
     expect(stubUpdate.calledOnce).to.be.true;
     expect(stubMailer.calledOnce).to.be.true;
-    expect(response).to.be.a('string');
-    expect(response).to.equal(stubResetTokenData);
+    expect(response).to.be.an('object');
   });
 
   it('should create password reset token successfully', async () => {
@@ -94,7 +93,6 @@ describe('PASSWORD FORGOT UNIT TEST', () => {
     expect(stubFindResetToken.calledOnce).to.be.true;
     expect(stubCreate.calledOnce).to.be.true;
     expect(stubMailer.calledOnce).to.be.true;
-    expect(response).to.be.a('string');
-    expect(response).to.equal(stubResetTokenData);
+    expect(response).to.be.an('object');
   });
 });

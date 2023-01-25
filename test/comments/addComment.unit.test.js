@@ -21,8 +21,7 @@ const addCommentService = require('../../comments/services/addComment.service');
 describe('ADD COMMENT UNIT TEST', () => {
   const inputData = { ...addCommentData.bodyData.valid };
   const userData = { ...addCommentData.userData.valid };
-  const foundDataNone = addCommentData.foundData.valid;
-  const foundDataAll = { ...addCommentData.foundData.validAllComments };
+  const foundDataAnswer = { ...addCommentData.foundData.validAnswer };
 
   const stubData = {
     id: 1,
@@ -38,18 +37,16 @@ describe('ADD COMMENT UNIT TEST', () => {
   });
 
   it('should create addComment successfully', async () => {
-    const stubFindOne = sandbox.stub(Comment, 'findOne').resolves(foundDataNone);
+    const stubFindAnswer = sandbox.stub(Answer, 'findOne').resolves(foundDataAnswer);
     const stubCreate = sandbox.stub(Comment, 'create').resolves(stubData);
-    const stubFindAll = sandbox.stub(Comment, 'findAll').resolves(foundDataAll);
     const stubUpdate = sandbox.stub(Answer, 'update').resolves();
 
     const { body, AnswerId } = stubData;
 
     const response = await addCommentService(userData.id, body, AnswerId);
 
-    expect(stubFindOne.calledOnce).to.be.true;
+    expect(stubFindAnswer.calledOnce).to.be.true;
     expect(stubCreate.calledOnce).to.be.true;
-    expect(stubFindAll.calledOnce).to.be.true;
     expect(stubUpdate.calledOnce).to.be.true;
     expect(response).to.be.an('object');
     expect(response).to.have.property('id', stubData.id);

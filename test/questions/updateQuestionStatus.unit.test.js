@@ -44,7 +44,14 @@ describe('UPDATE QUESTION STATUS UNIT TEST', () => {
 
     expect(stubFind.calledOnce).to.be.true;
     expect(stubUpdate.calledOnce).to.be.true;
-    expect(response).to.be.a('boolean');
-    expect(response).to.equal(stubData.isActive);
+    expect(response).to.be.a('object');
+    expect(response).to.contain(stubData);
+    expect(response).to.have.property('id', stubData.id);
+    expect(response).to.have.property('title', stubData.title);
+    expect(response).to.have.property('body', stubData.body);
+    expect(response).to.have.property('CategoryId', stubData.CategoryId);
+    expect(response).to.have.property('UserId', stubData.UserId);
+    expect(response).to.have.property('createdAt', stubData.createdAt);
+    expect(response).to.have.property('updatedAt', stubData.updatedAt);
   });
 });

@@ -5,7 +5,16 @@ const ApplicationException = require('../../common/ApplicationException');
 // update user status service
 const updateUserStatusService = async (userId) => {
   // fetch current user status
-  const user = await User.findByPk(userId);
+  const user = await User.findOne(
+    {
+      where: {
+        id: userId,
+      },
+      attributes: {
+        exclude: ['password', 'RoleId'],
+      },
+    },
+  );
 
   // check if user exists
   if (!user) {
@@ -27,7 +36,7 @@ const updateUserStatusService = async (userId) => {
     },
   );
 
-  return user.isActive;
+  return user;
 };
 
 // export service

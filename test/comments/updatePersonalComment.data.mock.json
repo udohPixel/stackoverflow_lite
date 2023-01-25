@@ -22,6 +22,18 @@
     }
   },
   "foundData": {
+    "validAnswer": {
+      "id": 2,
+      "body": "This is a sample answer content for a question. Some more sample content of the answer body to fill up more space goes here. ",
+      "QuestionId": 2,
+      "UserId": 1,
+      "upVotes": 0,
+      "downVotes": 0,
+      "isAcceptedAnswer": false,
+      "isActive": true,
+      "createdAt": "2022-12-26T09:40:02.000Z",
+      "updatedAt": "2022-12-27T11:47:05.000Z"
+    },
     "valid": {
       "id": 1,
       "body": "This is a sample comment content for my second answer",

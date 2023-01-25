@@ -14,7 +14,7 @@ const loginCtrl = async (req, res) => {
     return apiResponse.success(
       res,
       'You logged in successfully',
-      `Bearer ${token}`,
+      token,
     );
   } catch (error) {
     return apiResponse.errorObject(res, error, null, 'login');

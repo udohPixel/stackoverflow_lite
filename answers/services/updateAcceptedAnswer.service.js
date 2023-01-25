@@ -19,10 +19,11 @@ const updateAnswerStatusService = async (UserId, answerId) => {
 
   // check if currently logged in user is creator of the question
   if (UserId !== question.UserId) {
-    throw new ApplicationException('Unauthorized', 401);
+    throw new ApplicationException('You are not allowed to update accepted answer', 403);
   }
 
-  const filter = {
+  // fetch former accepted answer (if any)
+  const formerAcceptedAnswer = await Answer.findOne({
     where: {
       [Op.and]: [
         {
@@ -31,28 +32,19 @@ const updateAnswerStatusService = async (UserId, answerId) => {
         { isAcceptedAnswer: { [Op.eq]: true } },
       ],
     },
-  };
-
-  // fetch former accepted answer (if any)
-  const formerAcceptedAnswer = await Answer.findOne(filter);
+  });
 
   // check if former accepted answer exist
   if (formerAcceptedAnswer) {
-    await Answer.update(
-      { isAcceptedAnswer: false },
-      filter,
-    );
+    formerAcceptedAnswer.isAcceptedAnswer = false;
+
+    await formerAcceptedAnswer.save();
   }
 
   // update accepted answer
-  await Answer.update(
-    { isAcceptedAnswer: true },
-    {
-      where: {
-        id: answerId,
-      },
-    },
-  );
+  answer.isAcceptedAnswer = true;
+
+  await answer.save();
 
   // update that question hasAcceptedAnswer
   await Question.update(
@@ -64,14 +56,7 @@ const updateAnswerStatusService = async (UserId, answerId) => {
     },
   );
 
-  // fetch accepted answer
-  const acceptedAnswer = await Answer.findAll({
-    where: {
-      id: answerId,
-    },
-  });
-
-  return acceptedAnswer[0].isAcceptedAnswer;
+  return answer;
 };
 
 // export service

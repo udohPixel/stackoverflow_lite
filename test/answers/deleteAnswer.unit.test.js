@@ -24,7 +24,6 @@ describe('DELETE ANSWER UNIT TEST', () => {
   const userData = { ...deleteData.userData.valid };
   const foundData = { ...deleteData.foundData.valid };
   const foundDataRole = { ...deleteData.foundData.validRole };
-  const foundDataAll = { ...deleteData.foundData.validAllAnswers };
 
   const stubData = {
     id: foundData.id,
@@ -47,7 +46,6 @@ describe('DELETE ANSWER UNIT TEST', () => {
     const stubFind = sandbox.stub(Answer, 'findOne').resolves(foundData);
     const stubFindRole = sandbox.stub(Role, 'findByPk').resolves(foundDataRole);
     const stubDelete = sandbox.stub(Answer, 'destroy').resolves(stubData);
-    const stubFindAll = sandbox.stub(Answer, 'findAll').resolves(foundDataAll);
     const stubUpdate = sandbox.stub(Question, 'update').resolves();
 
     const response = await deleteAnswerService(userData.id, userData.RoleId, paramsData.id);
@@ -55,7 +53,6 @@ describe('DELETE ANSWER UNIT TEST', () => {
     expect(stubFind.calledOnce).to.be.true;
     expect(stubFindRole.calledOnce).to.be.true;
     expect(stubDelete.calledOnce).to.be.true;
-    expect(stubFindAll.calledOnce).to.be.true;
     expect(stubUpdate.calledOnce).to.be.true;
     const stubDeleteCallArg = stubDelete.getCalls()[0].args[0];
     expect(stubDeleteCallArg).to.be.an('object');

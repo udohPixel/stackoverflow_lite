@@ -60,7 +60,7 @@ const passwordResetService = async (token, password) => {
     message: passwordResetMessage,
   });
 
-  return theHashedPassword;
+  return isToken;
 };
 
 // export service

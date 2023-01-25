@@ -27,7 +27,7 @@ const updateQuestionStatusService = async (questionId) => {
     },
   );
 
-  return question.isActive;
+  return question;
 };
 
 // export service
