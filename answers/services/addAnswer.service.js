@@ -11,6 +11,7 @@ const addAnswerService = async (UserId, body, QuestionId) => {
   // fetch question
   const question = await Question.findOne({
     where: { id: QuestionId },
+    attributes: ['id'],
   });
 
   // check if question exists or not in dB

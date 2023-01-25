@@ -45,6 +45,7 @@ const updateUserService = async (userId, adminRoleId, userInfo) => {
       where: {
         id: { [Op.ne]: userId },
         email: email.toLowerCase(),
+        attributes: ['id', 'email'],
       },
     },
   );
@@ -63,6 +64,7 @@ const updateUserService = async (userId, adminRoleId, userInfo) => {
       where: {
         id: { [Op.ne]: userId },
         username: username.toLowerCase(),
+        attributes: ['id', 'username'],
       },
     },
   );

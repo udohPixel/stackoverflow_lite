@@ -8,6 +8,7 @@ const updateQuestionService = async (UserId, questionId, title, body, CategoryId
   // fetch category
   const category = await Category.findOne({
     where: { id: CategoryId },
+    attributes: ['id'],
   });
 
   // check if category exists or not in dB

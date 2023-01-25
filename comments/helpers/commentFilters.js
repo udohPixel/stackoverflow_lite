@@ -29,6 +29,7 @@ const commentFilters = {
         where: {
           username: queryStr.username,
         },
+        attributes: ['id'],
       });
 
       // check if user exist

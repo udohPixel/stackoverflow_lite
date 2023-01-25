@@ -11,6 +11,7 @@ const addCommentService = async (UserId, body, AnswerId) => {
   // fetch answer
   const answer = await Answer.findOne({
     where: { id: AnswerId },
+    attributes: ['id'],
   });
 
   // check if answer exists or not in dB
