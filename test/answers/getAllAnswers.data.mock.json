@@ -1,0 +1,55 @@
+{
+  "bodyData": {
+    "valid": {
+      "QuestionId": 2
+    },
+    "invalid": {
+      "QuestionId": 888888888888888888888888
+    }
+  },
+  "queryData": {
+    "valid": {
+      "keyword": "answer",
+      "username": "ipixel",
+      "upVotes": 0,
+      "downVotes": 0,
+      "isAcceptedAnswer": false,
+      "totalComments": 4,
+      "sort": "createdAt-desc"
+    },
+    "invalid": {
+      "keyword": "wrong keyword",
+      "username": "wrong-username",
+      "upVotes": 999908999018999999999,
+      "downVotes": 555555999999999999999999,
+      "isAcceptedAnswer": true,
+      "totalComments": 799999888888888888888888,
+      "sort": "creed-arcs"
+    }
+  },
+  "foundData": {
+    "valid": {
+      "id": 2,
+      "title": "My second question title updated",
+      "body": "This is a sample question content for my second question updated",
+      "CategoryId": 2,
+      "UserId": 1,
+      "totalAnswers": 0,
+      "hasAcceptedAnswer": false,
+      "isActive": true,
+      "createdAt": "2022-12-21T13:43:06.000Z",
+      "updatedAt": "2022-12-22T10:52:54.000Z"
+    },
+    "validUser": {
+      "id": 1,
+      "firstname": "Udoh",
+      "lastname": "Ndem",
+      "username": "ipixel",
+      "email": "udohndem@gmail.com",
+      "isActive": false,
+      "createdAt": "2022-11-09T12:17:02.106Z",
+      "updatedAt": "2022-11-09T12:17:02.106Z"
+    },
+    "invalid": null
+  }
+}

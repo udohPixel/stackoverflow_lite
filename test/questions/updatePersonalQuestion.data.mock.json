@@ -1,0 +1,52 @@
+{
+  "bodyData": {
+    "valid": {
+      "title": "My second question title updated",
+      "body": "This is a sample question content for my second question updated",
+      "CategoryId": 1
+    }
+  },
+  "paramsData": {
+    "valid": {
+      "id": 2
+    },
+    "invalid": {
+      "id": 888888888888888888888888
+    }
+  },
+  "userData": {
+    "valid": {
+      "id": 1
+    },
+    "invalid": {
+      "id": 999999999999999999999999
+    }
+  },
+  "foundData": {
+    "validCategory": {
+      "id": 2,
+      "title": "Phython",
+      "createdAt": "2022-12-10T17:40:00.128Z",
+      "updatedAt": "2022-12-10T17:40:00.128Z"
+    },
+    "valid": {
+      "id": 2,
+      "title": "My second question title",
+      "body": "This is a sample question content for my second question",
+      "CategoryId": 2,
+      "UserId": 1,
+      "createdAt": "2022-11-10T17:40:00.128Z",
+      "updatedAt": "2022-11-10T17:40:00.128Z"
+    },
+    "invalid": null,
+    "invalidUser": {
+      "id": 2,
+      "title": "My second question title",
+      "body": "This is a sample question content for my second question",
+      "CategoryId": 2,
+      "UserId": 7,
+      "createdAt": "2022-11-10T17:40:00.128Z",
+      "updatedAt": "2022-11-10T17:40:00.128Z"
+    }
+  }
+}

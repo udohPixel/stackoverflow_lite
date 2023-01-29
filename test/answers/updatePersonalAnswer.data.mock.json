@@ -1,0 +1,62 @@
+{
+  "bodyData": {
+    "valid": {
+      "body": "This is a sample answer content for my second question",
+      "QuestionId": 3
+    }
+  },
+  "paramsData": {
+    "valid": {
+      "id": 2
+    },
+    "invalid": {
+      "id": 888888888888888888888888
+    }
+  },
+  "userData": {
+    "valid": {
+      "id": 1
+    },
+    "invalid": {
+      "id": 999999999999999999999999
+    }
+  },
+  "foundData": {
+    "validQuestion": {
+      "id": 2,
+      "title": "My second question title",
+      "body": "This is a sample question content for my second question",
+      "CategoryId": 2,
+      "UserId": 1,
+      "totalAnswers": null,
+      "isActive": true,
+      "createdAt": "2022-12-21T13:43:06.000Z",
+      "updatedAt": "2022-12-22T10:52:54.000Z"
+    },
+    "valid": {
+      "id": 2,
+      "body": "This is a sample answer content for my second question",
+      "QuestionId": 2,
+      "UserId": 1,
+      "upVotes": 0,
+      "downVotes": 0,
+      "isAcceptedAnswer": false,
+      "isActive": true,
+      "createdAt": "2022-12-26T09:40:02.000Z",
+      "updatedAt": "2022-12-27T11:47:05.000Z"
+    },
+    "invalid": null,
+    "invalidUser": {
+      "id": 2,
+      "body": "This is a sample answer content for a question. Some more sample content of the answer body to fill up more space goes here. ",
+      "QuestionId": 2,
+      "UserId": 7,
+      "upVotes": 0,
+      "downVotes": 0,
+      "isAcceptedAnswer": false,
+      "isActive": true,
+      "createdAt": "2022-12-26T09:40:02.000Z",
+      "updatedAt": "2022-12-27T11:47:05.000Z"
+    }
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "foundData": {
+    "valid": [
+      {
+          "id": 17,
+          "title": "JavaScript",
+          "createdAt": "2022-12-10T17:40:00.128Z",
+          "updatedAt": "2022-12-10T17:40:00.128Z"
+      },
+      {
+          "id": 15,
+          "title": "Phython",
+          "createdAt": "2022-11-09T12:40:46.128Z",
+          "updatedAt": "2022-11-09T12:40:46.128Z"
+      }
+    ],
+    "invalid": null
+  }
+}

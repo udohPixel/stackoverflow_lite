@@ -1,0 +1,67 @@
+{
+  "bodyData": {
+    "valid": {
+      "userInfo": {
+        "firstname": "Johnny",
+        "lastname": "Doe",
+        "username": "johnnydoe",
+        "email": "john.doe123@gmail.com",
+        "facebook": "johnnydoe",
+        "twitter": "@johnnydoe"
+      }
+    },
+    "invalid": null
+  },
+  "paramsData": {
+    "valid": {
+      "id": 23
+    },
+    "invalid": {
+      "id": 888888888888888888888888
+    }
+  },
+  "userData": {
+    "valid": {
+      "RoleId": 2
+    },
+    "invalid": {
+      "RoleId": 999999999999999999999999
+    }
+  },
+  "foundData": {
+    "valid": {
+      "id": 23,
+      "firstname": "Jane",
+      "lastname": "Dowey",
+      "username": "janedowey",
+      "email": "john.doe111@gmail.com",
+      "RoleId": 2,
+      "isActive": true,
+      "createdAt": "2022-10-10T17:40:00.128Z",
+      "updatedAt": "2022-10-10T17:40:00.128Z"
+    },
+    "validNone": null,
+    "invalidEmail": {
+      "id": 11,
+      "firstname": "Johnson",
+      "lastname": "Doegh",
+      "username": "johnnydoewy",
+      "email": "john.doe123@gmail.com",
+      "RoleId": 2,
+      "isActive": true,
+      "createdAt": "2022-11-09T12:40:46.128Z",
+      "updatedAt": "2022-11-09T12:40:46.128Z"
+    },
+    "invalidUsername": {
+      "id": 11,
+      "firstname": "Johnson",
+      "lastname": "Doegh",
+      "username": "johnnydoe",
+      "email": "john.doe111@gmail.com",
+      "RoleId": 2,
+      "isActive": true,
+      "createdAt": "2022-11-09T12:40:46.128Z",
+      "updatedAt": "2022-11-09T12:40:46.128Z"
+    }
+  }
+}

@@ -1,0 +1,65 @@
+{
+  "paramsData": {
+    "valid": {
+      "id": 6
+    },
+    "invalid": {
+      "id": 777777777777777777777777
+    }
+  },
+  "userData": {
+    "valid": {
+      "id": 1
+    },
+    "invalid": {
+      "id": 9999999999999999999999
+    }
+  },
+  "foundData": {
+    "validAnswer": {
+      "id": 1,
+      "body": "This is a sample answer content for my second question",
+      "QuestionId": 2,
+      "UserId": 1,
+      "upVotes": 0,
+      "downVotes": 0,
+      "isAcceptedAnswer": false,
+      "isActive": true,
+      "createdAt": "2022-12-26T09:40:02.000Z",
+      "updatedAt": "2022-12-27T07:13:04.000Z"
+    },
+    "validAnswer2": {
+      "id": 1,
+      "body": "This is a sample answer content for my second question",
+      "QuestionId": 2,
+      "UserId": 1,
+      "upVotes": 0,
+      "downVotes": 0,
+      "isAcceptedAnswer": true,
+      "isActive": true,
+      "createdAt": "2022-12-26T09:40:02.000Z",
+      "updatedAt": "2022-12-29T05:10:15.643Z"
+    },
+    "validQuestion": {
+      "id": 2,
+      "title": "My second question title",
+      "body": "This is a sample question content for my second question",
+      "CategoryId": 2,
+      "UserId": 1,
+      "isActive": true,
+      "createdAt": "2022-11-10T17:40:00.128Z",
+      "updatedAt": "2022-11-10T17:40:00.128Z"
+    },
+    "invalidQuestion": {
+      "id": 2,
+      "title": "My second question title",
+      "body": "This is a sample question content for my second question",
+      "CategoryId": 2,
+      "UserId": 58,
+      "isActive": true,
+      "createdAt": "2022-11-10T17:40:00.128Z",
+      "updatedAt": "2022-11-10T17:40:00.128Z"
+    },
+    "invalid": null
+  }
+}

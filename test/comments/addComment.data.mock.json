@@ -1,0 +1,31 @@
+{
+  "bodyData": {
+    "valid": {
+      "body": "This is a sample comment content for my second answer",
+      "AnswerId": 2
+    },
+    "invalid": {
+      "body": "This is a sample comment content for my second answer",
+      "AnswerId": 245
+    }
+  },
+  "userData": {
+    "valid": {
+      "id": 1
+    },
+    "invalid": {
+      "id": 999999999999999999999999
+    }
+  },
+  "foundData": {
+    "invalid": null,
+    "validAnswer": {
+      "id": 1,
+      "body": "This is a sample comment content for my second answer",
+      "AnswerId": 2,
+      "UserId": 1,
+      "updatedAt": "2022-12-24T05:10:15.643Z",
+      "createdAt": "2022-12-24T05:10:15.643Z"
+    }
+  }
+}

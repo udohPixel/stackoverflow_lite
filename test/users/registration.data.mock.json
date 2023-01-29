@@ -1,0 +1,35 @@
+{
+  "bodyData": {
+    "valid": {
+      "firstname": "John",
+      "lastname": "Doe",
+      "username": "johnnydoe",
+      "email": "john.doe123@gmail.com",
+      "password": "udoh@1234"
+    },
+    "invalid": null
+  },
+  "foundData": {
+    "valid": null,
+    "invalidEmail": {
+      "id": 2,
+      "firstname": "Jane",
+      "lastname": "Dowey",
+      "username": "janedowey",
+      "email": "john.doe123@gmail.com",
+      "isActive": true,
+      "createdAt": "2022-10-10T17:40:00.128Z",
+      "updatedAt": "2022-10-10T17:40:00.128Z"
+    },
+    "invalidUsername": {
+      "id": 7,
+      "firstname": "Johnson",
+      "lastname": "Doegh",
+      "username": "johnnydoe",
+      "email": "johnson.doegh@gmail.com",
+      "isActive": true,
+      "createdAt": "2022-11-09T12:40:46.128Z",
+      "updatedAt": "2022-11-09T12:40:46.128Z"
+    }
+  }
+}
